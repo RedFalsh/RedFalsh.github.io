@@ -1231,7 +1231,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Raspberry/Raspberry Pi 3——cxfreeze打包python程序/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Raspberry/Raspberry Pi 3——VNC远程桌面操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="redfalsh">
@@ -1250,7 +1250,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/03/20/Learning/Raspberry/Raspberry Pi 3——cxfreeze打包python程序/" itemprop="url">Raspberry Pi 3——cxfreeze打包python程序</a></h1>
+                <a class="post-title-link" href="/2017/03/20/Learning/Raspberry/Raspberry Pi 3——VNC远程桌面操作/" itemprop="url">Raspberry Pi 3——VNC远程桌面操作</a></h1>
         
 
         <div class="post-meta">
@@ -1332,124 +1332,93 @@
       
         
           
-            <h1 id="Raspberry-Pi-3——cxfreeze打包python程序"><a href="#Raspberry-Pi-3——cxfreeze打包python程序" class="headerlink" title="Raspberry Pi 3——cxfreeze打包python程序"></a>Raspberry Pi 3——cxfreeze打包python程序</h1><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://anthony-tuininga.github.io/cx_Freeze/" target="_blank" rel="external">cxfreeze官网</a></li>
-<li><a href="https://pypi.python.org/pypi/cx_Freeze/" target="_blank" rel="external">cxfreeze下载地址</a></li>
-<li><a href="http://cx-freeze.readthedocs.io/en/latest/" target="_blank" rel="external">使用说明文档</a></li>
-</ul>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>Python是一个脚本语言，被解释器解释执行。它的发布方式：</p>
-<ul>
-<li>py文件：对于开源项目或者源码没那么重要的，直接提供源码，需要使用者自行安装Python并且安装依赖的各种库。（Python官方的各种安装包就是这样做的）</li>
-<li>pyc文件：有些公司或个人因为机密或者各种原因，不愿意源码被运行者看到，可以使用pyc文件发布，pyc文件是Python解释器可以识别的二进制码，故发布后也是跨平台的，需要使用者安装相应版本的Python和依赖库。</li>
-<li>可执行文件：对于非码农用户或者一些小白用户，你让他装个Python同时还要折腾一堆依赖库，那简直是个灾难。对于此类用户，最简单的方式就是提供一个可执行文件，只需要把用法告诉Ta即可。比较麻烦的是需要针对不同平台需要打包不同的可执行文件（Windows,Linux,Mac,…）。<br>本文主要就是介绍最后一种方式，.py和.pyc都比较简单，Python本身就可以搞定。将Python脚本打包成可执行文件有多种方式，本文重点介绍cx_Freeze，其它仅作比较和参考。<br>Freezing Your Code<br>各种打包Python程序对比 点击打开链接<br>各种打包工具的对比如下(来自文章Freezing Your Code)：</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Solution</td>
-<td>Windows</td>
-<td>Linux</td>
-<td>OS X</td>
-<td>Python 3</td>
-<td>License</td>
-<td>One-file mode</td>
-<td>Zipfile</td>
-<td>import    Eggs</td>
-<td>pkg_resources support</td>
-</tr>
-<tr>
-<td>bbFreeze</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-<td>no</td>
-<td>MIT</td>
-<td>no</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>py2exe</td>
-<td>yes</td>
-<td>no</td>
-<td>no</td>
-<td>yes</td>
-<td>MIT</td>
-<td>yes</td>
-<td>yes</td>
-<td>no</td>
-<td>no</td>
-</tr>
-<tr>
-<td>pyInstaller</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-<td>no</td>
-<td>GPL</td>
-<td>yes</td>
-<td>no</td>
-<td>yes    no</td>
-</tr>
-<tr>
-<td>cx_Freeze</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-<td>PSF</td>
-<td>no</td>
-<td>yes</td>
-<td>yes</td>
-<td>no</td>
-</tr>
-<tr>
-<td>py2app</td>
-<td>no</td>
-<td>no</td>
-<td>yes</td>
-<td>yes</td>
-<td>MIT</td>
-<td>no</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-</tbody>
-</table>
-<p>我要打包的环境是Linux+Python3，故根据情况我们采用cx_Freeze打包程序</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>Python3程序打包步骤：<br>1、下载cx_Freeze-4.3.4.tar.gz源码<br>2、解压源码到某个目录<br>3、打开终端到解压目录<br>4、执行python3 setup.py build<br>这编译会出错 </p>
-<pre><code>build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘GetImporterHelper’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:211：对‘PyObject_CallMethod’未定义的引用
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:215：对‘PyErr_Clear’未定义的引用
-build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘GetDirName’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:66：对‘PyString_FromStringAndSize’未定义的引用
-build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘FatalError’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Console.c:24：对‘PyErr_Print’未定义的引用
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Console.c:25：对‘Py_FatalError’未定义的引用
-build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘SetExecutableName’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:93：对‘PyString_FromString’未定义的引用
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:115：对‘PyString_FromStringAndSize’未定义的引用
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:136：对‘PyString_FromString’未定义的引用
-build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘FatalError’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Console.c:24：对‘PyErr_Print’未定义的引用
-</code></pre><p>查了一下 网上有修改setup.py  将其中的if not vars.get(“Py_ENABLE_SHARED”, 0):修改成if True：<br>就可以了<br>5、执行安装命令<code>sudo python3 setup.py install</code><br>6、此时再次打开一个终端，输入命令：<code>cxfreeze --help</code>有内容说明安装<br>7、打包命令输入：<br>查询版本：<br><code>cxfreeze --version</code><br>打包文件（包含运行需要的文件）：<br><code>cxfreeze ~/Desktop/Nt2000_Python1/Nt_Main.py --target-dir ~/Desktop/setup</code><br>格式为：cxfreeze 文件绝对路径 –target-dir 打包到目标可执行文件夹路径<br>打包成一个可执行文件命令：<br><code>cxfreeze D:/hello.py --target-dir D:/123 --no-copy-deps</code></p>
+            <h1 id="Raspberry-Pi-3——VNC远程桌面操作"><a href="#Raspberry-Pi-3——VNC远程桌面操作" class="headerlink" title="Raspberry Pi 3——VNC远程桌面操作"></a>Raspberry Pi 3——VNC远程桌面操作</h1><h2 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h2><p>安装VNC需要使用命令行。如果需要远程操作安装VNC，就必须通过SSH登录到命令行界面。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>树莓派命令行：<br><code>sudo apt-get install tightvncserver</code><br>安装好之后请一定先使用此命令设置一个VNC密码：<br><code>vncpasswd</code><br>（先输入操作密码两次，然后会询问是否设置一个查看(view-only)密码，按自己喜欢，一般没必要。）</p>
+<h3 id="开机自动启动"><a href="#开机自动启动" class="headerlink" title="开机自动启动"></a>开机自动启动</h3><p>设置开机启动，需要在/etc/init.d/中创建一个文件。例如tightvncserver：<br>（注：启动脚本的名称，有和程序名一致的习惯）<br><code>sudo nano /etc/init.d/tightvncserver</code><br>内容如下：（putty窗口中按右键=粘贴）#!/bin/sh</p>
+<pre><code>#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          tightvncserver
+# Required-Start:    $local_fs
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start/stop tightvncserver
+### END INIT INFO
+
+# More details see:
+# http://www.penguintutor.com/Linux/tightvnc
+
+### Customize this entry
+# Set the USER variable to the name of the user to start tightvncserver under
+export USER=&apos;pi&apos;
+### End customization required
+
+eval cd ~$USER
+
+case &quot;$1&quot; in
+  start)
+    # 启动命令行。此处自定义分辨率、控制台号码或其它参数。
+    su $USER -c &apos;/usr/bin/tightvncserver -depth 16 -geometry 800x600 :1&apos;
+    echo &quot;Starting TightVNC server for $USER &quot;
+    ;;
+  stop)
+    # 终止命令行。此处控制台号码与启动一致。
+    su $USER -c &apos;/usr/bin/tightvncserver -kill :1&apos;
+    echo &quot;Tightvncserver stopped&quot;
+    ;;
+  *)
+    echo &quot;Usage: /etc/init.d/tightvncserver {start|stop}&quot;
+    exit 1
+    ;;
+esac
+exit 0
+</code></pre><p>注：少数玩家默认用户不是pi的请自行更改USER变量<br>按Ctrl+X，回答Y（存盘）退出nano编辑器。<br>然后给tightvncserver文件加执行权限，并更新开机启动列表。</p>
+<p><code>sudo chmod 755 /etc/init.d/tightvncserver</code><br><code>sudo update-rc.d tightvncserver defaults</code></p>
+<h3 id="电脑登录VNC"><a href="#电脑登录VNC" class="headerlink" title="电脑登录VNC"></a>电脑登录VNC</h3><p>下载Windows客户端<a href="http://pan.baidu.com/share/link?shareid=547427462&amp;uk=605377859" target="_blank" rel="external">RealVNC Viewer</a><br>登录地址输入“IP地址:控制台号码”，0号控制台可不加号码,也可使用Android版VNC客户端，下载地址：<a href="http://android.d.cn/software/19334.html" target="_blank" rel="external">http://android.d.cn/software/19334.html</a><br> <img src="http://static.zybuluo.com/RedFalsh/k5vi020vjipy0ocoqmd8zyug/image_1bboiikhcqbssnh1b811f0d12pd9.png" alt="image_1bboiikhcqbssnh1b811f0d12pd9.png-14.7kB"><br>输入树莓派密码就可以了</p>
+<p>登录界面如下：</p>
+<p> <img src="http://static.zybuluo.com/RedFalsh/au42ip2fu7vu00tg6mgcn741/image_1bboijkri1s56f07fd51ara1d40m.png" alt="image_1bboijkri1s56f07fd51ara1d40m.png-127.5kB"></p>
+<p>附：手工启动与参数（以下用处不大，没兴趣请略过）<br>使用此命令手工启动VNC服务器程序：<br><code>tightvncserver -geometry 800x600 :1</code><br>如果首次启动，并且未曾使用vncpasswd命令设置密码，程序会要求设置一个。<br>开机启动很方便。如果没理由，真的不推荐手工启动。<br>命令行参数说明：<br>一、<code>:1</code>指定控制台的号码。<br>启动多个控制台，可以提供互不影响的多个桌面环境。（大多数人不用多用户操作所以没意义）<br>可以不加此参数，tightvncserver会自动寻找从1开始的下一个空闲控制台。<br>加上此参数，会强制使用指定的控制台，如果此控制台已经启动则报错。加此参数可有效防止无意多次启动程序（会启动多个控制台）白白浪费系统资源。<br>特殊的0号控制台<br>0号控制台就是连接真实显示器真正输出图像的那个桌面。<br>对于VNC客户端，不输入端口号登录，默认就登录到0号控制台，方便。<br>但是因为0号是真正的桌面，所以和开机启动桌面环境，或者自己用startx命令，都存在啰嗦的冲突。<br>到头来是个麻烦。因此自动启动的配置教程中，一律使用1号控制台。<br>二、<code>-geometry 800×600</code>，分辨率。可以不加。<br>终止VNC控制台：<br><code>tightvncserver -kill :1</code><br>查看正在运行的控制台列表：<br><code>ps ax | grep Xtightvnc | grep -v grep</code></p>
+<h2 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h2><p>转载请注明：@小五义<a href="http://www.cnblogs.com/xiaowuyi" target="_blank" rel="external">http://www.cnblogs.com/xiaowuyi</a></p>
+<p>一、添加国内软件源<br>Raspberry Pi(树莓派)国内软件源：（<a href="http://www.linuxidc.com/Linux/2013-10/91012.htm）" target="_blank" rel="external">http://www.linuxidc.com/Linux/2013-10/91012.htm）</a><br>修改配置文件：<br>pi@aborn ~ $ vi /etc/apt/sources.list</p>
+<p>deb <a href="http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/" target="_blank" rel="external">http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/</a> wheezy main contrib non-free rpi<br>deb-src <a href="http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/" target="_blank" rel="external">http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/</a> wheezy main contrib non-free rpi<br>deb <a href="http://mirrors.neusoft.edu.cn/raspbian/raspbian/" target="_blank" rel="external">http://mirrors.neusoft.edu.cn/raspbian/raspbian/</a> wheezy main contrib non-free rpi<br>deb-src <a href="http://mirrors.neusoft.edu.cn/raspbian/raspbian/" target="_blank" rel="external">http://mirrors.neusoft.edu.cn/raspbian/raspbian/</a> wheezy main contrib non-free rpi<br>deb <a href="http://mirrors.ustc.edu.cn/raspbian/raspbian/" target="_blank" rel="external">http://mirrors.ustc.edu.cn/raspbian/raspbian/</a> wheezy main contrib non-free rpi<br>deb-src <a href="http://mirrors.ustc.edu.cn/raspbian/raspbian/" target="_blank" rel="external">http://mirrors.ustc.edu.cn/raspbian/raspbian/</a> wheezy main contrib non-free rpi</p>
+<p>（这里如果vi不会用，可以百度一下。）<br>修改文件后，在终端中运行：<br>sudo apt-get update</p>
+<p>二、添加输入法<br>这里我习惯用fcitx<br>于是安装fcitx<br><code>sudo apt-get install fcitx fcitx-tables-wbpy</code></p>
+<p>三、添加vnc server<br><code>sudo apt-get update</code><br><code>sudo apt-get install tightvncserver</code><br>安装完成后，运行<br><code>tightvncserver</code><br>这时会要求输入控制密码，选择性输入查看密码，查看密码只能用来查看桌面，而控制密码才能对桌面进行操作。<br>此后，在电脑上安装vnc软件，下载地址：<a href="http://www.tightvnc.com/" target="_blank" rel="external">http://www.tightvnc.com/</a><br>安装时，选择自定义安装，仅安装tightvncviewer就可以。<br>每个用户可以启动多个VNCSERVER远程桌面，它们用ip加端口号：ip:1、ip:2、ip:3来标识、区分，使用同一端口会使另外登录的用户自动退出。<br>四、设定固定IP<br>设定成固定IP后，方便日后操作，不需要每次先读取到IP才能工作。设定方法很简 单，通过修改文件sudo vi /etc/network/interfaces文件完成，这里会用到root权限，树莓派root权限的获取可参考上一节评论（http: //www.cnblogs.com/xiaowuyi/p/3980037.html）。<br>1、有线网络固定IP修改<br>原文件为：</p>
+<pre><code>auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet dhcp
+</code></pre><p>这里iface eth0 inet dhcp设置有线网络eth0为动态获取IP，因此可做如下修改：</p>
+<pre><code>auto lo
+iface lo inet loopback
+iface eth0 inet static
+address 192.168.1.123
+netmask 255.255.255.0
+gateway 192.168.1.1
+
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet dhcp
+</code></pre><p>2、无线网络的修改</p>
+<pre><code>auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet static
+address 192.168.1.123
+netmask 255.255.255.0
+gateway 192.168.1.1
+</code></pre><p>修改成功后，IP地址换为192.168.1.123。<br>五、vnc的使用<br>通过以上的安装，每次启动vnc后，我们就不需要再连接显示器了，而是直接通过电脑就可以操作。具体方法是：<br>启动后，电脑通过putty与其连接：<br>连接后，运行tightvncserver，建立一个新窗体。然后打开tightvncviewer，输入密码，出现窗体，如下图:<br>1、停止VNC窗口：<br><code>vncserver -kill:1</code><br>2、修改密码<br><code>vncpasswd</code><br>3、重启服务<br><code>service vncserver restart</code></p>
 
           
         
