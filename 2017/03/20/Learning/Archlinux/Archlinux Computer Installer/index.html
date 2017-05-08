@@ -1,0 +1,897 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Archlinux,Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Archlinux Computer Installer[TOC] 基本安装教程参考–系统搭建过程 设置ssh远程访问（root）修改ssh配置文件nano /etc/ssh/sshd_config12PermitRootLogin yesPermitEmptyPasswords yes 启动sshsystemctl start sshd 磁盘查看、分区、挂载 查看磁盘：fdisk -l  磁盘分">
+<meta name="keywords" content="Archlinux,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Archlinux系统——初始安装">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/Learning/Archlinux/Archlinux Computer Installer/index.html">
+<meta property="og:site_name" content="Welcome">
+<meta property="og:description" content="Archlinux Computer Installer[TOC] 基本安装教程参考–系统搭建过程 设置ssh远程访问（root）修改ssh配置文件nano /etc/ssh/sshd_config12PermitRootLogin yesPermitEmptyPasswords yes 启动sshsystemctl start sshd 磁盘查看、分区、挂载 查看磁盘：fdisk -l  磁盘分">
+<meta property="og:updated_time" content="2017-05-08T22:41:28.886Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Archlinux系统——初始安装">
+<meta name="twitter:description" content="Archlinux Computer Installer[TOC] 基本安装教程参考–系统搭建过程 设置ssh远程访问（root）修改ssh配置文件nano /etc/ssh/sshd_config12PermitRootLogin yesPermitEmptyPasswords yes 启动sshsystemctl start sshd 磁盘查看、分区、挂载 查看磁盘：fdisk -l  磁盘分">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/20/Learning/Archlinux/Archlinux Computer Installer/"/>
+
+
+
+
+
+  <title>Archlinux系统——初始安装 | Welcome</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Welcome</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            Über
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Archlinux/Archlinux Computer Installer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Archlinux系统——初始安装</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/Archlinux/" itemprop="url" rel="index">
+                    <span itemprop="name">Archlinux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Archlinux-Computer-Installer"><a href="#Archlinux-Computer-Installer" class="headerlink" title="Archlinux Computer Installer"></a>Archlinux Computer Installer</h1><p>[TOC]</p>
+<h2 id="基本安装教程"><a href="#基本安装教程" class="headerlink" title="基本安装教程"></a>基本安装教程</h2><p><a href="https://github.com/RedFalsh/Wiki/wiki/archlinux-xfce4" target="_blank" rel="external">参考–系统搭建过程</a></p>
+<h3 id="设置ssh远程访问（root）"><a href="#设置ssh远程访问（root）" class="headerlink" title="设置ssh远程访问（root）"></a>设置ssh远程访问（root）</h3><p><strong>修改ssh配置文件</strong><br><code>nano /etc/ssh/sshd_config</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PermitRootLogin yes</div><div class="line">PermitEmptyPasswords yes</div></pre></td></tr></table></figure></p>
+<p><strong>启动ssh</strong><br><code>systemctl start sshd</code></p>
+<h3 id="磁盘查看、分区、挂载"><a href="#磁盘查看、分区、挂载" class="headerlink" title="磁盘查看、分区、挂载"></a>磁盘查看、分区、挂载</h3><ul>
+<li><p>查看磁盘：<br><code>fdisk -l</code></p>
+</li>
+<li><p>磁盘分区：<br><code>cfdisk /dev/sda</code></p>
+<blockquote>
+<p>dos<br>/dev/sda1  1G   linux boot<br>/dev/sda2  2G   linux swap /solaris<br>/dev/sda3  37G  linux</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>查看分区：<br><code>fdisk -l</code><br><code>mkfs.ext4 /dev/sda1</code><br><code>mkswap /dev/sda2</code><br><code>swapon /dev/sda2</code><br><code>mkfs.ext4 /dev/sda3</code></p>
+</li>
+<li><p>挂载：<br><code>mount /dev/sda3 /mnt</code><br><code>mkdir /mnt/boot /mnt/var mnt/home</code><br><code>mount /dev/sda1 /mnt/boot</code></p>
+</li>
+</ul>
+<h3 id="修改国内镜像源、安装基本系统包、更新内核"><a href="#修改国内镜像源、安装基本系统包、更新内核" class="headerlink" title="修改国内镜像源、安装基本系统包、更新内核"></a>修改国内镜像源、安装基本系统包、更新内核</h3><ul>
+<li><p>修改国内镜像源：<br><code>nano /etc/pacman.d/mirrorlist</code></p>
+<blockquote>
+<p>添加以下内容：<br><code>Server = http://mirrors.aliyun.com/archlinux/$repo/os/$arch</code><br><code>Server = http://mirrors.163.com/archlinux/$repo/os/$arch</code></p>
+</blockquote>
+</li>
+<li><p>安装基本系统:<br><code>pacstrap /mnt base base-devel</code></p>
+</li>
+<li><p>更新内核：<br><code>pacman -Syu</code></p>
+</li>
+</ul>
+<h3 id="安装引导工具grub、生成fstab"><a href="#安装引导工具grub、生成fstab" class="headerlink" title="安装引导工具grub、生成fstab"></a>安装引导工具grub、生成fstab</h3><ul>
+<li><p>安装引导工具grub:<br><code>pacstrap /mnt grub-bios</code></p>
+</li>
+<li><p>生成fstab:<br><code>genfstab -p /mnt &gt;&gt; /mnt/etc/fstab</code></p>
+</li>
+<li><p>转回到主目录:<br><code>arch-chroot /mnt</code></p>
+</li>
+</ul>
+<h3 id="时钟配置、修改root密码、用户添加："><a href="#时钟配置、修改root密码、用户添加：" class="headerlink" title="时钟配置、修改root密码、用户添加："></a>时钟配置、修改root密码、用户添加：</h3><ul>
+<li><p>时钟配置<br><code>hwclock --systohc --utc</code></p>
+</li>
+<li><p>创建初始内存盘:<br><code>mkinitcpio -p linux</code></p>
+<blockquote>
+<p><a href="https://wiki.archlinux.org/index.php/Mkinitcpio_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">mkinitcpio参考</a>)</p>
+</blockquote>
+</li>
+<li><p>设置root密码：<br><code>passwd root</code></p>
+</li>
+<li><p>添加用户：<br><code>useradd -m -g users -G wheel -s /bin/bash john</code></p>
+</li>
+<li><p>设置用户密码：<br><code>passwd john</code></p>
+</li>
+<li><p>安装到磁盘上<br><code>grub-install /dev/sda</code><br><code>grub-mkconfig -o /boot/grub/grub.cfg</code></p>
+<blockquote>
+<p><a href="https://wiki.archlinux.org/index.php/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">grub参考</a>)</p>
+</blockquote>
+</li>
+<li><p>退出：<br><code>exit</code></p>
+</li>
+<li><p>重启：<br><code>reboot</code></p>
+</li>
+<li><p>登录root：<br><code>root</code></p>
+</li>
+<li><p>设置主机名称：<br><code>hostnamectl set-hostname archlinux</code></p>
+</li>
+<li><p>查看IP：<br><code>ip addr</code></p>
+</li>
+<li><p>打开dhcpcd<br><code>systemctl enable dhcpcd</code><br><code>systemctl start dhcpcd</code><br><code>ping www.google.com</code></p>
+</li>
+<li><p>允许用户：<br><code>nano /etc/sudoers</code></p>
+<blockquote>
+<p>root ALL=(ALL) ALL<br>john ALL=(ALL) ALL</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="xorg-桌面环境安装"><a href="#xorg-桌面环境安装" class="headerlink" title="xorg 桌面环境安装"></a>xorg 桌面环境安装</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/Xorg" target="_blank" rel="external">xorg参考</a></li>
+<li>安装：<br><code>pacman -S xorg</code></li>
+<li>安装xorg工具：<br><code>pacman -S xterm xorg-xclock xorg-twm xorg-xinit xorg-server-utils</code></li>
+</ul>
+<h2 id="桌面安装"><a href="#桌面安装" class="headerlink" title="桌面安装"></a>桌面安装</h2><h3 id="xfce4"><a href="#xfce4" class="headerlink" title="xfce4"></a>xfce4</h3><ul>
+<li><p>安装xfce4：<br><code>pacman -S xfce4</code></p>
+</li>
+<li><p>安装完成重启：<br><code>reboot</code></p>
+</li>
+<li><p>登录并进入界面：<br><code>startxfce4</code></p>
+</li>
+</ul>
+<h3 id="安装KDE-plasma桌面"><a href="#安装KDE-plasma桌面" class="headerlink" title="安装KDE-plasma桌面"></a>安装KDE-plasma桌面</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/KDE" target="_blank" rel="external">KDE-wiki</a></li>
+<li>安装<br><code>pacman -S plasma kdebase</code><br><code>pacman -R plasma-mediacenter</code><br><code>pacman -S ttf-freefont</code><br><code>systemctl enable sddm</code><br><code>reboot</code><h2 id="Arch-Linux-中文社区仓库-镜像加速源"><a href="#Arch-Linux-中文社区仓库-镜像加速源" class="headerlink" title="Arch Linux 中文社区仓库 / 镜像加速源"></a>Arch Linux 中文社区仓库 / 镜像加速源</h2><a href="https://www.archlinuxcn.org/archlinux-cn-repo-and-mirror/" target="_blank" rel="external">修改源说明链接</a><br><a href="http://repo.archlinuxcn.org/" target="_blank" rel="external">http://repo.archlinuxcn.org/</a><br><a href="https://mirrors.ustc.edu.cn/archlinuxcn/" target="_blank" rel="external">https://mirrors.ustc.edu.cn/archlinuxcn/</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># Global CDN (no nodes in mainland China)</div><div class="line">[archlinuxcn]</div><div class="line">Server = https://cdn.repo.archlinuxcn.org/$arch</div><div class="line"># TUNA mirror of Tsinghua University</div><div class="line">[archlinuxcn]</div><div class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch#  both IPv4 &amp; IPv6</div><div class="line"># Server = https://mirrors.6.tuna.tsinghua.edu.cn/archlinuxcn/$arch#  only IPv6</div><div class="line"># Server = https://mirrors.4.tuna.tsinghua.edu.cn/archlinuxcn/$arch#  only IPv4</div><div class="line"># HTTP is also supported</div><div class="line"># University of Science and Technology of China</div><div class="line">[archlinuxcn]</div><div class="line">Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch</div><div class="line"># or with HTTP</div><div class="line"># Server = http://mirrors.ustc.edu.cn/archlinuxcn/$arch</div><div class="line"># 上海科技大学 Geek Pie 社团</div><div class="line">[archlinuxcn]</div><div class="line">Server = https://mirrors.geekpie.org/archlinuxcn/$arch</div><div class="line"># 中国科学院开源软件协会（OpenCAS）</div><div class="line">[archlinuxcn]</div><div class="line">Server = http://mirrors.opencas.org/archlinuxcn/$arch</div><div class="line"># Netease (网易)</div><div class="line">[archlinuxcn]</div><div class="line">Server = http://mirrors.163.com/archlinux-cn/$arch</div><div class="line"># 电子科技大学 凝聚网络安全工作室</div><div class="line">[archlinuxcn]</div><div class="line">Server = http://mirrors.cnssuestc.org/archlinuxcn/$arch</div><div class="line"># Chongqing University Open Source Mirror Site</div><div class="line">[archlinuxcn]</div><div class="line">Server = http://mirrors.cqu.edu.cn/archlinux-cn/$arch</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="yaourt-—AUR包安装工具"><a href="#yaourt-—AUR包安装工具" class="headerlink" title="yaourt —AUR包安装工具"></a>yaourt —AUR包安装工具</h3><ul>
+<li>参考</li>
+<li>Arch Linux 中文社区仓库 是由 Arch Linux 中文社区驱动的非官方用户仓库。包含中文用户常用软件、工具、字体/美化包等。</li>
+</ul>
+<p>完整的包信息列表（包名称/架构/维护者/状态）请 <a href="https://github.com/archlinuxcn/repo" target="_blank" rel="external">点击这里</a><br> 查看。</p>
+<ul>
+<li><p>修改aur源<br><code>sudo nano /etc/pacman.conf</code></p>
+</li>
+<li><p>添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[archlinuxcn]</div><div class="line">SigLevel = Optional TrustedOnly</div><div class="line">Server = https://cdn.repo.archlinuxcn.org/$arch</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装</p>
+</li>
+</ul>
+<p><code>sudo pacman -Syy &amp;&amp; sudo pacman -S archlinuxcn-keyring</code></p>
+<h2 id="其他常用安装说明"><a href="#其他常用安装说明" class="headerlink" title="其他常用安装说明"></a>其他常用安装说明</h2><h3 id="slim安装—-图形登录界面"><a href="#slim安装—-图形登录界面" class="headerlink" title="slim安装—-图形登录界面"></a>slim安装—-图形登录界面</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/SLiM" target="_blank" rel="external">slim wiki</a></li>
+<li><p>安装<br><code>pacman -S slim slim-themes archlinux-themes-slim xdg-user-dirs</code><br><code>pacman -S systemctl enable slim.service</code><br><code>pwd</code><br><code>cp /etc/X11/xinit/xinitrc ~/.xinitrc</code></p>
+</li>
+<li><p>修改启动文件<br><code>nano .xinitrc</code></p>
+<blockquote>
+<p>twn &amp;<br>…<br>…<br>..<br>exec xfce4-session</p>
+</blockquote>
+</li>
+<li><p>修改slim配置，更换登录主题：<br><code>nano /etc/slim.conf</code></p>
+<blockquote>
+<p>current_theme archlinux-soft-grey</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>注：安装完成后只能登录root，不知道为什么不能登录用户</strong></p>
+<h3 id="ifconfig-—网络查询工具"><a href="#ifconfig-—网络查询工具" class="headerlink" title="ifconfig —网络查询工具"></a>ifconfig —网络查询工具</h3><p><code>pacman -S net-tools dnsutils inetutils iproute2</code></p>
+<h3 id="openssh-—远程登录工具"><a href="#openssh-—远程登录工具" class="headerlink" title="openssh —远程登录工具"></a>openssh —远程登录工具</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/Secure_Shell" target="_blank" rel="external">openssh wiki 链接</a></li>
+<li>安装<br><code>sudo pacman -S openssh</code><br><code>systemctl enable sshd</code><br><code>systemctl start sshd</code></li>
+</ul>
+<h3 id="numix—-美化系统图标"><a href="#numix—-美化系统图标" class="headerlink" title="numix—-美化系统图标:"></a>numix—-美化系统图标:</h3><ul>
+<li>安装<br><code>pacman -S numix-themes</code><br><code>yaourt -S numix-circle</code></li>
+</ul>
+<h3 id="cairo-dock—-3D特效图标托盘"><a href="#cairo-dock—-3D特效图标托盘" class="headerlink" title="cairo-dock—-3D特效图标托盘"></a>cairo-dock—-3D特效图标托盘</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/Cairo-Dock" target="_blank" rel="external">wiki 链接</a></li>
+<li>安装<br><code>pacman -S cairo-dock</code></li>
+<li>特效插件安装<br><code>pacman -S cairo-dock-plug-ins</code></li>
+</ul>
+<h3 id="compiz—-3d特效装逼桌面"><a href="#compiz—-3d特效装逼桌面" class="headerlink" title="compiz—-3d特效装逼桌面"></a>compiz—-3d特效装逼桌面</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/Compiz" target="_blank" rel="external">compiz wiki</a></li>
+<li>安装compiz-opengl特效<br><code>yaourt compiz</code><br>安装窗口装饰器emerald0.9以及主题emerald-themes<br><code>yaourt emerald</code></li>
+</ul>
+<h3 id="conky—-cpu、内存、天气等图形化显示"><a href="#conky—-cpu、内存、天气等图形化显示" class="headerlink" title="conky—-cpu、内存、天气等图形化显示"></a>conky—-cpu、内存、天气等图形化显示</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/Conky" target="_blank" rel="external">Conky wiki</a></li>
+<li>安装conky-manager<br><code>pacman -S conky-manager</code></li>
+</ul>
+<h3 id="cmd-markdown—-作业部落-markdown编辑工具"><a href="#cmd-markdown—-作业部落-markdown编辑工具" class="headerlink" title="cmd markdown—-作业部落-markdown编辑工具"></a>cmd markdown—-作业部落-markdown编辑工具</h3><p> <a href="https://aur.archlinux.org/packages/cmd-markdown/" target="_blank" rel="external">cmd markdown 包</a></p>
+<ul>
+<li>安装<br><code>yaourt cmd-markdown</code></li>
+</ul>
+<h3 id="Local-Systemd—-rc-local开机启动服务自定义"><a href="#Local-Systemd—-rc-local开机启动服务自定义" class="headerlink" title="Local-Systemd—-rc.local开机启动服务自定义"></a>Local-Systemd—-rc.local开机启动服务自定义</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/User:Herodotus/Rc-Local-Systemd" target="_blank" rel="external">rc-local wiki</a></li>
+</ul>
+<h3 id="wifi——无线网络"><a href="#wifi——无线网络" class="headerlink" title="wifi——无线网络"></a>wifi——无线网络</h3><ul>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">wiki</a>#.E8.AE.BE.E5.A4.87.E9.A9.B1.E5.8A.A8)</li>
+<li>工具<br><a href="https://wiki.archlinux.org/index.php/NetworkManager" target="_blank" rel="external">NetworkManager—-检测网络、自动连接网络的程序</a><br><a href="https://wiki.archlinux.org/index.php/Wicd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">Wicd—-是 NetworkManager 的一个功能相似的替代</a>#.E5.9F.BA.E7.A1.80.E8.BD.AF.E4.BB.B6.E5.8C.85)<h3 id="wps-office——办公软件"><a href="#wps-office——办公软件" class="headerlink" title="wps-office——办公软件"></a>wps-office——办公软件</h3></li>
+<li>参考<br><a href="https://wiki.archlinux.org/index.php/WPS_Office_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">wiki</a>#.E5.AE.89.E8.A3.85)</li>
+<li>安装<br>64位<br><code>pacman -S wps-office</code><br>32位<br><code>yaourt wps-office</code></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Archlinux/" rel="tag"># Archlinux</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/20/Learning/Archlinux/Archlinux-kde桌面配置/" rel="next" title="Archlinux-kde桌面配置.md">
+                <i class="fa fa-chevron-left"></i> Archlinux-kde桌面配置.md
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/MyLife/东极岛旅游/" rel="prev" title="东极岛旅游.md">
+                东极岛旅游.md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="redfalsh" />
+          <p class="site-author-name" itemprop="name">redfalsh</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">Kategorien</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Archlinux-Computer-Installer"><span class="nav-number">1.</span> <span class="nav-text">Archlinux Computer Installer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本安装教程"><span class="nav-number">1.1.</span> <span class="nav-text">基本安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置ssh远程访问（root）"><span class="nav-number">1.1.1.</span> <span class="nav-text">设置ssh远程访问（root）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁盘查看、分区、挂载"><span class="nav-number">1.1.2.</span> <span class="nav-text">磁盘查看、分区、挂载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改国内镜像源、安装基本系统包、更新内核"><span class="nav-number">1.1.3.</span> <span class="nav-text">修改国内镜像源、安装基本系统包、更新内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装引导工具grub、生成fstab"><span class="nav-number">1.1.4.</span> <span class="nav-text">安装引导工具grub、生成fstab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时钟配置、修改root密码、用户添加："><span class="nav-number">1.1.5.</span> <span class="nav-text">时钟配置、修改root密码、用户添加：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xorg-桌面环境安装"><span class="nav-number">1.1.6.</span> <span class="nav-text">xorg 桌面环境安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桌面安装"><span class="nav-number">1.2.</span> <span class="nav-text">桌面安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xfce4"><span class="nav-number">1.2.1.</span> <span class="nav-text">xfce4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装KDE-plasma桌面"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装KDE-plasma桌面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arch-Linux-中文社区仓库-镜像加速源"><span class="nav-number">1.3.</span> <span class="nav-text">Arch Linux 中文社区仓库 / 镜像加速源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yaourt-—AUR包安装工具"><span class="nav-number">1.3.1.</span> <span class="nav-text">yaourt —AUR包安装工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他常用安装说明"><span class="nav-number">1.4.</span> <span class="nav-text">其他常用安装说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#slim安装—-图形登录界面"><span class="nav-number">1.4.1.</span> <span class="nav-text">slim安装—-图形登录界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ifconfig-—网络查询工具"><span class="nav-number">1.4.2.</span> <span class="nav-text">ifconfig —网络查询工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#openssh-—远程登录工具"><span class="nav-number">1.4.3.</span> <span class="nav-text">openssh —远程登录工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numix—-美化系统图标"><span class="nav-number">1.4.4.</span> <span class="nav-text">numix—-美化系统图标:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cairo-dock—-3D特效图标托盘"><span class="nav-number">1.4.5.</span> <span class="nav-text">cairo-dock—-3D特效图标托盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compiz—-3d特效装逼桌面"><span class="nav-number">1.4.6.</span> <span class="nav-text">compiz—-3d特效装逼桌面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conky—-cpu、内存、天气等图形化显示"><span class="nav-number">1.4.7.</span> <span class="nav-text">conky—-cpu、内存、天气等图形化显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmd-markdown—-作业部落-markdown编辑工具"><span class="nav-number">1.4.8.</span> <span class="nav-text">cmd markdown—-作业部落-markdown编辑工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Local-Systemd—-rc-local开机启动服务自定义"><span class="nav-number">1.4.9.</span> <span class="nav-text">Local-Systemd—-rc.local开机启动服务自定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wifi——无线网络"><span class="nav-number">1.4.10.</span> <span class="nav-text">wifi——无线网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wps-office——办公软件"><span class="nav-number">1.4.11.</span> <span class="nav-text">wps-office——办公软件</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redfalsh</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

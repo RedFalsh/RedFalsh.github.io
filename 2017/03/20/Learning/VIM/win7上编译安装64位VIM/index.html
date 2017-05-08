@@ -1,0 +1,783 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vim,win7," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前提 想找一个64位的Vim并且支持Python和Lua功能不容易，所以研究了一天，查了不少资料，终于成功编译，记录一下。一、编译环境选择和安装1. 选择编译环境从网上查看Win上的编译环境 Cygwin、MinGW、MSYS2等，我选了MSYS2作为编译环境，而且MSYS2用Pacman进行包管理 ，用过ArchLinux的比较方便不少。 2. 安装MSYS2编译环境  下载安装msys2, 默">
+<meta name="keywords" content="vim,win7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="win7上编译安装64位VIM">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/Learning/VIM/win7上编译安装64位VIM/index.html">
+<meta property="og:site_name" content="Welcome">
+<meta property="og:description" content="前提 想找一个64位的Vim并且支持Python和Lua功能不容易，所以研究了一天，查了不少资料，终于成功编译，记录一下。一、编译环境选择和安装1. 选择编译环境从网上查看Win上的编译环境 Cygwin、MinGW、MSYS2等，我选了MSYS2作为编译环境，而且MSYS2用Pacman进行包管理 ，用过ArchLinux的比较方便不少。 2. 安装MSYS2编译环境  下载安装msys2, 默">
+<meta property="og:updated_time" content="2017-05-08T22:41:28.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="win7上编译安装64位VIM">
+<meta name="twitter:description" content="前提 想找一个64位的Vim并且支持Python和Lua功能不容易，所以研究了一天，查了不少资料，终于成功编译，记录一下。一、编译环境选择和安装1. 选择编译环境从网上查看Win上的编译环境 Cygwin、MinGW、MSYS2等，我选了MSYS2作为编译环境，而且MSYS2用Pacman进行包管理 ，用过ArchLinux的比较方便不少。 2. 安装MSYS2编译环境  下载安装msys2, 默">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/20/Learning/VIM/win7上编译安装64位VIM/"/>
+
+
+
+
+
+  <title>win7上编译安装64位VIM | Welcome</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Welcome</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            Über
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/VIM/win7上编译安装64位VIM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">win7上编译安装64位VIM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前提</p>
+<p>想找一个64位的Vim并且支持Python和Lua功能不容易，所以研究了一天，查了不少资料，终于成功编译，记录一下。<br><strong>一、编译环境选择和安装</strong><br><strong>1. 选择编译环境</strong><br>从网上查看Win上的编译环境 Cygwin、MinGW、MSYS2等，我选了MSYS2作为编译环境，而且MSYS2用Pacman进行包管理 ，用过ArchLinux的比较方便不少。</p>
+<p><strong>2. 安装MSYS2编译环境</strong></p>
+<ul>
+<li><p>下载安装msys2, 默认文件目录为：C:\msys64, 编译环境为以此目录为根目录。</p>
+</li>
+<li><p>修改/etc/pacman.d/目录下3个文件mirrorlist.mingw32, mirrorlist.mingw64,  mirrorlist.msys, 添加软件源提升下载速度：</p>
+<ul>
+<li>添加Server = <a href="http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/i686" target="_blank" rel="external">http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/i686</a> 到mirrorlist.mingw32文件首行。</li>
+<li>添加Server = <a href="http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/x86_64" target="_blank" rel="external">http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/x86_64</a> 到mirrorlist.mingw64文件首行。</li>
+<li>添加Server = <a href="http://mirrors.ustc.edu.cn/msys2/REPOS/MSYS2/$arch" target="_blank" rel="external">http://mirrors.ustc.edu.cn/msys2/REPOS/MSYS2/$arch</a> 到mirrorlist.msys文件首行。</li>
+<li>运行 pacman -Syu 更新</li>
+</ul>
+</li>
+<li><p>安装编译器,调试器,make工具, git pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb mingw-w64-x86_64-make git</p>
+</li>
+<li>提前安装 pacman -S diffutils ，此包包含 diff 命令，因我在编译过程碰到没有 diff 命令。</li>
+</ul>
+<p><strong>二 编译Vim</strong><br><strong>1. 编译前准备软件安装</strong></p>
+<ul>
+<li>下载 Python2.7.9(x64) 安装到 C:\Python27</li>
+<li>下载 Python3.4.3(x64) 安装到 C:\Python34</li>
+<li>下载 Ruby 2.2.3 (x64) 安装到 C:\Ruby22-x64</li>
+<li>下载lua-5.3_Win64_bin.zip 和 lua-5.3_Win64_dllw4_lib.zip，解压2个包到 C:\Lua53</li>
+<li>编译电脑系统为Win7 64位 旗舰版</li>
+<li><p>下载Vim源码</p>
+<p>  <code>cd ~</code><br>  <code>git clone https://github.com/tracyone/vim vim-master</code></p>
+</li>
+</ul>
+<p><strong>2. 设置编译参数文件</strong></p>
+<ul>
+<li>打开64位编译环境 mingw64_shell</li>
+<li>进入src文件 cd ~/vim-master/src</li>
+<li>复制编译文件 Make_cyg_ming.mak 为custom.mak, 修改custom.mak文件,定制自己要编译的选项.</li>
+<li>修改编译64位vim</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># FEATURES=[TINY | SMALL | NORMAL | BIG | HUGE]</div><div class="line"># Set to TINY to make minimal version (few features).</div><div class="line">FEATURES=HUGE</div><div class="line"># Set to one of i386, i486, i586, i686 as the minimum target processor.</div><div class="line"># For amd64/x64 architecture set ARCH=x86-64 .</div><div class="line">ARCH=x86-64</div></pre></td></tr></table></figure>
+<ul>
+<li>修改编译Lua</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># ifdef LUA</div><div class="line">ifndef LUA</div><div class="line">LUA=c:/Lua53</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef DYNAMIC_LUA</div><div class="line">DYNAMIC_LUA=yes</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef LUA_VER</div><div class="line">LUA_VER=53</div><div class="line">endif</div><div class="line"></div><div class="line">ifeq (no,$(DYNAMIC_LUA))</div><div class="line">LUA_LIB = -L$(LUA)/lib -llua</div><div class="line">endif</div><div class="line"></div><div class="line"># endif</div></pre></td></tr></table></figure>
+<ul>
+<li><p>修改编译Python</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># ifdef PYTHON</div><div class="line"></div><div class="line">ifndef PYTHON</div><div class="line">PYTHON=c:/Python27</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef DYNAMIC_PYTHON</div><div class="line">DYNAMIC_PYTHON=yes</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef PYTHON_VER</div><div class="line">PYTHON_VER=27</div><div class="line">endif</div><div class="line"></div><div class="line">ifeq (no,$(DYNAMIC_PYTHON))</div><div class="line">PYTHONLIB=-L$(PYTHON)/libs -lpython$(PYTHON_VER)</div><div class="line">endif</div><div class="line"># my include files are in &apos;win32inc&apos; on Linux, and &apos;include&apos; in the standard</div><div class="line"># NT distro (ActiveState)</div><div class="line">ifeq ($(CROSS),no)</div><div class="line">PYTHONINC=-I $(PYTHON)/include</div><div class="line">else</div><div class="line">PYTHONINC=-I $(PYTHON)/win32inc</div><div class="line">endif</div><div class="line"># endif</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改编译Python3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># ifdef PYTHON3</div><div class="line">ifndef PYTHON3</div><div class="line">PYTHON3=c:/Python34</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef DYNAMIC_PYTHON3</div><div class="line">DYNAMIC_PYTHON3=yes</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef PYTHON3_VER</div><div class="line">PYTHON3_VER=34</div><div class="line">endif</div><div class="line"></div><div class="line">ifeq (no,$(DYNAMIC_PYTHON3))</div><div class="line">PYTHON3LIB=-L$(PYTHON3)/libs -lPYTHON$(PYTHON3_VER)</div><div class="line">endif</div><div class="line"></div><div class="line">ifeq ($(CROSS),no)</div><div class="line">PYTHON3INC=-I $(PYTHON3)/include</div><div class="line">else</div><div class="line">PYTHON3INC=-I $(PYTHON3)/win32inc</div><div class="line">endif</div><div class="line"># endif</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改编译Ruby</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># ifdef RUBY</div><div class="line">ifndef RUBY</div><div class="line">RUBY=c:/Ruby22-x64</div><div class="line">endif</div><div class="line">ifndef DYNAMIC_RUBY</div><div class="line">DYNAMIC_RUBY=yes</div><div class="line">endif</div><div class="line">#  Set default value</div><div class="line">ifndef RUBY_VER</div><div class="line">RUBY_VER = 22</div><div class="line">endif</div><div class="line">ifndef RUBY_VER_LONG</div><div class="line">RUBY_VER_LONG = 2.2.0</div><div class="line">endif</div><div class="line">ifndef RUBY_API_VER</div><div class="line">RUBY_API_VER = $(subst .,,$(RUBY_VER_LONG))</div><div class="line">endif</div><div class="line"></div><div class="line">... 中间一大段默认不用设置</div><div class="line"></div><div class="line"># endif # RUBY</div></pre></td></tr></table></figure>
+</li>
+<li><p>这里编译和Linux下稍有不同,不需要 configue, 直接make 就可以了</p>
+</li>
+</ul>
+<p><strong>3. 开始编译</strong></p>
+<ul>
+<li>开始编译运行 mingw32-make.exe -f custom.mak</li>
+<li>若先前有编译失败,或要重新编译,需要先运行 mingw32-make.exe -f custom.mak clean</li>
+<li>成功后在 src 文件夹下就有 Gvim.exe 文件了,可以运行看看正常不.</li>
+<li>需要把 C:\Lua53\lua53.dll 文件复制到和Gvim同一文件夹下</li>
+</ul>
+<p><strong>4. 整理打包编译好的Vim</strong></p>
+<p>我查了不少资料，但没有查到相关的，就是编译好后怎么整理编译好的文件到vim包，最后我直接参考 tracyone 的编译脚本，打包了一个vim包，可以正常运行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cd ~/vim-master</div><div class="line">mkdir -p vim74-x64/vim74</div><div class="line">cp -a runtime/* vim74-x64/vim74</div><div class="line">cp -a src/*.exe vim74-x64/vim74</div><div class="line">cp -a src/GvimExt/gvimext.dll vim74-x64/vim74</div><div class="line">cp -a src/xxd/xxd.exe vim74-x64/vim74</div><div class="line">cp -a vimtutor.bat vim74-x64/vim74</div><div class="line">cp -a /c/Lua53/lua53.dll vim74-x64/vim74</div></pre></td></tr></table></figure></p>
+<p><strong>三 安装Vim74-x64</strong></p>
+<p>运行管理员模式命令行，进行 Vim74-x64 文件夹，运行 install.exe<br>选择 d 进行默认安装。</p>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a href="http://www.cnblogs.com/tracyone/p/4735411.html" target="_blank" rel="external">Windows下编译YouCompleteMe流程</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vim/" rel="tag"># vim</a>
+          
+            <a href="/tags/win7/" rel="tag"># win7</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/20/Learning/VIM/我的vimrc配置文件/" rel="next" title="我的vimrc配置文件">
+                <i class="fa fa-chevron-left"></i> 我的vimrc配置文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/Learning/VIM/vim使用技巧--recoding/" rel="prev" title="vim使用技巧--recording(操作记录器).md">
+                vim使用技巧--recording(操作记录器).md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="redfalsh" />
+          <p class="site-author-name" itemprop="name">redfalsh</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">Kategorien</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redfalsh</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
