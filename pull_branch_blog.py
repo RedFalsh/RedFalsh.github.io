@@ -3,7 +3,6 @@
 
 import os
 
-os.chdir('..')
 name = 'RedFalsh.github.io'
 # 查询文件是否存在
 if os.path.exists('%s'%name):
