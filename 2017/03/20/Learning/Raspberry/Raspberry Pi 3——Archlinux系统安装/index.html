@@ -90,13 +90,13 @@
 
 
 
-<meta name="description" content="Raspberry Pi 3——Archlinux系统安装[TOC] 国内源网站http://mirrors.ustc.edu.cn/http://mirrors.aliyun.com/http://mirrors.163.com/ 官网制作sd卡教程Note:   The Raspberry Pi 3 has higher power requirements than the Raspberr">
+<meta name="description" content="Raspberry Pi 3——Archlinux系统安装[TOC] 国内源网站http://mirrors.ustc.edu.cn/http://mirrors.aliyun.com/http://mirrors.163.com/ 官网制作sd卡教程Note:  The Raspberry Pi 3 has higher power requirements than the Raspberry">
 <meta name="keywords" content="Archlinux,Linux,Raspberry">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Raspberry Pi 3——Archlinux系统安装">
 <meta property="og:url" content="http://yoursite.com/2017/03/20/Learning/Raspberry/Raspberry Pi 3——Archlinux系统安装/index.html">
 <meta property="og:site_name" content="Welcome">
-<meta property="og:description" content="Raspberry Pi 3——Archlinux系统安装[TOC] 国内源网站http://mirrors.ustc.edu.cn/http://mirrors.aliyun.com/http://mirrors.163.com/ 官网制作sd卡教程Note:   The Raspberry Pi 3 has higher power requirements than the Raspberr">
+<meta property="og:description" content="Raspberry Pi 3——Archlinux系统安装[TOC] 国内源网站http://mirrors.ustc.edu.cn/http://mirrors.aliyun.com/http://mirrors.163.com/ 官网制作sd卡教程Note:  The Raspberry Pi 3 has higher power requirements than the Raspberry">
 <meta property="og:image" content="http://static.zybuluo.com/RedFalsh/r04ck73bkixpoqfhh1ugv571/image_1bagj59nqpe7ov7cq1ben1k799.png">
 <meta property="og:image" content="http://static.zybuluo.com/RedFalsh/pmj4zlutgx0pvlkuyoqamqx4/image_1bagj63sq112quop9cl1f41qiem.png">
 <meta property="og:image" content="http://static.zybuluo.com/RedFalsh/3comr6jy5lvr6qel8jltbxii/image_1bagj75lt10jdoe11qmf1o24deh13.png">
@@ -108,10 +108,10 @@
 <meta property="og:image" content="http://static.zybuluo.com/RedFalsh/1eko8kjrnvmno9c714wlnkrt/image_1ba7rc05mbs7vjn1rhk1usf1eb82n.png">
 <meta property="og:image" content="http://static.zybuluo.com/RedFalsh/2q55h3ufxrs10lcnfyy4lwu1/image_1ba7r3cvo1egrt7e1iv4mkh1i351t.png">
 <meta property="og:image" content="http://static.zybuluo.com/RedFalsh/4zu1bj8o9ktn7bfabvgy2thf/image_1ba7r7lnm7ni139p14rf1mkcm5n2a.png">
-<meta property="og:updated_time" content="2017-05-08T22:41:28.890Z">
+<meta property="og:updated_time" content="2017-05-14T11:49:40.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi 3——Archlinux系统安装">
-<meta name="twitter:description" content="Raspberry Pi 3——Archlinux系统安装[TOC] 国内源网站http://mirrors.ustc.edu.cn/http://mirrors.aliyun.com/http://mirrors.163.com/ 官网制作sd卡教程Note:   The Raspberry Pi 3 has higher power requirements than the Raspberr">
+<meta name="twitter:description" content="Raspberry Pi 3——Archlinux系统安装[TOC] 国内源网站http://mirrors.ustc.edu.cn/http://mirrors.aliyun.com/http://mirrors.163.com/ 官网制作sd卡教程Note:  The Raspberry Pi 3 has higher power requirements than the Raspberry">
 <meta name="twitter:image" content="http://static.zybuluo.com/RedFalsh/r04ck73bkixpoqfhh1ugv571/image_1bagj59nqpe7ov7cq1ben1k799.png">
 
 
@@ -384,7 +384,7 @@
       
         <h1 id="Raspberry-Pi-3——Archlinux系统安装"><a href="#Raspberry-Pi-3——Archlinux系统安装" class="headerlink" title="Raspberry Pi 3——Archlinux系统安装"></a>Raspberry Pi 3——Archlinux系统安装</h1><p>[TOC]</p>
 <h2 id="国内源网站"><a href="#国内源网站" class="headerlink" title="国内源网站"></a>国内源网站</h2><p><a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="external">http://mirrors.ustc.edu.cn/</a><br><a href="http://mirrors.aliyun.com/" target="_blank" rel="external">http://mirrors.aliyun.com/</a><br><a href="http://mirrors.163.com/" target="_blank" rel="external">http://mirrors.163.com/</a></p>
-<h2 id="官网制作sd卡教程"><a href="#官网制作sd卡教程" class="headerlink" title="官网制作sd卡教程"></a>官网制作sd卡教程</h2><p><strong>Note:</strong> </p>
+<h2 id="官网制作sd卡教程"><a href="#官网制作sd卡教程" class="headerlink" title="官网制作sd卡教程"></a>官网制作sd卡教程</h2><p><strong>Note:</strong></p>
 <blockquote>
 <p>The Raspberry Pi 3 has higher power requirements than the Raspberry Pi 2. A power supply rated at 2.5A is the official recommendation. Using an insufficient power supply will result in random, inexplicable errors and filesystem corruption.</p>
 </blockquote>
@@ -469,7 +469,7 @@
 <p><code>sudo pacman -Syu pulseaudio-alsa pulseaudio-bluetooth pavucontrol bluez bluez-libs bluez-utils bluez-firmware gstreamer0.10-good-plugins</code></p>
 <h4 id="yaourt源码安装"><a href="#yaourt源码安装" class="headerlink" title="yaourt源码安装"></a>yaourt源码安装</h4><p><strong>1.修改源</strong></p>
 <p>清华大学源<br><code>sudo vim /etc/pacman.conf</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[archlinuxcn]  </div><div class="line">SigLevel = Optional TrustedOnly  </div><div class="line">Server = http://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/any</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[archlinuxcn]</div><div class="line">SigLevel = Optional TrustedOnly</div><div class="line">Server = http://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/any</div></pre></td></tr></table></figure>
 <p><strong>2.安装package-query</strong></p>
 <p>从archlinux wiki上查找package-query包<br><code>git clone https://aur.archlinux.org/package-query.git</code><br><code>cd package-query</code><br><code>makepkg</code><br>缺少yajl依赖包，安装<br><code>sudo pacman -S yajl</code><br>重新编译<br><code>makepkg</code><br>编译完成后会在当前目录下生成pkg.tar.xz文件，套件安装：<br><code>sudo pacman -U /home/alan/package-query/package-query-1.6.2-1-armv7h.pkg.tar.xz</code></p>
 <blockquote>
@@ -541,18 +541,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/20/Learning/Raspberry/Raspberry Pi 3——VNC远程桌面操作/" rel="next" title="Raspberry Pi 3——VNC远程桌面操作">
-                <i class="fa fa-chevron-left"></i> Raspberry Pi 3——VNC远程桌面操作
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/20/Learning/Python/setuptools和easy_install——创建和发布 Python的egg 包/" rel="prev" title="setuptools和easy_install——创建和发布 Python的egg 包">
-                setuptools和easy_install——创建和发布 Python的egg 包 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/20/MyJob/个人剂量监测管理系统使用说明书/" rel="prev" title="个人剂量监测管理系统使用说明书">
+                个人剂量监测管理系统使用说明书 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -625,7 +621,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -636,7 +632,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">Kategorien</span>
               </a>
             </div>
@@ -647,7 +643,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>

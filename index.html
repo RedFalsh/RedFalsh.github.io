@@ -1108,6 +1108,166 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/21/Learning/git/回滚代码方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/21/Learning/git/回滚代码方法/" itemprop="url">Git回滚代码方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-21T13:53:48+00:00">
+                2017-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Git回滚代码方法"><a href="#Git回滚代码方法" class="headerlink" title="Git回滚代码方法"></a>Git回滚代码方法</h1><p>[TOC]</p>
+<h2 id="nodejs、hexo与github搭建自己的博客"><a href="#nodejs、hexo与github搭建自己的博客" class="headerlink" title="nodejs、hexo与github搭建自己的博客"></a>nodejs、hexo与github搭建自己的博客</h2><p>参考链接<br>    <a href="http://blog.csdn.net/pansing/article/details/47339643" target="_blank" rel="external">安装Hexo部署到github手记（Windows）</a><br>    <a href="http://blog.liuxianan.com/build-blog-website-by-hexo-github.html#zhun-bei-gong-zuo" target="_blank" rel="external">使用hexo+github搭建免费个人博客详细教程</a><br>    <a href="http://www.isetsuna.com/categories/index.html" target="_blank" rel="external">博客1</a><br>    <a href="http://luuman.github.io/categories/Hexo/" target="_blank" rel="external">博客2</a><br>    <a href="http://blog.csdn.net/willxue123/article/details/50994852" target="_blank" rel="external">配置文件yml以及主题next配置文件说明</a></p>
+<h2 id="git如何正确回滚代码"><a href="#git如何正确回滚代码" class="headerlink" title="git如何正确回滚代码"></a>git如何正确回滚代码</h2><p><strong>方法一，删除远程分支再提交</strong></p>
+<p>1.首先两步保证当前工作区是干净的，并且和远程分支代码一致<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git co currentBranch</div><div class="line">$ git pull origin currentBranch</div><div class="line">$ git co ./</div></pre></td></tr></table></figure></p>
+<p>2.备份当前分支（如有必要）<br><code>$ git branch currentBranchBackUp</code><br>3.恢复到指定的commit hash<br><code>$ git reset --hard resetVersionHash //将当前branch的HEAD指针指向commit hash</code><br><img src="http://static.zybuluo.com/RedFalsh/qtwsb3nphs7pogomw3v6k47d/image_1bbgc7kl4g0k25c1ks8na01ith9.png" alt="image_1bbgc7kl4g0k25c1ks8na01ith9.png-59.8kB"></p>
+<p>4.删除当前分支的远程分支<br><code>$ git push origin :currentBranch</code><br><code>$ //或者这么写git push origin --delete currentBranch</code><br>5.把当前分支提交到远程<br><code>$ git push origin currentBranch</code></p>
+<p><strong>方法二，强制push远程分支</strong></p>
+<p>1.首先两步保证当前工作区是干净的，并且和远程分支代码一致<br>2.备份当前分支（如有必要）<br>3.恢复到指定的commit hash<br><code>$ git reset --hard resetVersionHash</code><br>4.把当前分支强制提交到远程<br><code>$ git push -f origin currentBranch</code></p>
+<p><strong>方法三，从回滚位置生成新的commit hash</strong></p>
+<p>1.首先两步保证当前工作区是干净的，并且和远程分支代码一致<br>2.备份当前分支（如有必要）<br>3.使用git revert恢复到指定的commit hash，当前分支恢复到a&gt;3版本（见下图）<br>a）此方法会产生一条多余的commit hash&amp;log，其实1c0ce98和01592eb内容上是一致的<br>b）git revert是以要回滚的commit hash(1c0ce98)为基础，新生成一个commit hash(01592eb)<br><code>$ git revert resetVersionHash</code><br><img src="http://static.zybuluo.com/RedFalsh/pwdfzil2ahwe8opuw8b9ia6l/image_1bbgcddsq3f4vcrnjcf7m13tem.png" alt="image_1bbgcddsq3f4vcrnjcf7m13tem.png-47.6kB"><br>4.提交远程分支<br><code>$ git push origin currentBranch</code></p>
+<p><strong>方法四，从回滚位置生成新的分支merge</strong><br>1.首先两步保证当前工作区是干净的，并且和远程分支代码一致</p>
+<p>2.备份当前分支（如有必要）</p>
+<p>3.把当前工作区的HEAD指针指向回滚的commit hash(注意不是branch的HEAD指针)</p>
+<p>Notice:这个时候工作区HEAD没有指向分支，称为匿名分支detached HEAD</p>
+<p>这个时候提交commit后无法保存状态，git中的任何提交必须是在当前工作区HEAD所在分支的HEAD上进行push hash入栈，所以HEAD必须是属于某个分支的HEAD位置，提交才生效。<br><code>$ git co resetVersionHash</code><br><img src="http://static.zybuluo.com/RedFalsh/vii7s3fa7i5jw7gn7in35lu2/image_1bbgcfevo1lvisrv15fqct060213.png" alt="image_1bbgcfevo1lvisrv15fqct060213.png-53.9kB"><br>4.以该commit hash创建一个新的分支<br><code>$ git co -b newRevertedHash</code><br>5.切换到当前分支，合并newRevertedHash。<br><code>$ git co currentBranch</code><br><code>$ git merge newRevertedHash</code><br>6.进行代码diff，完成代码回滚，push到远程currentBranch</p>
+<p>Notice: 也可以直接hotfix，从要回滚的地方直接重新打包一个新tag包，发版本hotFixVersion即可。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/21/Learning/git/git常用命令总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1374,166 +1534,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/21/Learning/git/回滚代码方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="redfalsh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/21/Learning/git/回滚代码方法/" itemprop="url">Git回滚代码方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-21T13:53:48+00:00">
-                2017-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Learn/" itemprop="url" rel="index">
-                    <span itemprop="name">Learn</span>
-                  </a>
-                </span>
-
-                
-                
-                  . 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Learn/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Git回滚代码方法"><a href="#Git回滚代码方法" class="headerlink" title="Git回滚代码方法"></a>Git回滚代码方法</h1><p>[TOC]</p>
-<h2 id="nodejs、hexo与github搭建自己的博客"><a href="#nodejs、hexo与github搭建自己的博客" class="headerlink" title="nodejs、hexo与github搭建自己的博客"></a>nodejs、hexo与github搭建自己的博客</h2><p>参考链接<br>    <a href="http://blog.csdn.net/pansing/article/details/47339643" target="_blank" rel="external">安装Hexo部署到github手记（Windows）</a><br>    <a href="http://blog.liuxianan.com/build-blog-website-by-hexo-github.html#zhun-bei-gong-zuo" target="_blank" rel="external">使用hexo+github搭建免费个人博客详细教程</a><br>    <a href="http://www.isetsuna.com/categories/index.html" target="_blank" rel="external">博客1</a><br>    <a href="http://luuman.github.io/categories/Hexo/" target="_blank" rel="external">博客2</a><br>    <a href="http://blog.csdn.net/willxue123/article/details/50994852" target="_blank" rel="external">配置文件yml以及主题next配置文件说明</a></p>
-<h2 id="git如何正确回滚代码"><a href="#git如何正确回滚代码" class="headerlink" title="git如何正确回滚代码"></a>git如何正确回滚代码</h2><p><strong>方法一，删除远程分支再提交</strong></p>
-<p>1.首先两步保证当前工作区是干净的，并且和远程分支代码一致<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git co currentBranch</div><div class="line">$ git pull origin currentBranch</div><div class="line">$ git co ./</div></pre></td></tr></table></figure></p>
-<p>2.备份当前分支（如有必要）<br><code>$ git branch currentBranchBackUp</code><br>3.恢复到指定的commit hash<br><code>$ git reset --hard resetVersionHash //将当前branch的HEAD指针指向commit hash</code><br><img src="http://static.zybuluo.com/RedFalsh/qtwsb3nphs7pogomw3v6k47d/image_1bbgc7kl4g0k25c1ks8na01ith9.png" alt="image_1bbgc7kl4g0k25c1ks8na01ith9.png-59.8kB"></p>
-<p>4.删除当前分支的远程分支<br><code>$ git push origin :currentBranch</code><br><code>$ //或者这么写git push origin --delete currentBranch</code><br>5.把当前分支提交到远程<br><code>$ git push origin currentBranch</code></p>
-<p><strong>方法二，强制push远程分支</strong></p>
-<p>1.首先两步保证当前工作区是干净的，并且和远程分支代码一致<br>2.备份当前分支（如有必要）<br>3.恢复到指定的commit hash<br><code>$ git reset --hard resetVersionHash</code><br>4.把当前分支强制提交到远程<br><code>$ git push -f origin currentBranch</code></p>
-<p><strong>方法三，从回滚位置生成新的commit hash</strong></p>
-<p>1.首先两步保证当前工作区是干净的，并且和远程分支代码一致<br>2.备份当前分支（如有必要）<br>3.使用git revert恢复到指定的commit hash，当前分支恢复到a&gt;3版本（见下图）<br>a）此方法会产生一条多余的commit hash&amp;log，其实1c0ce98和01592eb内容上是一致的<br>b）git revert是以要回滚的commit hash(1c0ce98)为基础，新生成一个commit hash(01592eb)<br><code>$ git revert resetVersionHash</code><br><img src="http://static.zybuluo.com/RedFalsh/pwdfzil2ahwe8opuw8b9ia6l/image_1bbgcddsq3f4vcrnjcf7m13tem.png" alt="image_1bbgcddsq3f4vcrnjcf7m13tem.png-47.6kB"><br>4.提交远程分支<br><code>$ git push origin currentBranch</code></p>
-<p><strong>方法四，从回滚位置生成新的分支merge</strong><br>1.首先两步保证当前工作区是干净的，并且和远程分支代码一致</p>
-<p>2.备份当前分支（如有必要）</p>
-<p>3.把当前工作区的HEAD指针指向回滚的commit hash(注意不是branch的HEAD指针)</p>
-<p>Notice:这个时候工作区HEAD没有指向分支，称为匿名分支detached HEAD</p>
-<p>这个时候提交commit后无法保存状态，git中的任何提交必须是在当前工作区HEAD所在分支的HEAD上进行push hash入栈，所以HEAD必须是属于某个分支的HEAD位置，提交才生效。<br><code>$ git co resetVersionHash</code><br><img src="http://static.zybuluo.com/RedFalsh/vii7s3fa7i5jw7gn7in35lu2/image_1bbgcfevo1lvisrv15fqct060213.png" alt="image_1bbgcfevo1lvisrv15fqct060213.png-53.9kB"><br>4.以该commit hash创建一个新的分支<br><code>$ git co -b newRevertedHash</code><br>5.切换到当前分支，合并newRevertedHash。<br><code>$ git co currentBranch</code><br><code>$ git merge newRevertedHash</code><br>6.进行代码diff，完成代码回滚，push到远程currentBranch</p>
-<p>Notice: 也可以直接hotfix，从要回滚的地方直接重新打包一个新tag包，发版本hotFixVersion即可。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Archlinux/Archlinux Computer Installer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1635,8 +1635,7 @@
       
         
           
-            <h1 id="Archlinux-Computer-Installer"><a href="#Archlinux-Computer-Installer" class="headerlink" title="Archlinux Computer Installer"></a>Archlinux Computer Installer</h1><p>[TOC]</p>
-<h2 id="基本安装教程"><a href="#基本安装教程" class="headerlink" title="基本安装教程"></a>基本安装教程</h2><p><a href="https://github.com/RedFalsh/Wiki/wiki/archlinux-xfce4" target="_blank" rel="external">参考–系统搭建过程</a></p>
+            <h1 id="Archlinux-Computer-Installer"><a href="#Archlinux-Computer-Installer" class="headerlink" title="Archlinux Computer Installer"></a>Archlinux Computer Installer</h1><h2 id="基本安装教程"><a href="#基本安装教程" class="headerlink" title="基本安装教程"></a>基本安装教程</h2><p><a href="https://github.com/RedFalsh/Wiki/wiki/archlinux-xfce4" target="_blank" rel="external">参考–系统搭建过程</a></p>
 <h3 id="设置ssh远程访问（root）"><a href="#设置ssh远程访问（root）" class="headerlink" title="设置ssh远程访问（root）"></a>设置ssh远程访问（root）</h3><p><strong>修改ssh配置文件</strong><br><code>nano /etc/ssh/sshd_config</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PermitRootLogin yes</div><div class="line">PermitEmptyPasswords yes</div></pre></td></tr></table></figure></p>
 <p><strong>启动ssh</strong><br><code>systemctl start sshd</code></p>
 <h3 id="磁盘查看、分区、挂载"><a href="#磁盘查看、分区、挂载" class="headerlink" title="磁盘查看、分区、挂载"></a>磁盘查看、分区、挂载</h3><ul>
@@ -1792,6 +1791,186 @@
 <li>工具<br><a href="https://wiki.archlinux.org/index.php/NetworkManager" target="_blank" rel="external">NetworkManager—-检测网络、自动连接网络的程序</a><br><a href="https://wiki.archlinux.org/index.php/Wicd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">Wicd—-是 NetworkManager 的一个功能相似的替代</a>#.E5.9F.BA.E7.A1.80.E8.BD.AF.E4.BB.B6.E5.8C.85)<h3 id="wps-office——办公软件"><a href="#wps-office——办公软件" class="headerlink" title="wps-office——办公软件"></a>wps-office——办公软件</h3></li>
 <li>参考<br><a href="https://wiki.archlinux.org/index.php/WPS_Office_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">wiki</a>#.E5.AE.89.E8.A3.85)</li>
 <li>安装<br>64位<br><code>pacman -S wps-office</code><br>32位<br><code>yaourt wps-office</code></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Archlinux/Archlinux-conky安装配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/20/Learning/Archlinux/Archlinux-conky安装配置/" itemprop="url">Archlinux-conky安装配置.md</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/Archlinux/" itemprop="url" rel="index">
+                    <span itemprop="name">Archlinux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>参考</p>
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/Conky" target="_blank" rel="external">conky官方wiki</a></li>
+<li><a href="http://zagortenay333.deviantart.com/art/Conky-Harmattan-426662366" target="_blank" rel="external">conky harmattan主题</a></li>
+<li><a href="http://gnome-look.org/content/show.php/Conky+lua?content=139024" target="_blank" rel="external">conky-lua主题</a></li>
+</ul>
+<p><strong>安装conky</strong><br><code>pacman -S conky</code><br><strong>图形界面管理conky</strong><br><code>pacman -S conky-manager</code></p>
+<h2 id="conky-lua安装"><a href="#conky-lua安装" class="headerlink" title="conky-lua安装"></a>conky-lua安装</h2><ul>
+<li><strong>conky-lua支持</strong><br><code>yaourt conky-lua</code></li>
+<li><strong>conky-nvidia支持</strong><br><code>yaourt conky-nvidia</code></li>
+<li><strong>lua与nvidia同时支持</strong><br><code>yaourt conky-lua-nv</code><h2 id="conky-lua使用"><a href="#conky-lua使用" class="headerlink" title="conky-lua使用"></a>conky-lua使用</h2></li>
+</ul>
+<p>conky-lua主题下载</p>
+<p><a href="https://dl.opendesktop.org/api/files/download/id/1465391037/139024-Conky-lua1.tar.gz" target="_blank" rel="external">139024-Conky-lua1.tar.gz</a></p>
+<p><strong>git archlinux-conky</strong></p>
+<p><code>git clone https://github.com/RedFalsh/archlinux_conky.git</code></p>
+<p><strong>进入</strong></p>
+<p><code>cd archlinux_conky/Conky-lua/</code></p>
+<p><strong>解压主题<code>&#39;Conky Mint-lua.tar.gz&#39;</code></strong></p>
+<p><code>tar -xvzf &#39;Conky Mint-lua.tar.gz&#39;</code></p>
+<p><strong>进入Conky Mint-lua文件夹</strong></p>
+<p><code>cd &#39;Conky Mint-lua&#39;</code></p>
+<p><strong>复制相关文件到用户目录下</strong></p>
+<p><code>cp conkyrc ~/.conkyrc</code></p>
+<p><code>cp clock_rings.lua ~/.lua/scripts/</code></p>
+<p><strong>运行conky</strong></p>
+<p><code>conky</code></p>
+<blockquote>
+<p>注：conkyrc中显示温度的符号可能出错，需要相应的系统编码，可以去掉温度显示</p>
+</blockquote>
+<h3 id="conky-manager"><a href="#conky-manager" class="headerlink" title="conky-manager"></a>conky-manager</h3><p><code>mkdir -p ~/.conky/Conky\ Mint-lua</code></p>
+<p><code>cp Cokny\ Mint-lua/conkyrc ~/.conky/Cokny\ Mint-lua/</code></p>
+<h2 id="conky-harmattan"><a href="#conky-harmattan" class="headerlink" title="conky harmattan"></a>conky harmattan</h2><p><strong>参考</strong> </p>
+<ul>
+<li><a href="https://github.com/zagortenay333/Harmattan" target="_blank" rel="external">zagortenay333/Harmattan</a></li>
 </ul>
 
           
@@ -1994,153 +2173,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Archlinux/Archlinux-vim安装配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="redfalsh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/20/Learning/Archlinux/Archlinux-vim安装配置/" itemprop="url">Archlinux-vim安装配置.md</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
-                2017-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Learn/" itemprop="url" rel="index">
-                    <span itemprop="name">Learn</span>
-                  </a>
-                </span>
-
-                
-                
-                  . 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Learn/Archlinux/" itemprop="url" rel="index">
-                    <span itemprop="name">Archlinux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://wiki.archlinux.org/index.php/Vim_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">archlinux-wiki-vim</a>#.E5.AE.89.E8.A3.85)</p>
-<h2 id="vim插件安装"><a href="#vim插件安装" class="headerlink" title="vim插件安装"></a>vim插件安装</h2><p>使用Arch软件库<br>vim-plugins分类下有许多插件。 使用<code>pacman -Sg vim-plugins</code>来列出可用的插件，然后你可用<code>pacman</code>安装。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">vim-plugins vim-a</div><div class="line">vim-plugins vim-airline</div><div class="line">vim-plugins vim-airline-themes</div><div class="line">vim-plugins vim-align</div><div class="line">vim-plugins vim-bufexplorer</div><div class="line">vim-plugins vim-colorsamplerpack</div><div class="line">vim-plugins vim-ctrlp</div><div class="line">vim-plugins vim-doxygentoolkit</div><div class="line">vim-plugins vim-fugitive</div><div class="line">vim-plugins vim-guicolorscheme</div><div class="line">vim-plugins vim-indent-object</div><div class="line">vim-plugins vim-jad</div><div class="line">vim-plugins vim-jedi</div><div class="line">vim-plugins vim-jellybeans</div><div class="line">vim-plugins vim-latexsuite</div><div class="line">vim-plugins vim-minibufexpl</div><div class="line">vim-plugins vim-molokai</div><div class="line">vim-plugins vim-nerdcommenter</div><div class="line">vim-plugins vim-nerdtree</div><div class="line">vim-plugins vim-omnicppcomplete</div><div class="line">vim-plugins vim-pastie</div><div class="line">vim-plugins vim-project</div><div class="line">vim-plugins vim-rails</div><div class="line">vim-plugins vim-seti</div><div class="line">vim-plugins vim-supertab</div><div class="line">vim-plugins vim-surround</div><div class="line">vim-plugins vim-syntastic</div><div class="line">vim-plugins vim-tagbar</div><div class="line">vim-plugins vim-taglist</div><div class="line">vim-plugins vim-ultisnips</div><div class="line">vim-plugins vim-vcscommand</div><div class="line">vim-plugins vim-workspace</div><div class="line">vim-plugins vim-fcitx</div><div class="line">vim-plugins vim-pathogen</div><div class="line">vim-plugins vim-rust-git</div><div class="line">vim-plugins vim-tern</div><div class="line">vim-plugins vim-youcompleteme-git</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2190,7 +2222,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -2201,7 +2233,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">Kategorien</span>
               </a>
             </div>
@@ -2212,7 +2244,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>

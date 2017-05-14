@@ -270,7 +270,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/MyJob/nt2000中转器程序流程设计/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/VIM/win7上编译安装64位VIM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="redfalsh">
@@ -289,7 +289,510 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/03/20/MyJob/nt2000中转器程序流程设计/" itemprop="url">nt2000中转器程序流程设计</a></h1>
+                <a class="post-title-link" href="/2017/03/20/Learning/VIM/win7上编译安装64位VIM/" itemprop="url">win7上编译安装64位VIM</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前提</p>
+<p>想找一个64位的Vim并且支持Python和Lua功能不容易，所以研究了一天，查了不少资料，终于成功编译，记录一下。<br><strong>一、编译环境选择和安装</strong><br><strong>1. 选择编译环境</strong><br>从网上查看Win上的编译环境 Cygwin、MinGW、MSYS2等，我选了MSYS2作为编译环境，而且MSYS2用Pacman进行包管理 ，用过ArchLinux的比较方便不少。</p>
+<p><strong>2. 安装MSYS2编译环境</strong></p>
+<ul>
+<li><p>下载安装msys2, 默认文件目录为：C:\msys64, 编译环境为以此目录为根目录。</p>
+</li>
+<li><p>修改/etc/pacman.d/目录下3个文件mirrorlist.mingw32, mirrorlist.mingw64,  mirrorlist.msys, 添加软件源提升下载速度：</p>
+<ul>
+<li>添加Server = <a href="http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/i686" target="_blank" rel="external">http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/i686</a> 到mirrorlist.mingw32文件首行。</li>
+<li>添加Server = <a href="http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/x86_64" target="_blank" rel="external">http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/x86_64</a> 到mirrorlist.mingw64文件首行。</li>
+<li>添加Server = <a href="http://mirrors.ustc.edu.cn/msys2/REPOS/MSYS2/$arch" target="_blank" rel="external">http://mirrors.ustc.edu.cn/msys2/REPOS/MSYS2/$arch</a> 到mirrorlist.msys文件首行。</li>
+<li>运行 pacman -Syu 更新</li>
+</ul>
+</li>
+<li><p>安装编译器,调试器,make工具, git pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb mingw-w64-x86_64-make git</p>
+</li>
+<li>提前安装 pacman -S diffutils ，此包包含 diff 命令，因我在编译过程碰到没有 diff 命令。</li>
+</ul>
+<p><strong>二 编译Vim</strong><br><strong>1. 编译前准备软件安装</strong></p>
+<ul>
+<li>下载 Python2.7.9(x64) 安装到 C:\Python27</li>
+<li>下载 Python3.4.3(x64) 安装到 C:\Python34</li>
+<li>下载 Ruby 2.2.3 (x64) 安装到 C:\Ruby22-x64</li>
+<li>下载lua-5.3_Win64_bin.zip 和 lua-5.3_Win64_dllw4_lib.zip，解压2个包到 C:\Lua53</li>
+<li>编译电脑系统为Win7 64位 旗舰版</li>
+<li><p>下载Vim源码</p>
+<p>  <code>cd ~</code><br>  <code>git clone https://github.com/tracyone/vim vim-master</code></p>
+</li>
+</ul>
+<p><strong>2. 设置编译参数文件</strong></p>
+<ul>
+<li>打开64位编译环境 mingw64_shell</li>
+<li>进入src文件 cd ~/vim-master/src</li>
+<li>复制编译文件 Make_cyg_ming.mak 为custom.mak, 修改custom.mak文件,定制自己要编译的选项.</li>
+<li>修改编译64位vim</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># FEATURES=[TINY | SMALL | NORMAL | BIG | HUGE]</div><div class="line"># Set to TINY to make minimal version (few features).</div><div class="line">FEATURES=HUGE</div><div class="line"># Set to one of i386, i486, i586, i686 as the minimum target processor.</div><div class="line"># For amd64/x64 architecture set ARCH=x86-64 .</div><div class="line">ARCH=x86-64</div></pre></td></tr></table></figure>
+<ul>
+<li>修改编译Lua</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># ifdef LUA</div><div class="line">ifndef LUA</div><div class="line">LUA=c:/Lua53</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef DYNAMIC_LUA</div><div class="line">DYNAMIC_LUA=yes</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef LUA_VER</div><div class="line">LUA_VER=53</div><div class="line">endif</div><div class="line"></div><div class="line">ifeq (no,$(DYNAMIC_LUA))</div><div class="line">LUA_LIB = -L$(LUA)/lib -llua</div><div class="line">endif</div><div class="line"></div><div class="line"># endif</div></pre></td></tr></table></figure>
+<ul>
+<li><p>修改编译Python</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># ifdef PYTHON</div><div class="line"></div><div class="line">ifndef PYTHON</div><div class="line">PYTHON=c:/Python27</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef DYNAMIC_PYTHON</div><div class="line">DYNAMIC_PYTHON=yes</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef PYTHON_VER</div><div class="line">PYTHON_VER=27</div><div class="line">endif</div><div class="line"></div><div class="line">ifeq (no,$(DYNAMIC_PYTHON))</div><div class="line">PYTHONLIB=-L$(PYTHON)/libs -lpython$(PYTHON_VER)</div><div class="line">endif</div><div class="line"># my include files are in &apos;win32inc&apos; on Linux, and &apos;include&apos; in the standard</div><div class="line"># NT distro (ActiveState)</div><div class="line">ifeq ($(CROSS),no)</div><div class="line">PYTHONINC=-I $(PYTHON)/include</div><div class="line">else</div><div class="line">PYTHONINC=-I $(PYTHON)/win32inc</div><div class="line">endif</div><div class="line"># endif</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改编译Python3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># ifdef PYTHON3</div><div class="line">ifndef PYTHON3</div><div class="line">PYTHON3=c:/Python34</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef DYNAMIC_PYTHON3</div><div class="line">DYNAMIC_PYTHON3=yes</div><div class="line">endif</div><div class="line"></div><div class="line">ifndef PYTHON3_VER</div><div class="line">PYTHON3_VER=34</div><div class="line">endif</div><div class="line"></div><div class="line">ifeq (no,$(DYNAMIC_PYTHON3))</div><div class="line">PYTHON3LIB=-L$(PYTHON3)/libs -lPYTHON$(PYTHON3_VER)</div><div class="line">endif</div><div class="line"></div><div class="line">ifeq ($(CROSS),no)</div><div class="line">PYTHON3INC=-I $(PYTHON3)/include</div><div class="line">else</div><div class="line">PYTHON3INC=-I $(PYTHON3)/win32inc</div><div class="line">endif</div><div class="line"># endif</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改编译Ruby</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># ifdef RUBY</div><div class="line">ifndef RUBY</div><div class="line">RUBY=c:/Ruby22-x64</div><div class="line">endif</div><div class="line">ifndef DYNAMIC_RUBY</div><div class="line">DYNAMIC_RUBY=yes</div><div class="line">endif</div><div class="line">#  Set default value</div><div class="line">ifndef RUBY_VER</div><div class="line">RUBY_VER = 22</div><div class="line">endif</div><div class="line">ifndef RUBY_VER_LONG</div><div class="line">RUBY_VER_LONG = 2.2.0</div><div class="line">endif</div><div class="line">ifndef RUBY_API_VER</div><div class="line">RUBY_API_VER = $(subst .,,$(RUBY_VER_LONG))</div><div class="line">endif</div><div class="line"></div><div class="line">... 中间一大段默认不用设置</div><div class="line"></div><div class="line"># endif # RUBY</div></pre></td></tr></table></figure>
+</li>
+<li><p>这里编译和Linux下稍有不同,不需要 configue, 直接make 就可以了</p>
+</li>
+</ul>
+<p><strong>3. 开始编译</strong></p>
+<ul>
+<li>开始编译运行 mingw32-make.exe -f custom.mak</li>
+<li>若先前有编译失败,或要重新编译,需要先运行 mingw32-make.exe -f custom.mak clean</li>
+<li>成功后在 src 文件夹下就有 Gvim.exe 文件了,可以运行看看正常不.</li>
+<li>需要把 C:\Lua53\lua53.dll 文件复制到和Gvim同一文件夹下</li>
+</ul>
+<p><strong>4. 整理打包编译好的Vim</strong></p>
+<p>我查了不少资料，但没有查到相关的，就是编译好后怎么整理编译好的文件到vim包，最后我直接参考 tracyone 的编译脚本，打包了一个vim包，可以正常运行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cd ~/vim-master</div><div class="line">mkdir -p vim74-x64/vim74</div><div class="line">cp -a runtime/* vim74-x64/vim74</div><div class="line">cp -a src/*.exe vim74-x64/vim74</div><div class="line">cp -a src/GvimExt/gvimext.dll vim74-x64/vim74</div><div class="line">cp -a src/xxd/xxd.exe vim74-x64/vim74</div><div class="line">cp -a vimtutor.bat vim74-x64/vim74</div><div class="line">cp -a /c/Lua53/lua53.dll vim74-x64/vim74</div></pre></td></tr></table></figure></p>
+<p><strong>三 安装Vim74-x64</strong></p>
+<p>运行管理员模式命令行，进行 Vim74-x64 文件夹，运行 install.exe<br>选择 d 进行默认安装。</p>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a href="http://www.cnblogs.com/tracyone/p/4735411.html" target="_blank" rel="external">Windows下编译YouCompleteMe流程</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/VIM/我的vimrc配置文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/20/Learning/VIM/我的vimrc配置文件/" itemprop="url">我的vimrc配置文件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##vimrc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div><div class="line">375</div><div class="line">376</div><div class="line">377</div><div class="line">378</div><div class="line">379</div><div class="line">380</div><div class="line">381</div><div class="line">382</div><div class="line">383</div><div class="line">384</div><div class="line">385</div><div class="line">386</div><div class="line">387</div><div class="line">388</div><div class="line">389</div></pre></td><td class="code"><pre><div class="line">filetype plugin on</div><div class="line">syntax on</div><div class="line"></div><div class="line">set mouse=a</div><div class="line"></div><div class="line">set number</div><div class="line"></div><div class="line">augroup resCur</div><div class="line">  autocmd!</div><div class="line">  autocmd BufReadPost * call setpos(&quot;.&quot;, getpos(&quot;&apos;\&quot;&quot;))</div><div class="line">augroup END</div><div class="line"></div><div class="line">&quot; Automatic reloading of .vimrc</div><div class="line">autocmd! bufwritepost .vimrc source %</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&quot; Mouse and backspace</div><div class="line">set mouse=a </div><div class="line">set backspace=2</div><div class="line">set backspace=indent,eol,start</div><div class="line"></div><div class="line">&quot;Rebind &lt;Leader&gt; key</div><div class="line">let mapleader = &quot;,&quot;</div><div class="line"></div><div class="line">&quot; Quicksave command</div><div class="line">noremap &lt;C-S&gt; :update&lt;CR&gt;</div><div class="line">vnoremap &lt;C-S&gt; &lt;C-C&gt;:update&lt;CR&gt;</div><div class="line">inoremap &lt;C-S&gt; &lt;C-O&gt;:update&lt;CR&gt;</div><div class="line"></div><div class="line">&quot; 映射全选+复制 ctrl+a</div><div class="line">map &lt;C-A&gt; ggVGY</div><div class="line">map! &lt;C-A&gt; &lt;Esc&gt;ggVGY</div><div class="line"></div><div class="line">&quot; 选中状态下 Ctrl+c 复制</div><div class="line">vmap &lt;C-c&gt; &quot;+y</div><div class="line"></div><div class="line">&quot; 快速注释</div><div class="line"></div><div class="line">&quot; Quick quit command</div><div class="line">noremap &lt;Leader&gt;e :quit&lt;CR&gt;</div><div class="line">noremap &lt;Leader&gt;E :qa!&lt;CR&gt;</div><div class="line"></div><div class="line">&quot; Change window size</div><div class="line">nmap    w=  :resize +3&lt;CR&gt;</div><div class="line">nmap    w-  :resize -3&lt;CR&gt;</div><div class="line">nmap    w.  :vertical resize -3&lt;CR&gt;</div><div class="line">nmap    w,  :vertical resize +3&lt;CR&gt;</div><div class="line">&quot; Quickjump Window </div><div class="line">nmap	ww	&lt;C-w&gt;w</div><div class="line">nmap    wh	&lt;C-w&gt;h</div><div class="line">nmap    wj	&lt;C-w&gt;j</div><div class="line">nmap    wk	&lt;C-w&gt;k</div><div class="line">nmap    wl	&lt;C-w&gt;l</div><div class="line">		</div><div class="line">&quot; Real programmers don&apos;t use TABs but spaces</div><div class="line">set tabstop=4</div><div class="line">set softtabstop=4</div><div class="line">set shiftwidth=4</div><div class="line">set shiftround</div><div class="line">set expandtab</div><div class="line"></div><div class="line">&quot; Disable stupid backup and swap files</div><div class="line">set nobackup</div><div class="line">set nowritebackup</div><div class="line">set noswapfile</div><div class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</div><div class="line">&quot;&quot;&quot;&quot;快速插入</div><div class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</div><div class="line">&quot;匹配括号，默认停留半秒钟</div><div class="line">set showmatch</div><div class="line">&quot;set matchtime=15   &quot;1.5秒</div><div class="line">filetype plugin on</div><div class="line">filetype plugin indent on</div><div class="line"></div><div class="line">&quot;比较文件  </div><div class="line">nnoremap &lt;C-F2&gt; :vert diffsplit </div><div class="line"></div><div class="line">&quot;中文设置&quot;</div><div class="line">set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1</div><div class="line">set enc=utf8</div><div class="line">set fencs=utf8,gbk,gb2312,gb18030</div><div class="line"></div><div class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</div><div class="line">&quot; 显示相关  </div><div class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</div><div class="line">syntax on</div><div class="line">set cul &quot;高亮光标所在行</div><div class="line">set cuc</div><div class="line">set shortmess=atI   &quot; 启动的时候不显示那个援助乌干达儿童的提示  </div><div class="line">set go=             &quot; 不要图形按钮  </div><div class="line">color desert     &quot; 设置背景主题  </div><div class="line">&quot;color ron     &quot; 设置背景主题  </div><div class="line">&quot;color torte     &quot; 设置背景主题  </div><div class="line">&quot;set guifont=Courier_New:h10:cANSI   &quot; 设置字体  </div><div class="line">&quot;autocmd InsertLeave * se nocul  &quot; 用浅色高亮当前行  </div><div class="line">autocmd InsertEnter * se cul    &quot; 用浅色高亮当前行  </div><div class="line">set ruler           &quot; 显示标尺  </div><div class="line">set showcmd         &quot; 输入的命令显示出来，看的清楚些  </div><div class="line">&quot;set whichwrap+=&lt;,&gt;,h,l   &quot; 允许backspace和光标键跨越行边界(不建议)  </div><div class="line">set scrolloff=3     &quot; 光标移动到buffer的顶部和底部时保持3行距离  </div><div class="line">set statusline=%F%m%r%h%w\ [FORMAT=%&#123;&amp;ff&#125;]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %&#123;strftime(\&quot;%d/%m/%y\ -\ %H:%M\&quot;)&#125;   &quot;状态行显示的内容  </div><div class="line">set laststatus=2    &quot; 启动显示状态行(1),总是显示状态行(2)  </div><div class="line">&quot;set foldenable      &quot; 允许折叠  </div><div class="line">&quot;&quot;set foldmethod=manual   &quot; 手动折叠  </div><div class="line">set nocompatible  &quot;去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  </div><div class="line">&quot; 显示中文帮助</div><div class="line">if version &gt;= 603</div><div class="line">	set helplang=cn</div><div class="line">	set encoding=utf-8</div><div class="line">endif</div><div class="line">&quot; 自动缩进</div><div class="line">set autoindent</div><div class="line">set cindent</div><div class="line">&quot; Tab键的宽度</div><div class="line">set tabstop=4</div><div class="line">&quot; 统一缩进为4</div><div class="line">set softtabstop=4</div><div class="line">set shiftwidth=4</div><div class="line">&quot; 使用空格代替制表符</div><div class="line">set expandtab</div><div class="line">&quot; 在行和段开始处使用制表符</div><div class="line">set smarttab</div><div class="line"></div><div class="line">&quot; 显示行号</div><div class="line">set number</div><div class="line">&quot; 历史记录数</div><div class="line">set history=1000</div><div class="line">&quot;搜索逐字符高亮</div><div class="line">set hlsearch</div><div class="line">set incsearch</div><div class="line">&quot;语言设置</div><div class="line">set langmenu=zh_CN.UTF-8</div><div class="line">set helplang=cn</div><div class="line">&quot; 总是显示状态行</div><div class="line">set cmdheight=2</div><div class="line">&quot; 侦测文件类型</div><div class="line">filetype on</div><div class="line">&quot; 载入文件类型插件</div><div class="line">filetype plugin on</div><div class="line">&quot; 为特定文件类型载入相关缩进文件</div><div class="line">filetype indent on</div><div class="line">&quot; 保存全局变量</div><div class="line">set viminfo+=!</div><div class="line">&quot; 带有如下符号的单词不要被换行分割</div><div class="line">set iskeyword+=_,$,@,%,#,-</div><div class="line">&quot; 字符间插入的像素行数目</div><div class="line"></div><div class="line">&quot;markdown配置</div><div class="line">au BufRead,BufNewFile *.&#123;md,mdown,mkd,mkdn,markdown,mdwn&#125;   set filetype=mkd</div><div class="line">au BufRead,BufNewFile *.&#123;go&#125;   set filetype=go</div><div class="line">au BufRead,BufNewFile *.&#123;js&#125;   set filetype=javascript</div><div class="line">&quot;rkdown to HTML  </div><div class="line">nmap md :!~/.vim/markdown.pl % &gt; %.html &lt;CR&gt;&lt;CR&gt;</div><div class="line">nmap fi :!firefox %.html &amp; &lt;CR&gt;&lt;CR&gt;</div><div class="line">nmap \ \cc</div><div class="line">vmap \ \cc</div><div class="line"></div><div class="line">&quot;将tab替换为空格</div><div class="line">nmap tt :%s/\t/    /g&lt;CR&gt;</div><div class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</div><div class="line">&quot;&quot;&quot;&quot;&quot;新文件标题</div><div class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</div><div class="line">&quot;新建.c,.h,.sh,.java文件，自动插入文件头 </div><div class="line">autocmd BufNewFile *.py,*.cpp,*.[ch],*.sh,*.rb,*.java exec &quot;:call SetTitle()&quot; </div><div class="line">&quot;&quot;定义函数SetTitle，自动插入文件头 </div><div class="line">func SetTitle() </div><div class="line">	&quot;如果文件类型为.sh文件 </div><div class="line">	if expand(&quot;%:e&quot;) == &apos;py&apos;</div><div class="line">		call setline(1, &quot;#!/usr/bin/python&quot;)</div><div class="line">        call setline(2, &quot;# coding=utf-8&quot;)</div><div class="line">	    call setline(3, &quot;&quot;) </div><div class="line">		call setline(4, &quot;&apos;&apos;&apos;&quot;) </div><div class="line">		call setline(5, &quot;	&gt; File Name: &quot;.expand(&quot;%&quot;)) </div><div class="line">		call setline(6, &quot;	&gt; Author: RedFlash&quot;) </div><div class="line">		call setline(7, &quot;	&gt; Mail: 13693421942@163.com&quot;) </div><div class="line">		call setline(8, &quot;	&gt; Created Time: &quot;.strftime(&quot;%c&quot;)) </div><div class="line">		call setline(9, &quot; &apos;&apos;&apos;&quot;) </div><div class="line">		call setline(10, &quot;&quot;)</div><div class="line">	endif</div><div class="line">	if expand(&quot;%:e&quot;) == &apos;cpp&apos;</div><div class="line">		call setline(1, &quot;#!/usr/binsdfsdfpython&quot;)</div><div class="line">        call setline(2, &quot;# coding=utf-8&quot;)</div><div class="line">	endif</div><div class="line">	</div><div class="line">	&quot;新建文件后，自动定位到文件末尾</div><div class="line">endfunc </div><div class="line">autocmd BufNewFile * normal G</div><div class="line"></div><div class="line">&quot;C，C++ 按F5编译运行</div><div class="line">map &lt;F5&gt; :call CompileRunGcc()&lt;CR&gt;</div><div class="line">func! CompileRunGcc()</div><div class="line">	exec &quot;w&quot;</div><div class="line">	if &amp;filetype == &apos;c&apos;</div><div class="line">		exec &quot;!g++ % -o %&lt;&quot;</div><div class="line">		exec &quot;! ./%&lt;&quot;</div><div class="line">	elseif &amp;filetype == &apos;cpp&apos;</div><div class="line">		exec &quot;!g++ % -o %&lt;&quot;</div><div class="line">		exec &quot;! ./%&lt;&quot;</div><div class="line">	elseif &amp;filetype == &apos;java&apos; </div><div class="line">		exec &quot;!javac %&quot; </div><div class="line">		exec &quot;! java %&lt;&quot;</div><div class="line">	elseif &amp;filetype == &apos;sh&apos;</div><div class="line">		:! bash %</div><div class="line">	elseif &amp;filetype == &apos;python&apos;</div><div class="line">		exec &quot;! python %&quot;</div><div class="line">    elseif &amp;filetype == &apos;html&apos;</div><div class="line">        exec &quot;!firefox % &amp;&quot;</div><div class="line">    elseif &amp;filetype == &apos;go&apos;</div><div class="line">&quot;        exec &quot;!go build %&lt;&quot;</div><div class="line">        exec &quot;! go run %&quot;</div><div class="line">    elseif &amp;filetype == &apos;mkd&apos;</div><div class="line">        exec &quot;!~/.vim/markdown.pl % &gt; %.html &amp;&quot;</div><div class="line">        exec &quot;!firefox %.html &amp;&quot;</div><div class="line">	endif</div><div class="line">endfunc</div><div class="line"></div><div class="line"></div><div class="line">set nocompatible              &quot; be iMproved, required</div><div class="line">filetype off                  &quot; required</div><div class="line"></div><div class="line">set rtp+=~/.vim/bundle/Vundle.vim</div><div class="line">call vundle#begin()</div><div class="line">Plugin &apos;VundleVim/Vundle.vim&apos;</div><div class="line">Plugin &apos;asins/vimcdoc&apos;</div><div class="line">Plugin &apos;tpope/vim-fugitive&apos;</div><div class="line">Plugin &apos;L9&apos;</div><div class="line">Plugin &apos;git://git.wincent.com/command-t.git&apos;</div><div class="line">Plugin &apos;file:///home/gmarik/path/to/plugin&apos;</div><div class="line">Plugin &apos;lokaltog/vim-powerline&apos;</div><div class="line">Plugin &apos;bling/vim-airline&apos;</div><div class="line">Plugin &apos;yggdroot/indentline&apos;</div><div class="line">Plugin &apos;ervandew/supertab&apos;</div><div class="line">Plugin &apos;kien/ctrlp.vim&apos;</div><div class="line">Plugin &apos;majutsushi/tagbar&apos;</div><div class="line">Plugin &apos;scrooloose/nerdtree&apos;</div><div class="line">Plugin &apos;altercation/vim-colors-solarized&apos;</div><div class="line">Plugin &apos;davidhalter/jedi-vim&apos;</div><div class="line">Plugin &apos;klen/python-mode&apos;</div><div class="line">Plugin &apos;vimwiki/vimwiki&apos;</div><div class="line">Plugin &apos;godlygeek/tabular&apos;</div><div class="line">Plugin &apos;plasticboy/vim-markdown&apos;</div><div class="line">&quot;Plugin &apos;iamcco/markdown-preview.vim&apos;</div><div class="line">call vundle#end()            &quot; required</div><div class="line">filetype plugin indent on    &quot; required</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; markdown设置</div><div class="line">&quot;autocmd BufNewFile,BufReadPost *.md set filetype=markdown</div><div class="line">let g:markdown_fenced_languages = [&apos;html&apos;, &apos;python&apos;, &apos;bash=sh&apos;]</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">let g:table_mode_corner=&quot;|&quot;</div><div class="line"></div><div class="line">&quot;noremap &lt;Leader&gt;e :quit&lt;CR&gt;</div><div class="line">noremap &lt;Leader&gt;m :update&lt;Bar&gt;silent ! start %:p&lt;CR&gt;</div><div class="line"></div><div class="line">nnoremap &lt;f2&gt; :!cmd /c c:\python27\python2 c:\python27\Scripts\markdown_py %:r.md -e utf-8 &gt; %:r.html&lt;cr&gt; </div><div class="line">noremap \m  :!cmd /c start %:r.html&lt;/cr&gt;&lt;cr&gt;&lt;/cr&gt;&lt;/f2&gt;</div><div class="line">	</div><div class="line">let g:mkdp_path_to_chrome = &quot;C:/Program Files (x86)/Google/Chrome/Application/chrome.exe&quot;</div><div class="line">    &quot; 设置 chrome 浏览器的路径（或是启动 chrome（或其他现代浏览器）的命令）</div><div class="line"></div><div class="line">let g:mkdp_auto_start = 0</div><div class="line">    &quot; 设置为 1 可以在打开 markdown 文件的时候自动打开浏览器预览，只在打开</div><div class="line">    &quot; markdown 文件的时候打开一次</div><div class="line"></div><div class="line">let g:mkdp_auto_open = 0</div><div class="line">    &quot; 设置为 1 在编辑 markdown 的时候检查预览窗口是否已经打开，否则自动打开预</div><div class="line">    &quot; 览窗口</div><div class="line"></div><div class="line">let g:mkdp_auto_close = 1</div><div class="line">    &quot; 在切换 buffer 的时候自动关闭预览窗口，设置为 0 则在切换 buffer 的时候不</div><div class="line">    &quot; 自动关闭预览窗口</div><div class="line"></div><div class="line">let g:mkdp_refresh_slow = 0</div><div class="line">    &quot; 设置为 1 则只有在保存文件，或退出插入模式的时候更新预览，默认为 0，实时</div><div class="line">    &quot; 更新预览</div><div class="line">	</div><div class="line">&quot;---------------------&gt;&gt; powerline</div><div class="line">set laststatus=2</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; airline</div><div class="line">let g:airline#extensions#tabline#enabled = 1</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; ctrlp</div><div class="line">let g:ctrlp_map = &apos;&lt;c-p&gt;&apos;</div><div class="line">let g:ctrlp_cmd = &apos;CtrlP&apos;</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; tagbar</div><div class="line">map &lt;C-t&gt; :TagbarToggle&lt;CR&gt;</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; vim-indentline</div><div class="line">let g:indentLine_color_gui = &apos;#A4E57E&apos;</div><div class="line">let g:indentLine_setColors = 0</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; nerdtree</div><div class="line">map &lt;C-n&gt; :NERDTreeToggle&lt;CR&gt;</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; vim-colors-solarized</div><div class="line">syntax enable</div><div class="line">set background=dark</div><div class="line">colorscheme solarized</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; vimwiki/vimwiki</div><div class="line">let g:vimwiki_list = [&#123;&apos;path&apos;: &apos;~/vimwiki/vimwiki&apos;,</div><div class="line">    \    &apos;path_html&apos;: &apos;~/vimwiki/vimwiki_html&apos;,</div><div class="line">    \    &apos;template_path&apos;: &apos;~/vimwiki/template&apos;,</div><div class="line">    \    &apos;template_default&apos;: &quot;/vimwiki/default.tpl&quot;&#125;]</div><div class="line">	  </div><div class="line">map &lt;F4&gt; :Vimwiki2HTML&lt;cr&gt;  </div><div class="line">	</div><div class="line">&quot;------------- PYTHON-IDE----------------------------</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; jedi-vim</div><div class="line">let g:jedi#usages_command = &quot;&lt;leader&gt;z&quot;</div><div class="line">let g:jedi#popup_on_dot = 0</div><div class="line">let g:jedi#popup_select_first = 0</div><div class="line">map &lt;Leader&gt;b Oimport ipdb; ipdb.set_trace() # BREAKPOINT&lt;C-c&gt;</div><div class="line"></div><div class="line">&quot; Better navigating through omnicomplete option list</div><div class="line">&quot; See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim</div><div class="line">set completeopt=longest,menuone</div><div class="line">function! OmniPopup(action)</div><div class="line">    if pumvisible()</div><div class="line">        if a:action == &apos;j&apos;</div><div class="line">            return &quot;\&lt;C-N&gt;&quot;</div><div class="line">        elseif a:action == &apos;k&apos;</div><div class="line">            return &quot;\&lt;C-P&gt;&quot;</div><div class="line">        endif</div><div class="line">    endif</div><div class="line">    return a:action</div><div class="line">endfunction</div><div class="line"></div><div class="line">inoremap &lt;silent&gt;&lt;C-j&gt; &lt;C-R&gt;=OmniPopup(&apos;j&apos;)&lt;CR&gt;</div><div class="line">inoremap &lt;silent&gt;&lt;C-k&gt; &lt;C-R&gt;=OmniPopup(&apos;k&apos;)&lt;CR&gt;</div><div class="line"></div><div class="line"></div><div class="line">&quot; Python folding</div><div class="line">&quot; mkdir -p ~/.vim/ftplugin</div><div class="line">&quot; wget -O ~/.vim/ftplugin/python_editing.vim http://www.vim.org/scripts/download_script.php?src_id=5492</div><div class="line">set nofoldenable</div><div class="line"></div><div class="line">&quot;---------------------&gt;&gt; python-mode</div><div class="line"></div><div class="line">map &lt;Leader&gt;g :call RopeGotoDefinition()&lt;CR&gt;</div><div class="line"></div><div class="line">let ropevim_enable_shortcuts = 1</div><div class="line">let g:pymode_rope_goto_def_newwin = &quot;vnew&quot;</div><div class="line">let g:pymode_rope_extended_complete = 1</div><div class="line">let g:pymode_breakpoint = 0</div><div class="line">let g:pymode_syntax = 1</div><div class="line">let g:pymode_syntax_builtin_objs = 0</div><div class="line">let g:pymode_syntax_builtin_funcs = 0</div><div class="line"></div><div class="line">&quot;turn on code checking</div><div class="line">&quot;&quot;let g:pymode_lint = 1</div><div class="line">&quot;Check code on every save (if file has been modified)</div><div class="line">&quot;&quot;let g:pymode_lint_on_write = 1</div><div class="line">&quot;Check code on every save (every)</div><div class="line">&quot;&quot;let g:pymode_lint_unmodified = 1</div><div class="line"></div><div class="line">&quot;Enable functionality</div><div class="line">&quot;&quot;let g:pymode_breakpoint = 1</div><div class="line"></div><div class="line">&quot;turn on code completion support in the plugin</div><div class="line">&quot;&quot;let g:pymode_rope_completion = 1</div><div class="line">&quot;&quot;let g:pymode_rope_autoimport = 0</div><div class="line">let g:pymode_doc = 1</div><div class="line"></div><div class="line">let g:pymode_doc_bind = &apos;K&apos;</div><div class="line">map &lt;Leader&gt;b Oimport ipdb; ipdb.set_trace() # BREAKPOINT&lt;C-c&gt;</div><div class="line"></div><div class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</div><div class="line">&quot;verilog 单词缩写&quot;</div><div class="line">iabbrev mo module</div><div class="line">iabbrev in input</div><div class="line">iabbrev ou output</div><div class="line">iabbrev al always</div><div class="line">iabbrev po posedge</div><div class="line">iabbrev ne negedge</div><div class="line">iabbrev def defparam</div><div class="line">iabbrev as assign</div><div class="line">iabbrev ini initial</div><div class="line">iabbrev ## //################################################</div><div class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</div><div class="line">set guioptions+=b</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/git/git使用说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/20/Learning/git/git使用说明/" itemprop="url">Git版本控制器使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://iissnan.com/progit/" target="_blank" rel="external">git版本控制器详细参考教程</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/MyJob/个人剂量监测管理系统使用说明书/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/20/MyJob/个人剂量监测管理系统使用说明书/" itemprop="url">个人剂量监测管理系统使用说明书</a></h1>
         
 
         <div class="post-meta">
@@ -360,329 +863,84 @@
       
         
           
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/MyLife/东极岛旅游/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="redfalsh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/20/MyLife/东极岛旅游/" itemprop="url">东极岛旅游.md</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
-                2017-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Learn/" itemprop="url" rel="index">
-                    <span itemprop="name">Learn</span>
-                  </a>
-                </span>
-
-                
-                
-                  . 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Learn/Archlinux/" itemprop="url" rel="index">
-                    <span itemprop="name">Archlinux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Archlinux/Archlinux-conky安装配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="redfalsh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/20/Learning/Archlinux/Archlinux-conky安装配置/" itemprop="url">Archlinux-conky安装配置.md</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+00:00">
-                2017-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Learn/" itemprop="url" rel="index">
-                    <span itemprop="name">Learn</span>
-                  </a>
-                </span>
-
-                
-                
-                  . 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Learn/Archlinux/" itemprop="url" rel="index">
-                    <span itemprop="name">Archlinux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>参考</p>
+            <h1 id="个人剂量监测管理系统使用说明书"><a href="#个人剂量监测管理系统使用说明书" class="headerlink" title="个人剂量监测管理系统使用说明书"></a>个人剂量监测管理系统使用说明书</h1><h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/lb1n4tvrrg77iw0ofhttps11/image_1ba6s2s61j35v0hk60l521fui9.png" alt="image_1ba6s2s61j35v0hk60l521fui9.png-90.7kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图1 整体系统框架</code></p>
+<p>&emsp;&emsp;以服务器为数据存储和处理中心，提供分类网络客户端操作界面，实时监测管理剂量终端设备的核电个人剂量监测管理系统。服务器实现了数据的准备、更新、自动备份以及通讯和网络终端等功能。<br>&emsp;&emsp;数据通讯网络的构建，实现了服务器系统分别与网络客户端界面和剂量终端设备的通讯。提供了网络客户端界面对数据库进行实时的数据查询、更新、删除等操作。终端机通过网络通讯模块，实现了剂量终端设备和数据库的实时数据交换。</p>
+<h2 id="软件系统使用说明书"><a href="#软件系统使用说明书" class="headerlink" title="软件系统使用说明书"></a>软件系统使用说明书</h2><h3 id="1-运行环境"><a href="#1-运行环境" class="headerlink" title="1.运行环境"></a>1.运行环境</h3><p>&emsp;&emsp;网页管理系统需要IE11或谷歌chrome以上版本浏览器</p>
+<h3 id="2-管理系统主界面"><a href="#2-管理系统主界面" class="headerlink" title="2.管理系统主界面"></a>2.管理系统主界面</h3><p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/evvl52n5tf0gy56p295f7hdt/image_1ba6sesdd1rhj19be1c9pc3fmjjm.png" alt="image_1ba6sesdd1rhj19be1c9pc3fmjjm.png-34kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图2 管理系统主界面</code></p>
+<p>&emsp;&emsp;管理系统具备分类网络客户端界面。提供了管理员以不同权限登录的管理模式和普通员工免登录的快捷查询模式的双模式网络界面。<br>&emsp;&emsp;个人剂量管理系统提供了系统管理、人事管理、剂量管理、辐射工作管理、健康管理和培训管理，共六大功能模块。管理员根据被设定的管理权限，对功能模块具有不同的管理范围。</p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/j992t98hv1w9pbqlbk5h6l84/image_1ba6sgera1l781rmf1dvitteued13.png" alt="image_1ba6sgera1l781rmf1dvitteued13.png-32.5kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图3 系统功能结构</code></p>
+<h3 id="3-个人信息查询界面"><a href="#3-个人信息查询界面" class="headerlink" title="3.个人信息查询界面"></a>3.个人信息查询界面</h3><p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/hwevt88weqttox1h0gl3wqwe/image_1ba6sid3t1unj1b2gteo1oho193r1g.png" alt="image_1ba6sid3t1unj1b2gteo1oho193r1g.png-49.4kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图4 个人信息查询</code></p>
+<p>&emsp;&emsp;个人信息查询界面提供了个人基本信息、剂量信息、出入工作区记录、培训信息、健康信息等。方便员工查询了解个人的基本工作情况。</p>
+<h3 id="4-管理员操作界面"><a href="#4-管理员操作界面" class="headerlink" title="4.管理员操作界面"></a>4.管理员操作界面</h3><p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/cfp3alfdcvmqw26qeafe0bjm/image_1ba6skuoq1goe4131dlj1fe7rhi2a.png" alt="image_1ba6skuoq1goe4131dlj1fe7rhi2a.png-33.1kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图5 管理员登录界面</code></p>
+<p>&emsp;&emsp;管理员通过用户名和密码进行登录操作，进入管理界面，管理员具有权限区分。</p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/ueolckcvjrq75zje3ryy00id/image_1ba6sm4vhic01j2n1sg7pt6tin34.png" alt="image_1ba6sm4vhic01j2n1sg7pt6tin34.png-96.2kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图6 管理员操作界面</code></p>
+<p>&emsp;&emsp;针对核电实际工作中所涉及的辐射任务、外延检测培训任务和剂量考查数据，在网络客户端界面中构建了相应的管理和查询端口。其中剂量数据部分，除了提供个人的剂量详情外，还提供了公司、部门和事务的分类分时的剂量数据统计信息。在剂量数据信息的表现形式上，采用了数据表格、数据图的形式进行了直观描述。<br>&emsp;&emsp;管理员可以对其功能权限内的数据进行增、删、改、查操作，以管理员操作界面为例。</p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/pheun35xjo8b2xqvv0p1qw6t/image_1ba6smnutlkbnqj1f71jbsd773h.png" alt="image_1ba6smnutlkbnqj1f71jbsd773h.png-61.8kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图7 管理员添加弹出框</code></p>
+<p>&emsp;&emsp;单击右上角的添加按钮，弹出添加管理员弹出框，根据弹出框信息的提示，输入相关信息，单击添加按钮，可完成添加操作。<br>&emsp;&emsp;若需要修改某个管理员信息，单击该行操作列内的修改按钮，可弹出类似添加按钮的弹出框，根据提示完成信息的修改，单击弹出框的修改按钮，即可完成管理员信息的修改。</p>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/by8c7frn8id59vmgsgq5xxkz/image_1ba6sthvp1t1s1b3h121d671p7o3u.png" alt="image_1ba6sthvp1t1s1b3h121d671p7o3u.png-58.2kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图8 管理员删除弹出框</code></p>
+<p>&emsp;&emsp;若需要删除某个管理员，单击该行操作列内的删除按钮，弹出删除对话框，单击确定按钮，即可完成管理员删除操作。<br>&emsp;&emsp;其余功能界面的增、删、改、查操作大同小异，可参照管理员操作界面的说明。</p>
+<hr>
+<h2 id="Nt2000-个人剂量计使用说明书"><a href="#Nt2000-个人剂量计使用说明书" class="headerlink" title="Nt2000 个人剂量计使用说明书"></a>Nt2000 个人剂量计使用说明书</h2><p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://static.zybuluo.com/RedFalsh/68omlycrfuqd24k4v4g6eoui/image_1ba6t7gvesrl16tgquh1952rdj4o.png" alt="image_1ba6t7gvesrl16tgquh1952rdj4o.png-110.9kB"><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<code>图9 个人剂量仪各模块功能介绍</code></p>
+<h3 id="一．概述"><a href="#一．概述" class="headerlink" title="一．概述"></a>一．概述</h3><p>&emsp;&emsp;Nt-2000型辐射仪是采用目前最先进的设计方案设计的通用小型个人防护剂量仪，主要用于X射线和γ射线的测量。具有体积小、重量轻、可放在衣袋内或挂在腰带上。可供核医学、放射诊断和治疗、核电站、辐射加工、核燃料生产、核废物处理、核试验、无损探伤等方面工作人员的个人剂量防护监测。</p>
+<h3 id="二．主要技术性能指标、特点："><a href="#二．主要技术性能指标、特点：" class="headerlink" title="二．主要技术性能指标、特点："></a>二．主要技术性能指标、特点：</h3><p>1．测量范围：<br>&emsp;&emsp;⑴  γ射线：48keV～1.25MeV<br>&emsp;&emsp;⑵  剂量率：1～1000,000μSv/h<br>&emsp;&emsp;⑶  剂量：  1～1000,000μSv</p>
+<p>2．能量响应：48keV～1.25MeV ，归一至137Cs(±30%)<br>3．测量重复性：   &lt;10%<br>4．剂量率线性：   &lt;10%<br>5．超过设置阈值可声光报警<br>6．使用环境<br>&emsp;&emsp;环境温度： -100C～450C<br>&emsp;&emsp;相对湿度： &lt;90%<br>&emsp;&emsp;供电电源：采用一节3.6伏5号一次性电池供电。</p>
+<ol>
+<li>整机尺寸、重量</li>
+</ol>
+<p>&emsp;&emsp;外尺寸： 长93mm，宽63mm，高36mm。</p>
+<p>###三.使用操作<br>&emsp;&emsp;Nt-2000采用一键式按键，其主要功能包括:开机；剂量率和累积剂量切换；累积剂量清零；关机功能。电池正负方向如下图方式放置。</p>
+<p>1.开机。仪器长时间(大于30分钟)没有开机，则需长按按键(约5～7s)，待<br>液晶屏开始显示，并进入剂量率测量界面后释放按键进入测量模式。如果仪器距离上一次关机时间较短，则重新启动所需长按时间通常为2-3秒。注意：如果按键时间不够，仪器会自动关机，目的是避免误按键操作。<br>2.开机后仪器首先进入剂量率测量模式。<br>3.单击按键，则进入累积剂量测量模式，再次单击则重新进入模式2。<br>4.无论在模式2或是模式3，双击按键，则清零累积剂量。<br>5.关机。长按按键大于3秒钟，待液晶屏出现OFF表示，释放按键，则仪<br>器自动关机。</p>
+<p>###四.注意事项</p>
+<ol>
+<li>开机后，预热1分钟，待仪器稳定后，开始测量。</li>
+<li>当剂量率小于100µSv/h时，剂量率数据在不超过30s开始稳定。</li>
+<li>当在检定或校准时，尽量采用累积剂量模式以减小测量误差，特别是在137Cs条件下(涉及能量响应指标)。X射线检定或校准时剂量率在1mSv/h以上时可采用剂量率模式。在137Cs条件时，剂量率尽量在3～15mSv/h，减小剂量率读数跳变影响。当上述条件不满足时，建议采用累积剂量模式。</li>
+<li>当辐射场存在变化或放射源出源缓慢时，仪器如在剂量率模式时，则仪器读数在不超过30s后开始稳定。</li>
+<li>当剂量率小于10µSv/h时，建议采用累积剂量模式进行测量。仪器报警阈值默认为10µSv/h。</li>
+<li>每年按时送计量检定部门检定。</li>
+<li>使用仪器遇到潮湿天气时，请将仪器置入塑料袋密封使用。</li>
+<li>仪器不用时，请放在干燥处，防潮湿。</li>
+<li>仪器出现故障，送厂方修理，用户不得随意拆卸，否则厂方不负任何责任。</li>
+<li>观察屏右上方电量显示，如电量不足，跟换一节3.6伏5号电池。</li>
+</ol>
+<h2 id="NT2000数据中转器及门禁系统使用说明书"><a href="#NT2000数据中转器及门禁系统使用说明书" class="headerlink" title="NT2000数据中转器及门禁系统使用说明书"></a>NT2000数据中转器及门禁系统使用说明书</h2><h3 id="一、入口"><a href="#一、入口" class="headerlink" title="一、入口"></a>一、入口</h3><p>1.放入个人剂量仪<br>2.按确认键,输入RP后6位<br>3.选取任务并确认确认<br>4.等待配置个人剂量仪<br>5.打开通道后取出个人剂量仪进入<br>6.进入完成</p>
+<h3 id="二、出口"><a href="#二、出口" class="headerlink" title="二、出口"></a>二、出口</h3><p>1.放入个人剂量仪<br>2.按确认键，等待读取个人剂量仪<br>3.打开通道后取出个人剂量仪离开<br>4.离开完成</p>
+<h2 id="程序问题"><a href="#程序问题" class="headerlink" title="程序问题"></a>程序问题</h2><ul>
+<li>windows同步调试程序（未完成，需要同步）——0</li>
+<li>Linux同步调试程序（未完成，需要改进）——0</li>
+<li><p>树莓派开发板程序调试（完成）</p>
 <ul>
-<li><a href="https://wiki.archlinux.org/index.php/Conky" target="_blank" rel="external">conky官方wiki</a></li>
-<li><a href="http://zagortenay333.deviantart.com/art/Conky-Harmattan-426662366" target="_blank" rel="external">conky harmattan主题</a></li>
-<li><a href="http://gnome-look.org/content/show.php/Conky+lua?content=139024" target="_blank" rel="external">conky-lua主题</a></li>
+<li>还需做如下改进：<ul>
+<li>区分Windows和Linux——0</li>
+<li>桌面图标快捷操作——0</li>
+<li>cxfreeze打包——0</li>
+<li>log文件保存问题——0</li>
+<li><strong>时间显示需要更改</strong></li>
+<li><strong>进入和离开的仪器编号以及用户编号不能从ui界面上面获取，有时候会获取不到，ui有问题</strong></li>
+<li>配置文件要用英文，中文的话读取可能有问题，</li>
+<li>代码注释以后也用英文，减少中文错误问题</li>
+<li>人员输入对话框和任务对话框会有同时弹出的可能，需要处理！！！就是在服务器调试的时候突然发送任务命令，就会显示任务界面（解决方案，在弹出界面时需要设置标志位来判断一下）</li>
+<li>串口会断掉的情况，需要专门开个线程来检测三个串口是否连接正常</li>
+<li>人员离开后需清除显示信息</li>
+<li>打开门禁这个流程还需确认一下，门禁有可能不发送离开命令给中转器</li>
+<li>人员进入时按确认后弹出框，弹出框后再次获取仪器编号来确认，防止仪器编号没有。</li>
 </ul>
-<p><strong>安装conky</strong><br><code>pacman -S conky</code><br><strong>图形界面管理conky</strong><br><code>pacman -S conky-manager</code></p>
-<h2 id="conky-lua安装"><a href="#conky-lua安装" class="headerlink" title="conky-lua安装"></a>conky-lua安装</h2><ul>
-<li><strong>conky-lua支持</strong><br><code>yaourt conky-lua</code></li>
-<li><strong>conky-nvidia支持</strong><br><code>yaourt conky-nvidia</code></li>
-<li><strong>lua与nvidia同时支持</strong><br><code>yaourt conky-lua-nv</code><h2 id="conky-lua使用"><a href="#conky-lua使用" class="headerlink" title="conky-lua使用"></a>conky-lua使用</h2></li>
+</li>
 </ul>
-<p>conky-lua主题下载</p>
-<p><a href="https://dl.opendesktop.org/api/files/download/id/1465391037/139024-Conky-lua1.tar.gz" target="_blank" rel="external">139024-Conky-lua1.tar.gz</a></p>
-<p><strong>git archlinux-conky</strong></p>
-<p><code>git clone https://github.com/RedFalsh/archlinux_conky.git</code></p>
-<p><strong>进入</strong></p>
-<p><code>cd archlinux_conky/Conky-lua/</code></p>
-<p><strong>解压主题<code>&#39;Conky Mint-lua.tar.gz&#39;</code></strong></p>
-<p><code>tar -xvzf &#39;Conky Mint-lua.tar.gz&#39;</code></p>
-<p><strong>进入Conky Mint-lua文件夹</strong></p>
-<p><code>cd &#39;Conky Mint-lua&#39;</code></p>
-<p><strong>复制相关文件到用户目录下</strong></p>
-<p><code>cp conkyrc ~/.conkyrc</code></p>
-<p><code>cp clock_rings.lua ~/.lua/scripts/</code></p>
-<p><strong>运行conky</strong></p>
-<p><code>conky</code></p>
-<blockquote>
-<p>注：conkyrc中显示温度的符号可能出错，需要相应的系统编码，可以去掉温度显示</p>
-</blockquote>
-<h3 id="conky-manager"><a href="#conky-manager" class="headerlink" title="conky-manager"></a>conky-manager</h3><p><code>mkdir -p ~/.conky/Conky\ Mint-lua</code></p>
-<p><code>cp Cokny\ Mint-lua/conkyrc ~/.conky/Cokny\ Mint-lua/</code></p>
-<h2 id="conky-harmattan"><a href="#conky-harmattan" class="headerlink" title="conky harmattan"></a>conky harmattan</h2><p><strong>参考</strong> </p>
-<ul>
-<li><a href="https://github.com/zagortenay333/Harmattan" target="_blank" rel="external">zagortenay333/Harmattan</a></li>
+</li>
+<li><p>开机启动<br><code>sudo vim /etc/rc.local</code></p>
+</li>
+</ul>
+<h2 id="门禁问题"><a href="#门禁问题" class="headerlink" title="门禁问题"></a>门禁问题</h2><ul>
+<li>管理员密码：<code>上上下下下下</code>，修改语音</li>
+<li>插座，购买封闭不用的插座</li>
+<li>485通信线要分清服务器和中转器之间的不一样</li>
+<li>门禁红外要对齐，三个都得对齐，有一个不对齐的话可能开了门之后检测不到人员进去，导致门禁无法关闭</li>
+</ul>
+<h2 id="中转器问题"><a href="#中转器问题" class="headerlink" title="中转器问题"></a>中转器问题</h2><ul>
+<li>底部固定螺丝需要重新设计，现在安装不方便</li>
+<li>上面的usb转接口模块太多最好做个电路转接模块</li>
+<li>供电问题还是需要解决，由于外设过多造成的</li>
 </ul>
 
           
@@ -727,7 +985,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Raspberry/Raspberry Pi 3——cxfreeze打包python程序/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Raspberry/Raspberry Pi 3——Archlinux系统安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="redfalsh">
@@ -746,7 +1004,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/03/20/Learning/Raspberry/Raspberry Pi 3——cxfreeze打包python程序/" itemprop="url">Raspberry Pi 3——cxfreeze打包python程序</a></h1>
+                <a class="post-title-link" href="/2017/03/20/Learning/Raspberry/Raspberry Pi 3——Archlinux系统安装/" itemprop="url">Raspberry Pi 3——Archlinux系统安装</a></h1>
         
 
         <div class="post-meta">
@@ -828,124 +1086,119 @@
       
         
           
-            <h1 id="Raspberry-Pi-3——cxfreeze打包python程序"><a href="#Raspberry-Pi-3——cxfreeze打包python程序" class="headerlink" title="Raspberry Pi 3——cxfreeze打包python程序"></a>Raspberry Pi 3——cxfreeze打包python程序</h1><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://anthony-tuininga.github.io/cx_Freeze/" target="_blank" rel="external">cxfreeze官网</a></li>
-<li><a href="https://pypi.python.org/pypi/cx_Freeze/" target="_blank" rel="external">cxfreeze下载地址</a></li>
-<li><a href="http://cx-freeze.readthedocs.io/en/latest/" target="_blank" rel="external">使用说明文档</a></li>
-</ul>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>Python是一个脚本语言，被解释器解释执行。它的发布方式：</p>
+            <h1 id="Raspberry-Pi-3——Archlinux系统安装"><a href="#Raspberry-Pi-3——Archlinux系统安装" class="headerlink" title="Raspberry Pi 3——Archlinux系统安装"></a>Raspberry Pi 3——Archlinux系统安装</h1><p>[TOC]</p>
+<h2 id="国内源网站"><a href="#国内源网站" class="headerlink" title="国内源网站"></a>国内源网站</h2><p><a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="external">http://mirrors.ustc.edu.cn/</a><br><a href="http://mirrors.aliyun.com/" target="_blank" rel="external">http://mirrors.aliyun.com/</a><br><a href="http://mirrors.163.com/" target="_blank" rel="external">http://mirrors.163.com/</a></p>
+<h2 id="官网制作sd卡教程"><a href="#官网制作sd卡教程" class="headerlink" title="官网制作sd卡教程"></a>官网制作sd卡教程</h2><p><strong>Note:</strong></p>
+<blockquote>
+<p>The Raspberry Pi 3 has higher power requirements than the Raspberry Pi 2. A power supply rated at 2.5A is the official recommendation. Using an insufficient power supply will result in random, inexplicable errors and filesystem corruption.</p>
+</blockquote>
+<h2 id="ARMv7-Installation"><a href="#ARMv7-Installation" class="headerlink" title="#ARMv7 Installation"></a>#ARMv7 Installation</h2><p>This provides the best compatibility with software built around the older revisions of the board, particularly software that requires the vendor libraries.</p>
+<p>Replace sdX in the following instructions with the device name for the SD card as it appears on your computer.</p>
+<p>1.Start fdisk to partition the SD card:</p>
+<p><code>fdisk /dev/sdX</code></p>
+<p>2.At the fdisk prompt, delete old partitions and create a new one:</p>
+<blockquote>
+<p>a.Type <strong>o</strong>. This will clear out any partitions on the drive.<br>b.Type <strong>p</strong> to list partitions. There should be no partitions left.<br>c.Type <strong>n</strong>, then <strong>p</strong> for primary, 1 for the first partition on the drive, press ENTER to accept the default first sector, then type <strong>+100M</strong> for the last sector.<br>d.Type <strong>t</strong>, then <strong>c</strong> to set the first partition to type W95 FAT32 (LBA).<br>e.Type <strong>n</strong>, then <strong>p</strong> for primary, 2 for the second partition on the drive, and then press ENTER twice to accept the default first and last sector.<br>f.Write the partition table and exit by typing <strong>w</strong>.</p>
+</blockquote>
+<p>3.Create and mount the FAT filesystem:</p>
+<p><code>mkfs.vfat /dev/sdX1</code></p>
+<p><code>mkdir boot</code></p>
+<p><code>mount /dev/sdX1 boot</code></p>
+<p>4.Create and mount the ext4 filesystem:</p>
+<p><code>mkfs.ext4 /dev/sdX2</code></p>
+<p><code>mkdir root</code></p>
+<p><code>mount /dev/sdX2 root</code></p>
+<p>5.Download and extract the root filesystem (as root, not via sudo):<br><code>wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz</code><br><code>bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C root</code><br><code>sync</code><br>6.Move boot files to the first partition:<br><code>mv root/boot/* boot</code><br>7.Unmount the two partitions:<br><code>umount boot root</code><br>8.Insert the SD card into the Raspberry Pi, connect ethernet, and apply 5V power.<br>9.Use the serial console or SSH to the IP address given to the board by your router.</p>
 <ul>
-<li>py文件：对于开源项目或者源码没那么重要的，直接提供源码，需要使用者自行安装Python并且安装依赖的各种库。（Python官方的各种安装包就是这样做的）</li>
-<li>pyc文件：有些公司或个人因为机密或者各种原因，不愿意源码被运行者看到，可以使用pyc文件发布，pyc文件是Python解释器可以识别的二进制码，故发布后也是跨平台的，需要使用者安装相应版本的Python和依赖库。</li>
-<li>可执行文件：对于非码农用户或者一些小白用户，你让他装个Python同时还要折腾一堆依赖库，那简直是个灾难。对于此类用户，最简单的方式就是提供一个可执行文件，只需要把用法告诉Ta即可。比较麻烦的是需要针对不同平台需要打包不同的可执行文件（Windows,Linux,Mac,…）。<br>本文主要就是介绍最后一种方式，.py和.pyc都比较简单，Python本身就可以搞定。将Python脚本打包成可执行文件有多种方式，本文重点介绍cx_Freeze，其它仅作比较和参考。<br>Freezing Your Code<br>各种打包Python程序对比 点击打开链接<br>各种打包工具的对比如下(来自文章Freezing Your Code)：</li>
+<li><p>Login as the default user alarm with the password alarm.</p>
+</li>
+<li><p>The default root password is root.</p>
+</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Solution</td>
-<td>Windows</td>
-<td>Linux</td>
-<td>OS X</td>
-<td>Python 3</td>
-<td>License</td>
-<td>One-file mode</td>
-<td>Zipfile</td>
-<td>import    Eggs</td>
-<td>pkg_resources support</td>
-</tr>
-<tr>
-<td>bbFreeze</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-<td>no</td>
-<td>MIT</td>
-<td>no</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>py2exe</td>
-<td>yes</td>
-<td>no</td>
-<td>no</td>
-<td>yes</td>
-<td>MIT</td>
-<td>yes</td>
-<td>yes</td>
-<td>no</td>
-<td>no</td>
-</tr>
-<tr>
-<td>pyInstaller</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-<td>no</td>
-<td>GPL</td>
-<td>yes</td>
-<td>no</td>
-<td>yes    no</td>
-</tr>
-<tr>
-<td>cx_Freeze</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-<td>PSF</td>
-<td>no</td>
-<td>yes</td>
-<td>yes</td>
-<td>no</td>
-</tr>
-<tr>
-<td>py2app</td>
-<td>no</td>
-<td>no</td>
-<td>yes</td>
-<td>yes</td>
-<td>MIT</td>
-<td>no</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-</tbody>
-</table>
-<p>我要打包的环境是Linux+Python3，故根据情况我们采用cx_Freeze打包程序</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>Python3程序打包步骤：<br>1、下载cx_Freeze-4.3.4.tar.gz源码<br>2、解压源码到某个目录<br>3、打开终端到解压目录<br>4、执行python3 setup.py build<br>这编译会出错 </p>
-<pre><code>build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘GetImporterHelper’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:211：对‘PyObject_CallMethod’未定义的引用
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:215：对‘PyErr_Clear’未定义的引用
-build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘GetDirName’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:66：对‘PyString_FromStringAndSize’未定义的引用
-build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘FatalError’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Console.c:24：对‘PyErr_Print’未定义的引用
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Console.c:25：对‘Py_FatalError’未定义的引用
-build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘SetExecutableName’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:93：对‘PyString_FromString’未定义的引用
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:115：对‘PyString_FromStringAndSize’未定义的引用
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Common.c:136：对‘PyString_FromString’未定义的引用
-build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘FatalError’中：
-/home/bill/Downloads/cx_Freeze-4.3.3/source/bases/Console.c:24：对‘PyErr_Print’未定义的引用
-</code></pre><p>查了一下 网上有修改setup.py  将其中的if not vars.get(“Py_ENABLE_SHARED”, 0):修改成if True：<br>就可以了<br>5、执行安装命令<code>sudo python3 setup.py install</code><br>6、此时再次打开一个终端，输入命令：<code>cxfreeze --help</code>有内容说明安装<br>7、打包命令输入：<br>查询版本：<br><code>cxfreeze --version</code><br>打包文件（包含运行需要的文件）：<br><code>cxfreeze ~/Desktop/Nt2000_Python1/Nt_Main.py --target-dir ~/Desktop/setup</code><br>格式为：cxfreeze 文件绝对路径 –target-dir 打包到目标可执行文件夹路径<br>打包成一个可执行文件命令：<br><code>cxfreeze D:/hello.py --target-dir D:/123 --no-copy-deps</code></p>
+<h2 id="AArch64-Installation"><a href="#AArch64-Installation" class="headerlink" title="#AArch64 Installation"></a>#AArch64 Installation</h2><p>This provides an installation using the mainline kernel and U-Boot. There is no support for the vendor-provided libraries, extensions, or related software. Some of the hardware on the board may not work, or it may perform poorly.</p>
+<p>Follow the above instructions, substituting with the following tarball:</p>
+<p><code>http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz</code></p>
+<p>[TOC]</p>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><h2 id="基本安装（桌面、用户名、密码等等）"><a href="#基本安装（桌面、用户名、密码等等）" class="headerlink" title="#基本安装（桌面、用户名、密码等等）"></a>#基本安装（桌面、用户名、密码等等）</h2><p>修改源<br><code>vi /etc/pacman.d/mirrorlist</code></p>
+<blockquote>
+<p><code>Server = http://mirrors.ustc.edu.cn/archlinuxarm/$arch/$repo</code></p>
+<p>这里一定要注意！！！！！在安装PC版时，大家可能习惯于在上面Server最后写\$arch，但是对于Raspberry Pi、Banana<br>Pi这些设备来说，\$arch对应的是armv7h！但是大家可以打开这个网址看一下，只有i686和x86以及any，要是使用\$arch的话在pacman<br>-Syy时会404报错！（我就是在这里卡了很久）</p>
+</blockquote>
+<p><strong>设置root密码：</strong><br><code>passwd root</code><br><strong>添加用户：</strong><br><code>useradd -m -g users -G wheel -s /bin/bash john</code><br><strong>设置用户密码：</strong><br><code>passwd john</code><br><strong>设置主机名称：</strong><br><code>hostnamectl set-hostname archlinux</code><br><strong>查看IP：</strong><br><code>ip addr</code><br><strong>packer</strong><br><code>sudo pacman -S packer</code><br><strong>xorg</strong><br><code>sudo pacman -S xorg-server xf86-video-fbdev xorg-xrefresh</code><br><strong>安装xorg工具</strong><br><code>pacman -S xterm xorg-xclock xorg-twm xorg-xinit xorg-server-utils</code><br><strong>xfce4</strong><br><code>sudo pacman -S xfce4 xfce4-goodies xarchiver</code><br><strong>安装完成重启：</strong><br><code>reboot</code><br><strong>登录并进入界面</strong>：<br><code>startxfce4</code><br><strong>开机启动项</strong><br><code>cp /etc/X11/xinit/xinitrc ~/.xinitrc</code><br><strong>时间设置</strong><br><code>timedatectl set-timezone Asia/Shanghai</code></p>
+<h3 id="常用配置"><a href="#常用配置" class="headerlink" title="常用配置"></a>常用配置</h3><h4 id="archlinux-wallpaper-（壁纸）"><a href="#archlinux-wallpaper-（壁纸）" class="headerlink" title="archlinux-wallpaper （壁纸）"></a>archlinux-wallpaper （壁纸）</h4><p><code>pacman -S archlinux-wallpaper</code><br><a href="https://www.archlinux.org/packages/community/any/archlinux-wallpaper/files/" target="_blank" rel="external">archlinux-wallpaper文件清单</a></p>
+<h4 id="openssh-默认只打开用户22端口，root不能访问"><a href="#openssh-默认只打开用户22端口，root不能访问" class="headerlink" title="openssh (默认只打开用户22端口，root不能访问)"></a>openssh (默认只打开用户22端口，root不能访问)</h4><p><code>pacman -S openssh</code><br><code>systemctl enable sshd</code><br><code>systemctl start sshd</code></p>
+<h4 id="base-base-devel（基本软件包）"><a href="#base-base-devel（基本软件包）" class="headerlink" title="base base-devel（基本软件包）"></a>base base-devel（基本软件包）</h4><ul>
+<li>软件包组,这样就不会在编译时缺少 gcc 或者 make 的问题</li>
+</ul>
+<p><code>pacman -S base base-devel</code></p>
+<h4 id="net-tools-dnsutils-inetutils-iproute2-（网络工具包）"><a href="#net-tools-dnsutils-inetutils-iproute2-（网络工具包）" class="headerlink" title="net-tools dnsutils inetutils iproute2 （网络工具包）"></a>net-tools dnsutils inetutils iproute2 （网络工具包）</h4><ul>
+<li>ifconfig,route在net-tools中，nslookup,dig在dnsutils中，ftp,telnet等在inetutils中,ip命令在iproute2中。</li>
+</ul>
+<p><code>pacman -S net-tools dnsutils inetutils iproute2</code></p>
+<h4 id="Raspberry-Pi-超频"><a href="#Raspberry-Pi-超频" class="headerlink" title="Raspberry Pi 超频"></a>Raspberry Pi 超频</h4><ul>
+<li>armfreq：ARM处理器的频率，单位是MHz。默认值是 700。 最简单的方法是将“armfreq”的值改成“900”并加上“sdram_freq=500”。 一步秒杀，十分轻松。</li>
+</ul>
+<p><code>vi /boot/config.txt</code></p>
+<p>[TOC]</p>
+<h4 id="locale（中文配置）"><a href="#locale（中文配置）" class="headerlink" title="locale（中文配置）"></a>locale（中文配置）</h4><p> <a href="https://wiki.archlinux.org/index.php/Arch_Linux_Localization_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="external">参考wiki</a>#.E5.9F.BA.E6.9C.AC.E4.B8.AD.E6.96.87.E6.94.AF.E6.8C.81)</p>
+<ol>
+<li>语言编码设置</li>
+</ol>
+<p><code>sudo vim /etc/locale.gen</code></p>
+<blockquote>
+<p>en_US.UTF-8 UTF-8<br>zh_CN.UTF-8 UTF-8</p>
+</blockquote>
+<p>如前面所说，可以在~/.xinitrc或~/.xprofile单独设置中文locale。添加如下内容到上述文件最前端注释之后（如果不确定使用哪个文件，可以都添加）：</p>
+<blockquote>
+<p>export LANG=zh_CN.UTF-8<br>export LANGUAGE=zh_CN:en_US<br>export LC_CTYPE=en_US.UTF-8</p>
+</blockquote>
+<ol>
+<li><p>安装中文字体<br><code>pacman -S wqy-zenhei</code></p>
+</li>
+<li><p>启用中文locale<br>Arch Linux中，通过/etc/locale.conf文件设置全局有效的locale：</p>
+<blockquote>
+<p>LANG=en_US.UTF-8</p>
+</blockquote>
+</li>
+<li><p>中文输入法</p>
+</li>
+</ol>
+<p>支持中文输入的常见输入法有scim，fcitx ，ibus。推荐使用ibus，不推荐scim，因为scim已经停止维护了。不过我使用的是scim拼音输入法。</p>
+<h4 id="wifi安装"><a href="#wifi安装" class="headerlink" title="wifi安装"></a>wifi安装</h4><p><code>sudo pacman -S networkmanager network-manager-applet</code><br><code>systemctl enable NetworkManager</code><br><code>systemctl start NetworkManager</code><br><code>sudo ifconfig wlan0 up</code><br><code>ifconfig wlan0</code></p>
+<p>check if wlan0 is up<br>then edit your wireless network in NetworkManage</p>
+<h4 id="Bluetooth安装"><a href="#Bluetooth安装" class="headerlink" title="Bluetooth安装"></a>Bluetooth安装</h4><p><code>packer -S yaourt blueman bluez-utils</code><br><code>yaourt -S pi-bluetooth</code><br><code>systemctl start bluetooth.service</code><br><code>systemctl enable bluetooth.service</code><br><code>sudo systemctl enable brcm43438.service</code><br><code>sudo reboot</code></p>
+<p>connect bluetooth keyboard：<a href="https://wiki.archlinux.org/index.php/bluetooth_keyboard" target="_blank" rel="external">https://wiki.archlinux.org/index.php/bluetooth_keyboard</a></p>
+<p>connect bluetooth headset : <a href="https://wiki.archlinux.org/index.php/Bluetooth_headset" target="_blank" rel="external">https://wiki.archlinux.org/index.php/Bluetooth_headset</a></p>
+<p>If you need to connect a bluetooth headset, then you need install more package</p>
+<p><code>sudo pacman -Syu pulseaudio-alsa pulseaudio-bluetooth pavucontrol bluez bluez-libs bluez-utils bluez-firmware gstreamer0.10-good-plugins</code></p>
+<h4 id="yaourt源码安装"><a href="#yaourt源码安装" class="headerlink" title="yaourt源码安装"></a>yaourt源码安装</h4><p><strong>1.修改源</strong></p>
+<p>清华大学源<br><code>sudo vim /etc/pacman.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[archlinuxcn]</div><div class="line">SigLevel = Optional TrustedOnly</div><div class="line">Server = http://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/any</div></pre></td></tr></table></figure>
+<p><strong>2.安装package-query</strong></p>
+<p>从archlinux wiki上查找package-query包<br><code>git clone https://aur.archlinux.org/package-query.git</code><br><code>cd package-query</code><br><code>makepkg</code><br>缺少yajl依赖包，安装<br><code>sudo pacman -S yajl</code><br>重新编译<br><code>makepkg</code><br>编译完成后会在当前目录下生成pkg.tar.xz文件，套件安装：<br><code>sudo pacman -U /home/alan/package-query/package-query-1.6.2-1-armv7h.pkg.tar.xz</code></p>
+<blockquote>
+<p>注：修改alan为你的用户名，package-query-1.6.2-1-armv7h.pkg.tar.xz版本为生成的版本</p>
+</blockquote>
+<p><strong>3.安装yaourt</strong></p>
+<p>根据我的上一篇帖子设置好archlinux aur的源地址，直接pacman -S yaourt出了些问题，少了key，pacman-key –init之后卡住不动，所以也手工编译吧。<br>大体流程和package-query一样，先下载：</p>
+<p><code>git clone https://aur.archlinux.org/yaourt.git</code><br><code>cd yaourt</code><br>编译<br><code>makepkg</code><br>打包<br><code>sudo pacman -U /home/alan/yaourt/yaourt-1.6-1-any.pkg.tar.xz</code></p>
+<blockquote>
+<p>注意同上package-query安装</p>
+</blockquote>
+<h4 id="Python3安装"><a href="#Python3安装" class="headerlink" title="Python3安装"></a>Python3安装</h4><p><a href="https://wiki.archlinux.org/index.php/Python" target="_blank" rel="external">python3</a><br><code>sudo pacman -S python</code><br><strong>python-setuptools</strong><br><code>sudo pacman -S python-setuptools</code><br><strong>python-pip</strong><br><code>sudo pacman -S python-pip</code><br><strong>pyqt</strong><br><code>sudo pacman -S python-pyqt5</code></p>
+<blockquote>
+<p>相关连接<br><a href="https://wiki.archlinux.org/index.php/Qt#Python_.28PyQt.29" target="_blank" rel="external">QT-wiki</a></p>
+</blockquote>
+<p><strong>python-pyserial</strong><br><code>sudo pacman -S python-pyserial</code><br><strong>cxfreeze</strong><br><a href="http://cx-freeze.readthedocs.io/en/latest/" target="_blank" rel="external">官方打包说明</a><br><code>sudo pip install cx_Freeze</code></p>
+<h4 id="udev-设备管理工具"><a href="#udev-设备管理工具" class="headerlink" title="udev-设备管理工具"></a>udev-设备管理工具</h4><p><a href="http://blog.csdn.net/xqf1528399071/article/details/52191637" target="_blank" rel="external">可参考博客</a><br><a href="https://wiki.archlinux.org/index.php/Udev" target="_blank" rel="external">archlinux wiki udev</a></p>
+<p>1、查询串口号，需安装python-pyserial<br><code>python -m serial.tools.list_ports</code><br><img src="http://static.zybuluo.com/RedFalsh/r04ck73bkixpoqfhh1ugv571/image_1bagj59nqpe7ov7cq1ben1k799.png" alt="image_1bagj59nqpe7ov7cq1ben1k799.png-8.9kB"></p>
+<p>2、根据串口号查询详细信息<br><code>udevadm info /dev/ttyUSB0</code><br><img src="http://static.zybuluo.com/RedFalsh/pmj4zlutgx0pvlkuyoqamqx4/image_1bagj63sq112quop9cl1f41qiem.png" alt="image_1bagj63sq112quop9cl1f41qiem.png-42.7kB"></p>
+<p>3、根据这些信息重写串口设备命名规则，采用Linux的udev来自定义规则来管理设备名称</p>
+<p><img src="http://static.zybuluo.com/RedFalsh/3comr6jy5lvr6qel8jltbxii/image_1bagj75lt10jdoe11qmf1o24deh13.png" alt="image_1bagj75lt10jdoe11qmf1o24deh13.png-109.7kB"></p>
+<h4 id="VNC远程桌面–x11vnc"><a href="#VNC远程桌面–x11vnc" class="headerlink" title="VNC远程桌面–x11vnc"></a>VNC远程桌面–x11vnc</h4><p><strong>安装</strong><br><code>pacman -S x11vnc</code><br><strong>运行</strong><br>首先你需要运行一个x server服务器. 使用startx 或类似的. 完成后运行<br><strong>startx</strong><br><code>x11vnc -display :0 -auth ~/.Xauthority</code><br>如果失败，你可能需要作为root来运行<br><code>x11vnc -display :0 -autho /home/USER/.Xauthority</code><br><strong>GDM</strong><br>作为root, 运行<br><code>x11vnc -display :0 -auth /var/lib/gdm/:0.Xauth</code><br><strong>访问</strong><br>在其他机器运行VNC客户端, 然后输入运行了x11vnc服务器的IP地址. 点击连接, 然后你需要设置.<br><strong>SSH端口转发</strong></p>
+<p>为了安全地使用x11vnc，您首先需要安装并且配置好SSH。<br>在启动x11vnc的时候，指定命令行选项“-localhost”，这将导致VNC服务只能绑定到本地网络界面。此时从外界直接连入的连接将被拒绝。<br>当您需要从另一台电脑上访问这个VNC服务的时候，首先用SSH登录到运行VNC的主机，将VNC服务监听的端口转发到您的本地主机。以下的例子中假设运行VNC的主机名为”foo”，VNC监听5900端口上：<br><code>ssh foo -L 5900:localhost:5900</code><br>SSH连接建立以后，打开VNC客户端程序，但是不要让它连接到foo的5900端口，而是连接到本机（localhost）的5900端口。<br>这样，您就可以通过加密渠道安全地访问远程X服务了。</p>
+<p><br><br></p>
+<h3 id="装逼命令"><a href="#装逼命令" class="headerlink" title="装逼命令"></a>装逼命令</h3><p><code>pacman -S screenfetch</code><br><img src="http://static.zybuluo.com/RedFalsh/g08qihdsctwapg61cgmf6ksu/image_1ba7r0e821e8g1r9g10vmvr21smn1g.png" alt="image_1ba7r0e821e8g1r9g10vmvr21smn1g.png-53.7kB"><br><code>yaourt -S oneko</code><br><img src="http://static.zybuluo.com/RedFalsh/kwliam1h87nvu8bx0x5wuoud/image_1ba7rflfr1l03mmvg153ak1gtt34.png" alt="image_1ba7rflfr1l03mmvg153ak1gtt34.png-62.5kB"><br><code>pacman -S cmatrix</code><br><img src="http://static.zybuluo.com/RedFalsh/1xwhoss67vynil8633583uq6/image_1ba7qs90678f1fmj1vol1kvj1iknm.png" alt="image_1ba7qs90678f1fmj1vol1kvj1iknm.png-58.3kB"><br><code>pacman -S asciiquarium</code><br><img src="http://static.zybuluo.com/RedFalsh/eaupfk9299vupdzsox37lvcn/image_1ba7qrbjj1sccn22e9u19g62ij9.png" alt="image_1ba7qrbjj1sccn22e9u19g62ij9.png-20.6kB"><br><code>yaourt -S toilet</code><br><img src="http://static.zybuluo.com/RedFalsh/hlvrd5q76dgwao6jsfkxocat/image_1ba7qtoll74i11dp4qq4bm1ig613.png" alt="image_1ba7qtoll74i11dp4qq4bm1ig613.png-9.8kB"><br><code>pacman -S figlet</code><br><img src="http://static.zybuluo.com/RedFalsh/1eko8kjrnvmno9c714wlnkrt/image_1ba7rc05mbs7vjn1rhk1usf1eb82n.png" alt="image_1ba7rc05mbs7vjn1rhk1usf1eb82n.png-7.9kB"><br><code>pacman -S sl</code><br><img src="http://static.zybuluo.com/RedFalsh/2q55h3ufxrs10lcnfyy4lwu1/image_1ba7r3cvo1egrt7e1iv4mkh1i351t.png" alt="image_1ba7r3cvo1egrt7e1iv4mkh1i351t.png-18.9kB"><br><code>pacman -S cowsay</code><br><img src="http://static.zybuluo.com/RedFalsh/4zu1bj8o9ktn7bfabvgy2thf/image_1ba7r7lnm7ni139p14rf1mkcm5n2a.png" alt="image_1ba7r7lnm7ni139p14rf1mkcm5n2a.png-12.7kB"></p>
 
           
         
@@ -1029,7 +1282,7 @@ build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘FatalError’�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -1040,7 +1293,7 @@ build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘FatalError’�
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">Kategorien</span>
               </a>
             </div>
@@ -1051,7 +1304,7 @@ build/temp.linux-x86_64-2.7/source/bases/Console.o：在函数‘FatalError’�
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>
