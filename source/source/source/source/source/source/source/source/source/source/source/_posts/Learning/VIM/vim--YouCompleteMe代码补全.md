@@ -2,12 +2,12 @@
 title: vim--YouCompleteMe代码补全
 
 date: 2017-03-20 21:04:04
-tags:
-- vim
+tags: 
+- vim 
 - vimrc
-categories:
+categories: 
 - Learn
-- vim
+- vim 
 
 ---
 

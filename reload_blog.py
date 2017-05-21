@@ -67,22 +67,28 @@ def push():
 
 def help():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hpp", ["help","push","pull"])
+        opts, args = getopt.getopt(sys.argv[1:], "h", ["help","push","pull","hexo"])
     except getopt.GetoptError:
         print('error')
     for o, a in opts:
-        if o in ('--pull'):
-            print('正在同步博客分支blog到本地......')
-            print('git clone %s'%url)
-            pull()
-        if o in ('--push'):
-            print('正在上传到博客分支blog到github......')
-            print('git clone %s'%url)
-            push()
+        print(o)
+        print(a)
         if o in ("-h", "--help"):
             print('\t%-20s%s'%('-h or --help','help information'))
             print('\t%-20s%s'%('--push','push the blog to Github'))
             print('\t%-20s%s'%('--pull','pull the the blog from Github'))
+        if o in ('','--pull'):
+            print('正在同步博客分支blog到本地......')
+            print('git clone %s'%url)
+            pull()
+        if o in ('','--push'):
+            print('正在上传到博客分支blog到github......')
+            print('git clone %s'%url)
+            push()
+        if o in ('','--hexo'):
+            print('正在同步hexo到github......')
+            os.system('hexo clean')
+            os.system('hexo g -d')
 
 if __name__=="__main__":
     help()
