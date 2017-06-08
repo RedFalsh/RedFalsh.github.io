@@ -16,20 +16,20 @@ def pull():
         os.system('git clone %s'%url)
 
     # 复制source文件夹
-    print('cp -r %s/source/ source/'%name)
-    os.system('cp -r %s/source/ source/'%name)
+    print('cp -r %s/source/* source/'%name)
+    os.system('cp -r %s/source/* source/'%name)
     # 复制_config.yml文件
     print('cp %s/_config.yml _config.yml'%name)
     os.system('cp %s/_config.yml _config.yml'%name)
 
     # 复制主题文件
-    themes_files = os.listdir('%s/themes/'%name)
-    for theme in themes_files:
-        if os.path.exists('themes/%s'%theme):
-            print('cp %s/themes/%s/_config.yml themes/%s/config.yml'%(name,theme,theme))
-            os.system('cp %s/themes/%s/_config.yml themes/%s/config.yml'%(name,theme,theme))
-        else:
-            print('the %s dir is not exists!!!'%theme)
+    # themes_files = os.listdir('%s/themes/'%name)
+    theme_name = 'hexo-theme-next'
+    if not os.path.exists('themes/%s'%theme_name):
+        print('git clone https://github.com/iissnan/%s.git themes/%s'%(theme_name,theme_name))
+        os.system('git clone https://github.com/iissnan/%s.git themes/%s'%(theme_name,theme_name))
+    print('cp %s/themes/%s/_config.yml themes/%s/_config.yml'%(name,theme_name,theme_name))
+    os.system('cp %s/themes/%s/_config.yml themes/%s/_config.yml'%(name,theme_name,theme_name))
 
 def push():
     # 查询文件是否存在
