@@ -38,6 +38,9 @@ def push():
     else:
         os.system('git clone git@github.com:RedFalsh/RedFalsh.github.io.git')
 
+    # 删除source文件夹
+    print('rm -r %s/source/'%name)
+    os.system('rm -r %s/source/'%name)
     # 复制source文件夹
     print('cp -r source/ %s/source/'%name)
     os.system('cp -r source/ %s/source/'%name)
