@@ -42,12 +42,12 @@ def push():
     print('sudo rm -r %s/source/'%name)
     os.system('sudo rm -r %s/source/'%name)
     # 复制source文件夹
-    print('sudo cp -r source/ %s/source/'%name)
-    os.system('sudo cp -r source/ %s/source/'%name)
+    print('cp -r source/ %s/source/'%name)
+    os.system('cp -r source/ %s/source/'%name)
     # 复制_config.yml文件
-    print('sudo cp _config.yml %s/_config.yml'%name)
+    print('cp _config.yml %s/_config.yml'%name)
     os.system('sudo cp _config.yml %s/_config.yml'%name)
-    print('sudo cp reload_blog.py %s/reload_blog.py'%name)
+    print('cp reload_blog.py %s/reload_blog.py'%name)
     os.system('cp reload_blog.py %s/reload_blog.py'%name)
 
     # 复制主题文件
