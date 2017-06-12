@@ -5,7 +5,7 @@ tags:
 - Raspberry
 - Linux
 - Raspbian
-categories: 
+categories:
 - Learn
 - Raspberry
 
@@ -14,9 +14,9 @@ categories:
 # Raspberry Pi 3——python3+pyqt5+matplotlib环境搭建
 ## python3
 1、为python3安装pyqt5：
-`sudo apt-get install python3-pyqt5`   
+`sudo apt-get install python3-pyqt5`
 2、为python3安装matplotlib：
-`sudo apt-get install python3-matplotlib ` 
+`sudo apt-get install python3-matplotlib `
 注意：编写的py文件打开方式要选择环境Python2还是Python3
 
 ## python2

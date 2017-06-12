@@ -9,7 +9,6 @@ tags:
 categories:
 - Learn
 - Archlinux
-- Raspberry
 
 ---
 ## 参考

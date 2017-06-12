@@ -6,7 +6,7 @@ tags:
 - Linux
 - Gate One
 - web
-categories: 
+categories:
 - Learn
 - Raspberry
 
@@ -51,7 +51,7 @@ Gate One要求系统必须满足下面两个前提条件，
 ## Gate One验证
 Gate One的配置文件是/etc/gateone/conf.d/10server.conf，
 [python] view plain copy print?在CODE上查看代码片派生到我的代码片
-`sudo vi /etc/gateone/conf.d/10server.conf`  
+`sudo vi /etc/gateone/conf.d/10server.conf`
 
 我们修改配置文件如下图：
 ![image_1bbohbqbg8qi1jf01fvmfm52rmm.png-85.2kB][2]
@@ -65,7 +65,7 @@ Gate One的配置文件是/etc/gateone/conf.d/10server.conf，
 `$ sudo gateone`
 
 
- 
+
 启动后，通过打印的信息，我们看到Gate One服务监听了8000端口号，然后在浏览器中输入https://192.168.1.106:8000/即可打开gateone的网页，这个貌似是局域网内......。
 网络会进行拦截，点击   高级 ——添加例外——确认即可
 
