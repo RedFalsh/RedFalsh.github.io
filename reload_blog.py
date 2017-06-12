@@ -39,15 +39,15 @@ def push():
         os.system('git clone git@github.com:RedFalsh/RedFalsh.github.io.git')
 
     # 删除source文件夹
-    print('rm -r %s/source/'%name)
-    os.system('rm -r %s/source/'%name)
+    print('sudo rm -r %s/source/'%name)
+    os.system('sudo rm -r %s/source/'%name)
     # 复制source文件夹
-    print('cp -r source/ %s/source/'%name)
-    os.system('cp -r source/ %s/source/'%name)
+    print('sudo cp -r source/ %s/source/'%name)
+    os.system('sudo cp -r source/ %s/source/'%name)
     # 复制_config.yml文件
-    print('cp _config.yml %s/_config.yml'%name)
-    os.system('cp _config.yml %s/_config.yml'%name)
-    print('cp reload_blog.py %s/reload_blog.py'%name)
+    print('sudo cp _config.yml %s/_config.yml'%name)
+    os.system('sudo cp _config.yml %s/_config.yml'%name)
+    print('sudo cp reload_blog.py %s/reload_blog.py'%name)
     os.system('cp reload_blog.py %s/reload_blog.py'%name)
 
     # 复制主题文件
@@ -63,7 +63,7 @@ def push():
             os.system('cp themes/%s/_config.yml %s/themes/%s/_config.yml'%(theme,name,theme))
     # 提交到github上面
     os.chdir(r'%s'%name)
-    os.system('git add ./')
+    os.system('sudo git add ./')
     os.system('''git commit -m "备份blog文件"''')
     os.system('git push origin blog')
 
