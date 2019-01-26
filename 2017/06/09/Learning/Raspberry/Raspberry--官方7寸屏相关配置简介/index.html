@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,Raspberry,LOGO,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Raspberry–官方7寸屏相关配置简介1. 引子在树莓派官方触摸屏发布之前，市场上可用的屏幕有以下三种：  直接和GPIO插口对接的屏幕，使用SPI与CPU进行通信。需要特殊的驱动程序将framebuffer的内容发送到LCD控制器上，一般带有触屏功能，大小以3.5寸为主流。受限于SPI通信速度，刷新速率不高； 专用USB接口的屏幕，如RoboPeak Mini USB Display。这类屏">
+<meta name="keywords" content="Linux,Raspberry,LOGO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry--官方7寸屏相关配置简介">
+<meta property="og:url" content="http://yoursite.com/2017/06/09/Learning/Raspberry/Raspberry--官方7寸屏相关配置简介/index.html">
+<meta property="og:site_name" content="小熊博客@v@">
+<meta property="og:description" content="Raspberry–官方7寸屏相关配置简介1. 引子在树莓派官方触摸屏发布之前，市场上可用的屏幕有以下三种：  直接和GPIO插口对接的屏幕，使用SPI与CPU进行通信。需要特殊的驱动程序将framebuffer的内容发送到LCD控制器上，一般带有触屏功能，大小以3.5寸为主流。受限于SPI通信速度，刷新速率不高； 专用USB接口的屏幕，如RoboPeak Mini USB Display。这类屏">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.yfworld.com/?attachment_id=3712">
+<meta property="og:updated_time" content="2019-01-26T15:40:11.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Raspberry--官方7寸屏相关配置简介">
+<meta name="twitter:description" content="Raspberry–官方7寸屏相关配置简介1. 引子在树莓派官方触摸屏发布之前，市场上可用的屏幕有以下三种：  直接和GPIO插口对接的屏幕，使用SPI与CPU进行通信。需要特殊的驱动程序将framebuffer的内容发送到LCD控制器上，一般带有触屏功能，大小以3.5寸为主流。受限于SPI通信速度，刷新速率不高； 专用USB接口的屏幕，如RoboPeak Mini USB Display。这类屏">
+<meta name="twitter:image" content="http://www.yfworld.com/?attachment_id=3712">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/09/Learning/Raspberry/Raspberry--官方7寸屏相关配置简介/">
+
+
+
+
+
+  <title>Raspberry--官方7寸屏相关配置简介 | 小熊博客@v@</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小熊博客@v@</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">redfalsh's blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/09/Learning/Raspberry/Raspberry--官方7寸屏相关配置简介/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小熊博客@v@">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Raspberry--官方7寸屏相关配置简介</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-09T16:06:14+08:00">
+                2017-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/Raspberry/" itemprop="url" rel="index">
+                    <span itemprop="name">Raspberry</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Raspberry–官方7寸屏相关配置简介"><a href="#Raspberry–官方7寸屏相关配置简介" class="headerlink" title="Raspberry–官方7寸屏相关配置简介"></a>Raspberry–官方7寸屏相关配置简介</h1><h2 id="1-引子"><a href="#1-引子" class="headerlink" title="1. 引子"></a>1. 引子</h2><p>在树莓派官方触摸屏发布之前，市场上可用的屏幕有以下三种：</p>
+<ul>
+<li>直接和GPIO插口对接的屏幕，使用SPI与CPU进行通信。需要特殊的驱动程序将framebuffer的内容发送到LCD控制器上，一般带有触屏功能，大小以3.5寸为主流。受限于SPI通信速度，刷新速率不高；</li>
+<li>专用USB接口的屏幕，如RoboPeak Mini USB Display。这类屏幕通过USB连接，需要本地运行驱动程序；</li>
+<li>通用LCD屏幕，通过HDMI和树莓派连接。因其通用性不需要特殊的驱动程序，但是很多都不支持触屏功能，而且都需要额外的转接板，体积较大；</li>
+</ul>
+<p><img src="http://www.yfworld.com/?attachment_id=3712" alt="▲ 图.  树莓派官方7寸屏实拍"></p>
+<p>我自己的需求是将树莓派作为信息显示中心，在屏幕上显示我的HP服务器的运行信息，另外提供一些快捷的传感器监控和控制操作接口。最初一直在官方屏幕和HDMI屏幕之间犹豫，最后还是选择了官方触摸屏。归结起来主要有几个原因：</p>
+<ul>
+<li>官方屏的LCD模组最有保证，淘宝上的HDMI LCD一般成像质量不高；</li>
+<li>官方屏的触摸功能在所有方案中是支持的最好的，有十点电容触摸（目前Raspbian还只支持单点，以后会升级），且不需要额外驱动。而HDMI接口的LCD如果有触摸功能，都需要额外接一根USB用于提供触摸控制；</li>
+<li>官方触屏和树莓派3可以直接通过铜柱物理连接，无需额外的驱动电路板。连线也非常少，只需要一根DSI软排线和供电接口即可。</li>
+</ul>
+<p>总体上来说，虽然官方屏的价格高了一些，但是却是所有方案中最可靠、简洁的，所以最后也没有多犹豫就从网上下单了。</p>
+<p>▲ 图. 树莓派官方LCD屏实拍 – 正面</p>
+<h2 id="2-入手简评"><a href="#2-入手简评" class="headerlink" title="2. 入手简评"></a>2. 入手简评</h2><p>这款屏幕官方公布的主要参数有：</p>
+<ul>
+<li>分辨率800 x 480像素，刷新率60fps；</li>
+<li>10点电容触摸，但是目前只支持单点触控；</li>
+<li>背后有可供背挂的安装定位孔；</li>
+<li>可视角度70度 ，可视区域大约为155 x 86mm；</li>
+<li>非方形像素 – 大约为0.19 x 0.175mm；</li>
+<li>电源功耗：455mA – 470mA之间，约为2.3W。</li>
+</ul>
+<p>虽然说这款屏幕是相对来说比较好的选择，但是拿到手之后还是发现了很多存在的问题：</p>
+<ul>
+<li>首先是这款屏幕的分辨率只有800 x 480，是WVGA标准，很多应用软件的界面都无法完全显示，使用时要经常拖动窗口来显示需要的信息；同样的，如果是自己开发图形界面，能够显示内容的空间也会比较有限（尤其考虑到任务栏也占用了一部分空间）；</li>
+<li>其次是这个屏幕的可视角不大。现在主流的LCD屏幕可视角都是120度以上了，而这款屏只有70度，工作时只要稍微变换一下角度屏幕的内容就看不清楚了。可视角的问题在仰视时还可以接受，俯视的时候就非常明显了；</li>
+<li>最后就是这个屏幕比较吃电，如果和树莓派供用电源，会影响到树莓派的供电。如果出现供电不足的情况，屏幕的右上角就会时不时出现一个方形的彩虹图标。<br>总体来说这款屏幕从设置到使用还是比较方便的，但是作为官方发布的屏幕，同时再考虑其600块钱的定价，整体性价比就显得不高了。</li>
+</ul>
+<h2 id="3-使用方法"><a href="#3-使用方法" class="headerlink" title="3. 使用方法"></a>3. 使用方法</h2><h3 id="3-1-注意事项（使用前必读）"><a href="#3-1-注意事项（使用前必读）" class="headerlink" title="3.1 注意事项（使用前必读）"></a>3.1 注意事项（使用前必读）</h3><ul>
+<li><p>1) 这款屏幕主要支持的树莓派型号是Model A+, B+, Pi 2和Pi 3。 Model A和B虽然也可以使用，但是会牺牲I2C的功能（因为这两个型号只有一组I2C，而其他型号有两组，可用其中一组作触屏接口）；</p>
+</li>
+<li><p>2) 至于操作系统，推荐使用最新版原生Raspbian OS。目前对NOOBS系统支持不好，所以还是推荐安装Raspbian；如果已经在使用旧版Raspbian，但是不想重新安装最新的系统，可以使用以下命令升级系统：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install --reinstall libraspberrypi0 libraspberrypi-&#123;bin,dev,doc&#125; raspberrypi-bootloader</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以下是官方公布的操作系统支持情况：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">– Raspbian – Supported</span><br><span class="line">– Ubuntu MATE – Supported</span><br><span class="line">– RetroPie – Supported</span><br><span class="line">– OpenElec – Supported</span><br><span class="line">– OSMC – Supported</span><br><span class="line">– Arch – Display works, Touch may be tricky: https://www.raspberrypi.org/forums/viewtopic.php?f=108&amp;t=128452</span><br><span class="line">– Kano OS – Not supported</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>3) 确保使用官方电源（或其他品牌电流供应能力 &gt; 2A以上的电源），保证屏幕可以正常供电；</p>
+</li>
+<li><p>4) FPC连接头很脆，安装的时候需要小心一点。确保FPC连接头可靠链接，连接端口的卡口扣下。</p>
+</li>
+</ul>
+<h3 id="3-2-安装方法"><a href="#3-2-安装方法" class="headerlink" title="3.2 安装方法"></a>3.2 安装方法</h3><p>打开包装后，屏幕背面接口的情况如下图所示：</p>
+<p>▲ 图. 树莓派官方LCD屏背面接口</p>
+<p>这里主要需要连接的就是LCD软排线和电源供电接口。LCD软排线连接的时候问题不大，主要就是注意接口触电的方向是否正确，不要装反了。至于电源接口，这款屏幕提供三种供电方式：</p>
+<ul>
+<li>1) GPIO引脚供电（树莓派向LCD供电）</li>
+</ul>
+<p>可以直接从树莓派跳VCC和GND线进行连接，然后给树莓派供电，但是这样就无法使用其他IO扩展板了（如SenseHat）。</p>
+<p>▲图. GPIO供电连接方法</p>
+<ul>
+<li>2) USB串联供电（LCD向树莓派供电）</li>
+</ul>
+<p>将LCD的Power Out端连接至树莓派，然后给LCD电源接口供电。经测试，这种方式供电经常会遇到之前说的供电不足的情况，屏幕右上角会出现彩虹图标。</p>
+<p>▲图. USB串联供电连接方法</p>
+<ul>
+<li>3) 双USB同时供电</li>
+</ul>
+<p>两个USB都单独供电，但是要保证两个USB可以同时上电，否则会出现开机没有初始化屏幕，而没有图形显示的问题。</p>
+<p>电源和软排线连线完成后就可以固定树莓派了。树莓派的安装方法有两种：正装和反装。所谓正装，就是将树莓派以相同方向安装在LCD的铜柱固定柱上。而反装，则是将树莓派面朝LCD驱动板进行安装。反装可以节省空间，但是反装就无法再使用GPIO引脚了，所以一般情况下都是正装的。</p>
+<p>官方屏不含支架，可以去网上购买专用的LCD支架，像我买的这款用起来就不错：</p>
+<p>▲图. LCD亚克力支架</p>
+<h3 id="3-3-使用虚拟键盘"><a href="#3-3-使用虚拟键盘" class="headerlink" title="3.3 使用虚拟键盘"></a>3.3 使用虚拟键盘</h3><p>对于想使用触摸屏进行全部操作的朋友，可以安装一个虚拟键盘进行文字输入：</p>
+<h4 id="3-3-1-Florence"><a href="#3-3-1-Florence" class="headerlink" title="3.3.1 Florence"></a>3.3.1 Florence</h4><p>Suggested on the Pi forums by Hove is Florence: <a href="http://xmodulo.com/onscreen-virtual-keyboard-linux.html" target="_blank" rel="noopener">http://xmodulo.com/onscreen-virtual-keyboard-linux.html</a>. Install with:</p>
+<p><code>sudo apt-get install florence</code></p>
+<h4 id="3-3-2-Matchbox"><a href="#3-3-2-Matchbox" class="headerlink" title="3.3.2 Matchbox"></a>3.3.2 Matchbox</h4><p>Suggested by Alex ( the almighty @raspitv ), and scattered on various blogs, is Matchbox, which you can install like so:</p>
+<p><code>sudo apt-get install matchbox-keyboard</code></p>
+<p>And then find in Accessories &gt; Keyboard.</p>
+<h2 id="4-FAQ问题解答"><a href="#4-FAQ问题解答" class="headerlink" title="4. FAQ问题解答"></a>4. FAQ问题解答</h2><p><strong>Q: 屏幕上下180度翻转</strong></p>
+<p>A: 打开SD卡中的/boot/config.txt文件，增加以下一行：</p>
+<p><code>lcd_rotate=2</code></p>
+<p>也可以直接使用以下命令：</p>
+<p><code>echo &quot;lcd_rotate=2&quot; | sudo tee -a /boot/config.txt</code></p>
+<p><strong>Q: 程序控制背光</strong></p>
+<p>A: 打开背光:</p>
+<p><code>echo 0 &gt; /sys/class/backlight/rpi_backlight/bl_power</code></p>
+<p>关闭背光:</p>
+<p><code>echo 1 &gt; /sys/class/backlight/rpi_backlight/bl_power</code></p>
+<p>取消屏幕进入睡眠<br><code>sudo nano /etc/lightdm/lightdm.conf</code><br>添加如下内容到[SeatDefaults]选项中<br><code>xserver-command=X -s 0 dpms</code></p>
+<p><strong>Q: 在Pi A, B上使用</strong></p>
+<p>A: 首先需要将树莓派的IIC线与LCD控制板的IIC总线手动连线在一起，包括SDA ( <a href="http://pinout.xyz/pinout/pin3_gpio2" target="_blank" rel="noopener">http://pinout.xyz/pinout/pin3_gpio2</a>) 和 SCL (<a href="http://pinout.xyz/pinout/pin5_gpio3)。之后修改配置，在IIC总线上识别LCD：" target="_blank" rel="noopener">http://pinout.xyz/pinout/pin5_gpio3)。之后修改配置，在IIC总线上识别LCD：</a></p>
+<p><code>ignore_lcd=0</code></p>
+<p>注意: 其他IIC设备将无法使用。</p>
+<p><strong>Q: 屏幕左上角出现方形彩虹图标</strong></p>
+<p>A: 电源供电不足，请使用电流供应能力 &gt; 2A的电源。</p>
+<p><strong>Q: 如何使用Kivy图形库</strong></p>
+<p>A: Kivy介绍：Kivy is a Python GUI development system for cross-platform applications. It is designed to work with touchscreen devices (phones and tablets), but also runs on the Raspberry Pi. To install Kivy onto your Pi follow the instructions at <a href="https://kivy.org/docs/installation/installation-rpi.html" target="_blank" rel="noopener">https://kivy.org/docs/installation/installation-rpi.html</a>.</p>
+<p>如果需要在树莓派上正常识别触摸屏输入，需要将触摸屏在Kivy中配置成为输入源。打开配置文件 ~/.kivy/config.ini ，在 [input] 一栏增加以下命令：</p>
+<p><code>mouse = mouse</code><br><code>mtdev_%(name)s = probesysfs,provider=mtdev</code><br><code>hid_%(name)s = probesysfs,provider=hidinput</code></p>
+<p>Reference</p>
+<p>[1] Official 7” Raspberry Pi Touch Screen FAQ, PIMORONI, <a href="http://forums.pimoroni.com/t/official-7-raspberry-pi-touch-screen-faq/959" target="_blank" rel="noopener">http://forums.pimoroni.com/t/official-7-raspberry-pi-touch-screen-faq/959</a></p>
+<p>[2] Getting Started with the Pi 7″ Touchscreen LCD, PIMORONI, <a href="http://learn.pimoroni.com/tutorial/pi-lcd/getting-started-with-raspberry-pi-7-touchscreen-lcd" target="_blank" rel="noopener">http://learn.pimoroni.com/tutorial/pi-lcd/getting-started-with-raspberry-pi-7-touchscreen-lcd</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Raspberry/" rel="tag"># Raspberry</a>
+          
+            <a href="/tags/LOGO/" rel="tag"># LOGO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/09/Learning/Raspberry/Raspberry--无线wifi连接配置/" rel="next" title="Raspberry--wifi配置">
+                <i class="fa fa-chevron-left"></i> Raspberry--wifi配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/10/Learning/Python/python-pythondialog(unix终端对话框)/" rel="prev" title="python-dialog(unix显示终端对话框)">
+                python-dialog(unix显示终端对话框) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">redfalsh</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Raspberry–官方7寸屏相关配置简介"><span class="nav-number">1.</span> <span class="nav-text">Raspberry–官方7寸屏相关配置简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引子"><span class="nav-number">1.1.</span> <span class="nav-text">1. 引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-入手简评"><span class="nav-number">1.2.</span> <span class="nav-text">2. 入手简评</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-使用方法"><span class="nav-number">1.3.</span> <span class="nav-text">3. 使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-注意事项（使用前必读）"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 注意事项（使用前必读）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-安装方法"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 安装方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-使用虚拟键盘"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 使用虚拟键盘</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-Florence"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">3.3.1 Florence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-Matchbox"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">3.3.2 Matchbox</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-FAQ问题解答"><span class="nav-number">1.4.</span> <span class="nav-text">4. FAQ问题解答</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redfalsh</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

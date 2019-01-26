@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Pyinstaller——windows打包python程序介绍PyInstaller是一个将Windows程序冻结（包））到Windows，Linux，Mac OS X，FreeBSD，Solaris和AIX的独立可执行程序的程序。与其他类似工具相比，PyInstaller的主要优点是使用Python 2.7和3.3-3.5，它通过透明压缩构建了更小的可执行文件，它是完全多平台的，并且使用操作系">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pyinstaller——windows打包python程序">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/Learning/Python/Pyinstaller--windows下打包python/index.html">
+<meta property="og:site_name" content="小熊博客@v@">
+<meta property="og:description" content="Pyinstaller——windows打包python程序介绍PyInstaller是一个将Windows程序冻结（包））到Windows，Linux，Mac OS X，FreeBSD，Solaris和AIX的独立可执行程序的程序。与其他类似工具相比，PyInstaller的主要优点是使用Python 2.7和3.3-3.5，它通过透明压缩构建了更小的可执行文件，它是完全多平台的，并且使用操作系">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-26T15:40:11.431Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pyinstaller——windows打包python程序">
+<meta name="twitter:description" content="Pyinstaller——windows打包python程序介绍PyInstaller是一个将Windows程序冻结（包））到Windows，Linux，Mac OS X，FreeBSD，Solaris和AIX的独立可执行程序的程序。与其他类似工具相比，PyInstaller的主要优点是使用Python 2.7和3.3-3.5，它通过透明压缩构建了更小的可执行文件，它是完全多平台的，并且使用操作系">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/20/Learning/Python/Pyinstaller--windows下打包python/">
+
+
+
+
+
+  <title>Pyinstaller——windows打包python程序 | 小熊博客@v@</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小熊博客@v@</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">redfalsh's blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/Python/Pyinstaller--windows下打包python/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小熊博客@v@">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pyinstaller——windows打包python程序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+08:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Pyinstaller——windows打包python程序"><a href="#Pyinstaller——windows打包python程序" class="headerlink" title="Pyinstaller——windows打包python程序"></a>Pyinstaller——windows打包python程序</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>PyInstaller是一个将Windows程序冻结（包））到Windows，Linux，Mac OS X，FreeBSD，Solaris和AIX的独立可执行程序的程序。与其他类似工具相比，PyInstaller的主要优点是使用Python 2.7和3.3-3.5，它通过透明压缩构建了更小的可执行文件，它是完全多平台的，并且使用操作系统支持来加载动态库，从而确保完全兼容。</p>
+<p>PyInstaller的主要目标是与开箱即用的第三方软件包兼容。这意味着，使用PyInstaller，使外部程序包工作所需的所有技巧都已经集成在PyInstaller本身中，因此不需要用户干预。您将永远不需要在维基中寻找技巧，并对您的文件或安装脚本应用自定义修改。例如，完全支持像PyQt，Django或者matplotlib这样的库，而无需手动处理外部数据文件或外部数据文件。有关详细信息，请查看我们的支持包的兼容性列表。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://pythonhosted.org/PyInstaller/" target="_blank" rel="noopener">Pyinstaller Doc</a></p>
+<h2 id="安装Pyinstaller"><a href="#安装Pyinstaller" class="headerlink" title="安装Pyinstaller"></a>安装Pyinstaller</h2><p>pip安装</p>
+<p><code>pip install pyinstaller</code></p>
+<p>当然，也可以通过下载源代码编译方式安装：</p>
+<p><code>python setup.py install</code></p>
+<h2 id="打包程序"><a href="#打包程序" class="headerlink" title="打包程序"></a>打包程序</h2><p>简单使用</p>
+<p><code>pyinstaller yourprogram.py</code></p>
+<p>常用选项</p>
+<p>通过<code>pyinstaller --help</code>命令可查看选项详细说明</p>
+<h2 id="spec文件打包"><a href="#spec文件打包" class="headerlink" title="spec文件打包"></a>spec文件打包</h2><p>spec文件案例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># -*- mode: python -*-</span><br><span class="line"></span><br><span class="line">block_cipher = None</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = Analysis([&apos;main.py&apos;],</span><br><span class="line">             pathex=[&apos;F:\\Python\\Git\\PersonalDose&apos;],</span><br><span class="line">             binaries=[],</span><br><span class="line">             datas=[</span><br><span class="line">				 (&apos;app.ico&apos;,&apos;.&apos;),</span><br><span class="line">				 (&apos;PersonalDose.db&apos;,&apos;.&apos;),</span><br><span class="line">				 (&apos;Fonts&apos;,&apos;Fonts&apos;)</span><br><span class="line">			 ],</span><br><span class="line">             hiddenimports=[],</span><br><span class="line">             hookspath=[],</span><br><span class="line">             runtime_hooks=[],</span><br><span class="line">             excludes=[],</span><br><span class="line">             win_no_prefer_redirects=False,</span><br><span class="line">             win_private_assemblies=False,</span><br><span class="line">             cipher=block_cipher)</span><br><span class="line">pyz = PYZ(a.pure, a.zipped_data,</span><br><span class="line">             cipher=block_cipher)</span><br><span class="line">exe = EXE(pyz,</span><br><span class="line">          a.scripts,</span><br><span class="line">          exclude_binaries=True,</span><br><span class="line">          name=&apos;DoseManager&apos;,</span><br><span class="line">          debug=False,</span><br><span class="line">          strip=False,</span><br><span class="line">          upx=False,</span><br><span class="line">          console=False, icon=&apos;F:\\Python\\Git\\PersonalDose\\app.ico&apos;)</span><br><span class="line">coll = COLLECT(exe,</span><br><span class="line">               a.binaries,</span><br><span class="line">               a.zipfiles,</span><br><span class="line">               a.datas,</span><br><span class="line">               strip=False,</span><br><span class="line">               upx=False,</span><br><span class="line">               name=&apos;main&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>这里介绍一下添加文件的说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">datas = [</span><br><span class="line">         ( &apos;/mygame/data&apos;, &apos;data&apos; ), //添加data文件夹</span><br><span class="line">         ( &apos;/mygame/sfx/*.mp3&apos;, &apos;sfx&apos; ), //添加所以.mp3后缀的文件</span><br><span class="line">         ( &apos;src/README.txt&apos;, &apos;.&apos; ) //添加README.txt文件</span><br><span class="line">         ]</span><br></pre></td></tr></table></figure></p>
+<p>cmd命令进入spec文件所在位置，并运行</p>
+<p><code>pyinstaller yourspecfile.spec</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/20/Learning/Python/SimpleHTTPServer——内置文件服务器模块/" rel="next" title="SimpleHTTPServer——内置文件服务器模块">
+                <i class="fa fa-chevron-left"></i> SimpleHTTPServer——内置文件服务器模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/Learning/Python/PYQT-qtabview使用/" rel="prev" title="pyqt-qtableview使用">
+                pyqt-qtableview使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">redfalsh</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pyinstaller——windows打包python程序"><span class="nav-number">1.</span> <span class="nav-text">Pyinstaller——windows打包python程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">1.2.</span> <span class="nav-text">参考链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Pyinstaller"><span class="nav-number">1.3.</span> <span class="nav-text">安装Pyinstaller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打包程序"><span class="nav-number">1.4.</span> <span class="nav-text">打包程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spec文件打包"><span class="nav-number">1.5.</span> <span class="nav-text">spec文件打包</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redfalsh</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

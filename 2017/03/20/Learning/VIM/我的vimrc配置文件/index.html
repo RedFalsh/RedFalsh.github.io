@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vim,vimrc,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="##vimrc1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001">
+<meta name="keywords" content="vim,vimrc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的vimrc配置文件">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/Learning/VIM/我的vimrc配置文件/index.html">
+<meta property="og:site_name" content="小熊博客@v@">
+<meta property="og:description" content="##vimrc1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-26T15:40:11.438Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我的vimrc配置文件">
+<meta name="twitter:description" content="##vimrc1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/20/Learning/VIM/我的vimrc配置文件/">
+
+
+
+
+
+  <title>我的vimrc配置文件 | 小熊博客@v@</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小熊博客@v@</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">redfalsh's blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Learning/VIM/我的vimrc配置文件/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="redfalsh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小熊博客@v@">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">我的vimrc配置文件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T21:04:04+08:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn/vim/" itemprop="url" rel="index">
+                    <span itemprop="name">vim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##vimrc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br></pre></td><td class="code"><pre><span class="line">filetype plugin on</span><br><span class="line">syntax on</span><br><span class="line"></span><br><span class="line">set mouse=a</span><br><span class="line"></span><br><span class="line">set number</span><br><span class="line"></span><br><span class="line">augroup resCur</span><br><span class="line">  autocmd!</span><br><span class="line">  autocmd BufReadPost * call setpos(&quot;.&quot;, getpos(&quot;&apos;\&quot;&quot;))</span><br><span class="line">augroup END</span><br><span class="line"></span><br><span class="line">&quot; Automatic reloading of .vimrc</span><br><span class="line">autocmd! bufwritepost .vimrc source %</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot; Mouse and backspace</span><br><span class="line">set mouse=a </span><br><span class="line">set backspace=2</span><br><span class="line">set backspace=indent,eol,start</span><br><span class="line"></span><br><span class="line">&quot;Rebind &lt;Leader&gt; key</span><br><span class="line">let mapleader = &quot;,&quot;</span><br><span class="line"></span><br><span class="line">&quot; Quicksave command</span><br><span class="line">noremap &lt;C-S&gt; :update&lt;CR&gt;</span><br><span class="line">vnoremap &lt;C-S&gt; &lt;C-C&gt;:update&lt;CR&gt;</span><br><span class="line">inoremap &lt;C-S&gt; &lt;C-O&gt;:update&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">&quot; 映射全选+复制 ctrl+a</span><br><span class="line">map &lt;C-A&gt; ggVGY</span><br><span class="line">map! &lt;C-A&gt; &lt;Esc&gt;ggVGY</span><br><span class="line"></span><br><span class="line">&quot; 选中状态下 Ctrl+c 复制</span><br><span class="line">vmap &lt;C-c&gt; &quot;+y</span><br><span class="line"></span><br><span class="line">&quot; 快速注释</span><br><span class="line"></span><br><span class="line">&quot; Quick quit command</span><br><span class="line">noremap &lt;Leader&gt;e :quit&lt;CR&gt;</span><br><span class="line">noremap &lt;Leader&gt;E :qa!&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">&quot; Change window size</span><br><span class="line">nmap    w=  :resize +3&lt;CR&gt;</span><br><span class="line">nmap    w-  :resize -3&lt;CR&gt;</span><br><span class="line">nmap    w.  :vertical resize -3&lt;CR&gt;</span><br><span class="line">nmap    w,  :vertical resize +3&lt;CR&gt;</span><br><span class="line">&quot; Quickjump Window </span><br><span class="line">nmap	ww	&lt;C-w&gt;w</span><br><span class="line">nmap    wh	&lt;C-w&gt;h</span><br><span class="line">nmap    wj	&lt;C-w&gt;j</span><br><span class="line">nmap    wk	&lt;C-w&gt;k</span><br><span class="line">nmap    wl	&lt;C-w&gt;l</span><br><span class="line">		</span><br><span class="line">&quot; Real programmers don&apos;t use TABs but spaces</span><br><span class="line">set tabstop=4</span><br><span class="line">set softtabstop=4</span><br><span class="line">set shiftwidth=4</span><br><span class="line">set shiftround</span><br><span class="line">set expandtab</span><br><span class="line"></span><br><span class="line">&quot; Disable stupid backup and swap files</span><br><span class="line">set nobackup</span><br><span class="line">set nowritebackup</span><br><span class="line">set noswapfile</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;&quot;&quot;&quot;快速插入</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;匹配括号，默认停留半秒钟</span><br><span class="line">set showmatch</span><br><span class="line">&quot;set matchtime=15   &quot;1.5秒</span><br><span class="line">filetype plugin on</span><br><span class="line">filetype plugin indent on</span><br><span class="line"></span><br><span class="line">&quot;比较文件  </span><br><span class="line">nnoremap &lt;C-F2&gt; :vert diffsplit </span><br><span class="line"></span><br><span class="line">&quot;中文设置&quot;</span><br><span class="line">set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1</span><br><span class="line">set enc=utf8</span><br><span class="line">set fencs=utf8,gbk,gb2312,gb18030</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot; 显示相关  </span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">syntax on</span><br><span class="line">set cul &quot;高亮光标所在行</span><br><span class="line">set cuc</span><br><span class="line">set shortmess=atI   &quot; 启动的时候不显示那个援助乌干达儿童的提示  </span><br><span class="line">set go=             &quot; 不要图形按钮  </span><br><span class="line">color desert     &quot; 设置背景主题  </span><br><span class="line">&quot;color ron     &quot; 设置背景主题  </span><br><span class="line">&quot;color torte     &quot; 设置背景主题  </span><br><span class="line">&quot;set guifont=Courier_New:h10:cANSI   &quot; 设置字体  </span><br><span class="line">&quot;autocmd InsertLeave * se nocul  &quot; 用浅色高亮当前行  </span><br><span class="line">autocmd InsertEnter * se cul    &quot; 用浅色高亮当前行  </span><br><span class="line">set ruler           &quot; 显示标尺  </span><br><span class="line">set showcmd         &quot; 输入的命令显示出来，看的清楚些  </span><br><span class="line">&quot;set whichwrap+=&lt;,&gt;,h,l   &quot; 允许backspace和光标键跨越行边界(不建议)  </span><br><span class="line">set scrolloff=3     &quot; 光标移动到buffer的顶部和底部时保持3行距离  </span><br><span class="line">set statusline=%F%m%r%h%w\ [FORMAT=%&#123;&amp;ff&#125;]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %&#123;strftime(\&quot;%d/%m/%y\ -\ %H:%M\&quot;)&#125;   &quot;状态行显示的内容  </span><br><span class="line">set laststatus=2    &quot; 启动显示状态行(1),总是显示状态行(2)  </span><br><span class="line">&quot;set foldenable      &quot; 允许折叠  </span><br><span class="line">&quot;&quot;set foldmethod=manual   &quot; 手动折叠  </span><br><span class="line">set nocompatible  &quot;去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  </span><br><span class="line">&quot; 显示中文帮助</span><br><span class="line">if version &gt;= 603</span><br><span class="line">	set helplang=cn</span><br><span class="line">	set encoding=utf-8</span><br><span class="line">endif</span><br><span class="line">&quot; 自动缩进</span><br><span class="line">set autoindent</span><br><span class="line">set cindent</span><br><span class="line">&quot; Tab键的宽度</span><br><span class="line">set tabstop=4</span><br><span class="line">&quot; 统一缩进为4</span><br><span class="line">set softtabstop=4</span><br><span class="line">set shiftwidth=4</span><br><span class="line">&quot; 使用空格代替制表符</span><br><span class="line">set expandtab</span><br><span class="line">&quot; 在行和段开始处使用制表符</span><br><span class="line">set smarttab</span><br><span class="line"></span><br><span class="line">&quot; 显示行号</span><br><span class="line">set number</span><br><span class="line">&quot; 历史记录数</span><br><span class="line">set history=1000</span><br><span class="line">&quot;搜索逐字符高亮</span><br><span class="line">set hlsearch</span><br><span class="line">set incsearch</span><br><span class="line">&quot;语言设置</span><br><span class="line">set langmenu=zh_CN.UTF-8</span><br><span class="line">set helplang=cn</span><br><span class="line">&quot; 总是显示状态行</span><br><span class="line">set cmdheight=2</span><br><span class="line">&quot; 侦测文件类型</span><br><span class="line">filetype on</span><br><span class="line">&quot; 载入文件类型插件</span><br><span class="line">filetype plugin on</span><br><span class="line">&quot; 为特定文件类型载入相关缩进文件</span><br><span class="line">filetype indent on</span><br><span class="line">&quot; 保存全局变量</span><br><span class="line">set viminfo+=!</span><br><span class="line">&quot; 带有如下符号的单词不要被换行分割</span><br><span class="line">set iskeyword+=_,$,@,%,#,-</span><br><span class="line">&quot; 字符间插入的像素行数目</span><br><span class="line"></span><br><span class="line">&quot;markdown配置</span><br><span class="line">au BufRead,BufNewFile *.&#123;md,mdown,mkd,mkdn,markdown,mdwn&#125;   set filetype=mkd</span><br><span class="line">au BufRead,BufNewFile *.&#123;go&#125;   set filetype=go</span><br><span class="line">au BufRead,BufNewFile *.&#123;js&#125;   set filetype=javascript</span><br><span class="line">&quot;rkdown to HTML  </span><br><span class="line">nmap md :!~/.vim/markdown.pl % &gt; %.html &lt;CR&gt;&lt;CR&gt;</span><br><span class="line">nmap fi :!firefox %.html &amp; &lt;CR&gt;&lt;CR&gt;</span><br><span class="line">nmap \ \cc</span><br><span class="line">vmap \ \cc</span><br><span class="line"></span><br><span class="line">&quot;将tab替换为空格</span><br><span class="line">nmap tt :%s/\t/    /g&lt;CR&gt;</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;新文件标题</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;新建.c,.h,.sh,.java文件，自动插入文件头 </span><br><span class="line">autocmd BufNewFile *.py,*.cpp,*.[ch],*.sh,*.rb,*.java exec &quot;:call SetTitle()&quot; </span><br><span class="line">&quot;&quot;定义函数SetTitle，自动插入文件头 </span><br><span class="line">func SetTitle() </span><br><span class="line">	&quot;如果文件类型为.sh文件 </span><br><span class="line">	if expand(&quot;%:e&quot;) == &apos;py&apos;</span><br><span class="line">		call setline(1, &quot;#!/usr/bin/python&quot;)</span><br><span class="line">        call setline(2, &quot;# coding=utf-8&quot;)</span><br><span class="line">	    call setline(3, &quot;&quot;) </span><br><span class="line">		call setline(4, &quot;&apos;&apos;&apos;&quot;) </span><br><span class="line">		call setline(5, &quot;	&gt; File Name: &quot;.expand(&quot;%&quot;)) </span><br><span class="line">		call setline(6, &quot;	&gt; Author: RedFlash&quot;) </span><br><span class="line">		call setline(7, &quot;	&gt; Mail: 13693421942@163.com&quot;) </span><br><span class="line">		call setline(8, &quot;	&gt; Created Time: &quot;.strftime(&quot;%c&quot;)) </span><br><span class="line">		call setline(9, &quot; &apos;&apos;&apos;&quot;) </span><br><span class="line">		call setline(10, &quot;&quot;)</span><br><span class="line">	endif</span><br><span class="line">	if expand(&quot;%:e&quot;) == &apos;cpp&apos;</span><br><span class="line">		call setline(1, &quot;#!/usr/binsdfsdfpython&quot;)</span><br><span class="line">        call setline(2, &quot;# coding=utf-8&quot;)</span><br><span class="line">	endif</span><br><span class="line">	</span><br><span class="line">	&quot;新建文件后，自动定位到文件末尾</span><br><span class="line">endfunc </span><br><span class="line">autocmd BufNewFile * normal G</span><br><span class="line"></span><br><span class="line">&quot;C，C++ 按F5编译运行</span><br><span class="line">map &lt;F5&gt; :call CompileRunGcc()&lt;CR&gt;</span><br><span class="line">func! CompileRunGcc()</span><br><span class="line">	exec &quot;w&quot;</span><br><span class="line">	if &amp;filetype == &apos;c&apos;</span><br><span class="line">		exec &quot;!g++ % -o %&lt;&quot;</span><br><span class="line">		exec &quot;! ./%&lt;&quot;</span><br><span class="line">	elseif &amp;filetype == &apos;cpp&apos;</span><br><span class="line">		exec &quot;!g++ % -o %&lt;&quot;</span><br><span class="line">		exec &quot;! ./%&lt;&quot;</span><br><span class="line">	elseif &amp;filetype == &apos;java&apos; </span><br><span class="line">		exec &quot;!javac %&quot; </span><br><span class="line">		exec &quot;! java %&lt;&quot;</span><br><span class="line">	elseif &amp;filetype == &apos;sh&apos;</span><br><span class="line">		:! bash %</span><br><span class="line">	elseif &amp;filetype == &apos;python&apos;</span><br><span class="line">		exec &quot;! python %&quot;</span><br><span class="line">    elseif &amp;filetype == &apos;html&apos;</span><br><span class="line">        exec &quot;!firefox % &amp;&quot;</span><br><span class="line">    elseif &amp;filetype == &apos;go&apos;</span><br><span class="line">&quot;        exec &quot;!go build %&lt;&quot;</span><br><span class="line">        exec &quot;! go run %&quot;</span><br><span class="line">    elseif &amp;filetype == &apos;mkd&apos;</span><br><span class="line">        exec &quot;!~/.vim/markdown.pl % &gt; %.html &amp;&quot;</span><br><span class="line">        exec &quot;!firefox %.html &amp;&quot;</span><br><span class="line">	endif</span><br><span class="line">endfunc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">set nocompatible              &quot; be iMproved, required</span><br><span class="line">filetype off                  &quot; required</span><br><span class="line"></span><br><span class="line">set rtp+=~/.vim/bundle/Vundle.vim</span><br><span class="line">call vundle#begin()</span><br><span class="line">Plugin &apos;VundleVim/Vundle.vim&apos;</span><br><span class="line">Plugin &apos;asins/vimcdoc&apos;</span><br><span class="line">Plugin &apos;tpope/vim-fugitive&apos;</span><br><span class="line">Plugin &apos;L9&apos;</span><br><span class="line">Plugin &apos;git://git.wincent.com/command-t.git&apos;</span><br><span class="line">Plugin &apos;file:///home/gmarik/path/to/plugin&apos;</span><br><span class="line">Plugin &apos;lokaltog/vim-powerline&apos;</span><br><span class="line">Plugin &apos;bling/vim-airline&apos;</span><br><span class="line">Plugin &apos;yggdroot/indentline&apos;</span><br><span class="line">Plugin &apos;ervandew/supertab&apos;</span><br><span class="line">Plugin &apos;kien/ctrlp.vim&apos;</span><br><span class="line">Plugin &apos;majutsushi/tagbar&apos;</span><br><span class="line">Plugin &apos;scrooloose/nerdtree&apos;</span><br><span class="line">Plugin &apos;altercation/vim-colors-solarized&apos;</span><br><span class="line">Plugin &apos;davidhalter/jedi-vim&apos;</span><br><span class="line">Plugin &apos;klen/python-mode&apos;</span><br><span class="line">Plugin &apos;vimwiki/vimwiki&apos;</span><br><span class="line">Plugin &apos;godlygeek/tabular&apos;</span><br><span class="line">Plugin &apos;plasticboy/vim-markdown&apos;</span><br><span class="line">&quot;Plugin &apos;iamcco/markdown-preview.vim&apos;</span><br><span class="line">call vundle#end()            &quot; required</span><br><span class="line">filetype plugin indent on    &quot; required</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; markdown设置</span><br><span class="line">&quot;autocmd BufNewFile,BufReadPost *.md set filetype=markdown</span><br><span class="line">let g:markdown_fenced_languages = [&apos;html&apos;, &apos;python&apos;, &apos;bash=sh&apos;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">let g:table_mode_corner=&quot;|&quot;</span><br><span class="line"></span><br><span class="line">&quot;noremap &lt;Leader&gt;e :quit&lt;CR&gt;</span><br><span class="line">noremap &lt;Leader&gt;m :update&lt;Bar&gt;silent ! start %:p&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">nnoremap &lt;f2&gt; :!cmd /c c:\python27\python2 c:\python27\Scripts\markdown_py %:r.md -e utf-8 &gt; %:r.html&lt;cr&gt; </span><br><span class="line">noremap \m  :!cmd /c start %:r.html&lt;/cr&gt;&lt;cr&gt;&lt;/cr&gt;&lt;/f2&gt;</span><br><span class="line">	</span><br><span class="line">let g:mkdp_path_to_chrome = &quot;C:/Program Files (x86)/Google/Chrome/Application/chrome.exe&quot;</span><br><span class="line">    &quot; 设置 chrome 浏览器的路径（或是启动 chrome（或其他现代浏览器）的命令）</span><br><span class="line"></span><br><span class="line">let g:mkdp_auto_start = 0</span><br><span class="line">    &quot; 设置为 1 可以在打开 markdown 文件的时候自动打开浏览器预览，只在打开</span><br><span class="line">    &quot; markdown 文件的时候打开一次</span><br><span class="line"></span><br><span class="line">let g:mkdp_auto_open = 0</span><br><span class="line">    &quot; 设置为 1 在编辑 markdown 的时候检查预览窗口是否已经打开，否则自动打开预</span><br><span class="line">    &quot; 览窗口</span><br><span class="line"></span><br><span class="line">let g:mkdp_auto_close = 1</span><br><span class="line">    &quot; 在切换 buffer 的时候自动关闭预览窗口，设置为 0 则在切换 buffer 的时候不</span><br><span class="line">    &quot; 自动关闭预览窗口</span><br><span class="line"></span><br><span class="line">let g:mkdp_refresh_slow = 0</span><br><span class="line">    &quot; 设置为 1 则只有在保存文件，或退出插入模式的时候更新预览，默认为 0，实时</span><br><span class="line">    &quot; 更新预览</span><br><span class="line">	</span><br><span class="line">&quot;---------------------&gt;&gt; powerline</span><br><span class="line">set laststatus=2</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; airline</span><br><span class="line">let g:airline#extensions#tabline#enabled = 1</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; ctrlp</span><br><span class="line">let g:ctrlp_map = &apos;&lt;c-p&gt;&apos;</span><br><span class="line">let g:ctrlp_cmd = &apos;CtrlP&apos;</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; tagbar</span><br><span class="line">map &lt;C-t&gt; :TagbarToggle&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; vim-indentline</span><br><span class="line">let g:indentLine_color_gui = &apos;#A4E57E&apos;</span><br><span class="line">let g:indentLine_setColors = 0</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; nerdtree</span><br><span class="line">map &lt;C-n&gt; :NERDTreeToggle&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; vim-colors-solarized</span><br><span class="line">syntax enable</span><br><span class="line">set background=dark</span><br><span class="line">colorscheme solarized</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; vimwiki/vimwiki</span><br><span class="line">let g:vimwiki_list = [&#123;&apos;path&apos;: &apos;~/vimwiki/vimwiki&apos;,</span><br><span class="line">    \    &apos;path_html&apos;: &apos;~/vimwiki/vimwiki_html&apos;,</span><br><span class="line">    \    &apos;template_path&apos;: &apos;~/vimwiki/template&apos;,</span><br><span class="line">    \    &apos;template_default&apos;: &quot;/vimwiki/default.tpl&quot;&#125;]</span><br><span class="line">	  </span><br><span class="line">map &lt;F4&gt; :Vimwiki2HTML&lt;cr&gt;  </span><br><span class="line">	</span><br><span class="line">&quot;------------- PYTHON-IDE----------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; jedi-vim</span><br><span class="line">let g:jedi#usages_command = &quot;&lt;leader&gt;z&quot;</span><br><span class="line">let g:jedi#popup_on_dot = 0</span><br><span class="line">let g:jedi#popup_select_first = 0</span><br><span class="line">map &lt;Leader&gt;b Oimport ipdb; ipdb.set_trace() # BREAKPOINT&lt;C-c&gt;</span><br><span class="line"></span><br><span class="line">&quot; Better navigating through omnicomplete option list</span><br><span class="line">&quot; See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim</span><br><span class="line">set completeopt=longest,menuone</span><br><span class="line">function! OmniPopup(action)</span><br><span class="line">    if pumvisible()</span><br><span class="line">        if a:action == &apos;j&apos;</span><br><span class="line">            return &quot;\&lt;C-N&gt;&quot;</span><br><span class="line">        elseif a:action == &apos;k&apos;</span><br><span class="line">            return &quot;\&lt;C-P&gt;&quot;</span><br><span class="line">        endif</span><br><span class="line">    endif</span><br><span class="line">    return a:action</span><br><span class="line">endfunction</span><br><span class="line"></span><br><span class="line">inoremap &lt;silent&gt;&lt;C-j&gt; &lt;C-R&gt;=OmniPopup(&apos;j&apos;)&lt;CR&gt;</span><br><span class="line">inoremap &lt;silent&gt;&lt;C-k&gt; &lt;C-R&gt;=OmniPopup(&apos;k&apos;)&lt;CR&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot; Python folding</span><br><span class="line">&quot; mkdir -p ~/.vim/ftplugin</span><br><span class="line">&quot; wget -O ~/.vim/ftplugin/python_editing.vim http://www.vim.org/scripts/download_script.php?src_id=5492</span><br><span class="line">set nofoldenable</span><br><span class="line"></span><br><span class="line">&quot;---------------------&gt;&gt; python-mode</span><br><span class="line"></span><br><span class="line">map &lt;Leader&gt;g :call RopeGotoDefinition()&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">let ropevim_enable_shortcuts = 1</span><br><span class="line">let g:pymode_rope_goto_def_newwin = &quot;vnew&quot;</span><br><span class="line">let g:pymode_rope_extended_complete = 1</span><br><span class="line">let g:pymode_breakpoint = 0</span><br><span class="line">let g:pymode_syntax = 1</span><br><span class="line">let g:pymode_syntax_builtin_objs = 0</span><br><span class="line">let g:pymode_syntax_builtin_funcs = 0</span><br><span class="line"></span><br><span class="line">&quot;turn on code checking</span><br><span class="line">&quot;&quot;let g:pymode_lint = 1</span><br><span class="line">&quot;Check code on every save (if file has been modified)</span><br><span class="line">&quot;&quot;let g:pymode_lint_on_write = 1</span><br><span class="line">&quot;Check code on every save (every)</span><br><span class="line">&quot;&quot;let g:pymode_lint_unmodified = 1</span><br><span class="line"></span><br><span class="line">&quot;Enable functionality</span><br><span class="line">&quot;&quot;let g:pymode_breakpoint = 1</span><br><span class="line"></span><br><span class="line">&quot;turn on code completion support in the plugin</span><br><span class="line">&quot;&quot;let g:pymode_rope_completion = 1</span><br><span class="line">&quot;&quot;let g:pymode_rope_autoimport = 0</span><br><span class="line">let g:pymode_doc = 1</span><br><span class="line"></span><br><span class="line">let g:pymode_doc_bind = &apos;K&apos;</span><br><span class="line">map &lt;Leader&gt;b Oimport ipdb; ipdb.set_trace() # BREAKPOINT&lt;C-c&gt;</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;verilog 单词缩写&quot;</span><br><span class="line">iabbrev mo module</span><br><span class="line">iabbrev in input</span><br><span class="line">iabbrev ou output</span><br><span class="line">iabbrev al always</span><br><span class="line">iabbrev po posedge</span><br><span class="line">iabbrev ne negedge</span><br><span class="line">iabbrev def defparam</span><br><span class="line">iabbrev as assign</span><br><span class="line">iabbrev ini initial</span><br><span class="line">iabbrev ## //################################################</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">set guioptions+=b</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vim/" rel="tag"># vim</a>
+          
+            <a href="/tags/vimrc/" rel="tag"># vimrc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/20/Learning/git/git使用说明/" rel="next" title="Git版本控制器使用">
+                <i class="fa fa-chevron-left"></i> Git版本控制器使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/Learning/VIM/win7上编译安装64位VIM/" rel="prev" title="win7上编译安装64位VIM">
+                win7上编译安装64位VIM <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">redfalsh</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redfalsh</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
